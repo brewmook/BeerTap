@@ -21,6 +21,24 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
 
+    addItem: function(text)
+    {
+	var div = $("<div/>").attr('data-role','collapsible').trigger('create');
+	$("<h4/>").append(text).appendTo(div);
+	var buttons = $("<div/>").appendTo(div);
+	$("<a/>").attr('data-role','button')
+	         .attr('href','#')
+	         .append('Finished')
+	         .appendTo(buttons)
+		 .buttonMarkup({inline:true,icon:'delete'});
+	$("<a/>").attr('data-role','button')
+	         .attr('href','#')
+	         .append('Change')
+	         .appendTo(buttons)
+		 .buttonMarkup({inline:true,icon:'edit'});
+	div.appendTo("#current").collapsible();
+    },
+
     onFreshTweets: function(tweets)
     {
 	$("#current").empty();
@@ -28,10 +46,8 @@ var app = {
 	$.each(keys(result).sort(), function(i, key)
         {
 	    var text = key + " (" + formatDate(result[key]) + ")";
-	    $("<li/>").append(text).appendTo("#current");
+	    app.addItem(text);
 	});
-
-	$("#current").listview('refresh');
     },
 
     // deviceready Event Handler
