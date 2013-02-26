@@ -1,0 +1,44 @@
+67e82095b0226dbd5c06d88f339674a398e85548
+ assets/www/js/index.js |   22 ++++++++++++----------
+ 1 files changed, 12 insertions(+), 10 deletions(-)
+
+diff --git a/assets/www/js/index.js b/assets/www/js/index.js
+index 70d5181..b4b2b7c 100644
+--- a/assets/www/js/index.js
++++ b/assets/www/js/index.js
+@@ -50,6 +50,17 @@ var app = {
+ 	});
+     },
+ 
++    onJSON: function(data)
++    {
++	var tweets = [];
++	$.each(data, function(index, item)
++	{
++	    tweets.push({text:item.text,date:item.created_at});
++	});
++	tweets.reverse(); // chronological order please
++	app.onFreshTweets(tweets);
++    },
++
+     // deviceready Event Handler
+     //
+     // The scope of 'this' is the event. In order to call the 'receivedEvent'
+@@ -58,16 +69,7 @@ var app = {
+     {
+ 	//var url="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=TheBatTaps&trim_user=t&include_rts=false&count=100&callback=?";
+ 	var url="js/sample.json";
+-	$.getJSON(url, function(data)
+-	{
+-	    var tweets = [];
+-	    $.each(data, function(index, item)
+-	    {
+-		tweets.push({text:item.text,date:item.created_at});
+-	    });
+-	    tweets.reverse(); // chronological order please
+-	    app.onFreshTweets(tweets);
+-	});
++	$.getJSON(url, app.onJSON);
+     },
+ 
+     tweetsToCurrent: function(tweets)

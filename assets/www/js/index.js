@@ -50,6 +50,17 @@ var app = {
 	});
     },
 
+    onJSON: function(data)
+    {
+	var tweets = [];
+	$.each(data, function(index, item)
+	{
+	    tweets.push({text:item.text,date:item.created_at});
+	});
+	tweets.reverse(); // chronological order please
+	app.onFreshTweets(tweets);
+    },
+
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -58,16 +69,7 @@ var app = {
     {
 	//var url="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=TheBatTaps&trim_user=t&include_rts=false&count=100&callback=?";
 	var url="js/sample.json";
-	$.getJSON(url, function(data)
-	{
-	    var tweets = [];
-	    $.each(data, function(index, item)
-	    {
-		tweets.push({text:item.text,date:item.created_at});
-	    });
-	    tweets.reverse(); // chronological order please
-	    app.onFreshTweets(tweets);
-	});
+	$.getJSON(url, app.onJSON);
     },
 
     tweetsToCurrent: function(tweets)
