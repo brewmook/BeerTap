@@ -1,3 +1,20 @@
+function keys(obj) {
+    var keys = [];
+    for (var key in obj) {
+	if (obj.hasOwnProperty(key)) {
+	    keys.push(key);
+	}
+    }
+    keys.sort();
+    return keys;
+}
+
+function formatDate(date)
+{
+    var fields = [date.getFullYear(), date.getMonth()+1, date.getDate()];
+    return fields.join('/');
+}
+
 var app = {
 
     initialize: function() {
@@ -7,11 +24,14 @@ var app = {
     onFreshTweets: function(tweets)
     {
 	$("#current").empty();
-	$.each(app.tweetsToCurrent(tweets), function(key, value)
+	var result = app.tweetsToCurrent(tweets);
+	$.each(keys(result).sort(), function(i, key)
         {
-	    var text = key + " (since " + value.toLocaleDateString() + ")";
+	    var text = key + " (" + formatDate(result[key]) + ")";
 	    $("<li/>").append(text).appendTo("#current");
 	});
+
+	$("#current").listview('refresh');
     },
 
     // deviceready Event Handler
@@ -20,8 +40,8 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function()
     {
-	var url="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=TheBatTaps&trim_user=t&include_rts=false&count=100&callback=?";
-	//var url="js/sample.json";
+	//var url="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=TheBatTaps&trim_user=t&include_rts=false&count=100&callback=?";
+	var url="js/sample.json";
 	$.getJSON(url, function(data)
 	{
 	    var tweets = [];
@@ -40,16 +60,12 @@ var app = {
 	tweets.forEach(function(tweet)
         {
 	    var text = tweet.text.replace(/\s+/g, ' ');
-	    var matches = /OFF: (.*) ON: (.*)/.exec(text);
+	    var matches = /OFF: *(.*) ON: *(.*)/.exec(text);
 	    if (matches !== null)
 	    {
 		var off = matches[1];
 		if (off in result)
-		{
-		    console.log("erasing "+off);
 		    delete result[off];
-		}
-		console.log("adding "+matches[2]);
 		result[matches[2]] = new Date(tweet.date);
 	    }
 	});
