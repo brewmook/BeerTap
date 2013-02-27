@@ -1,31 +1,22 @@
-var app = {
+function App(viewDiv)
+{
+    this.model = new Model();
+    this.view = new View(viewDiv)
 
-    model: new Model(),
-    view: new View($("#current")),
+    var app = this;
 
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-	this.view.itemRemoveClicked = this.onItemRemoveClicked;
-    },
+    this.view.itemRemoveClicked = function(item) { app.onItemRemoveClicked(item); };
 
-    onItemRemoveClicked: function(item)
+    $.getJSON(twitter.timelineQuery("TheBatTaps"), function(data)
     {
-	app.model.remove(item);
-	app.view.remove(item);
-	twitter.tweet("OFF: " + item.name);
-    },
+	app.model.parseTweets(data);
+	app.view.refresh(app.model.items);
+    });
+}
 
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicity call 'app.receivedEvent(...);'
-    onDeviceReady: function()
-    {
-	$.getJSON(twitter.timelineQuery("TheBatTaps"), function(data)
-        {
-	    app.model.parseTweets(data);
-	    app.view.refresh(app.model.items);
-	});
-    },
-
+App.prototype.onItemRemoveClicked = function(item)
+{
+    this.model.remove(item);
+    this.view.remove(item);
+    twitter.tweet("OFF: " + item.name);
 };
