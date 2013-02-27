@@ -12,6 +12,7 @@ function Model(twitterScreenName)
 {
     this.items = [];
     this.itemsLoaded = function(){};
+    this.itemRemoved = function(item){};
 }
 
 Model.prototype.load = function(twitterScreenName)
@@ -60,7 +61,9 @@ Model.prototype.remove = function(name)
     {
 	if (item.name == name)
 	{
+	    twitter.tweet("OFF: " + item.name);
 	    this.items.splice(index,index);
+	    this.itemRemoved(item);
 	    return;
 	}
     }, this);
