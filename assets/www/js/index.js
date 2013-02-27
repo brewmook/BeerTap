@@ -15,14 +15,27 @@ function formatDate(date)
     return fields.join('/');
 }
 
+// Mock back end pretending to be twitter
+var twitter = {
+    timelineQuery: function(screenName) {
+        //return "https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screenName+"&trim_user=t&include_rts=false&count=100&callback=?";
+	return "js/sample.json";
+    },
+
+    tweet: function(text) {
+        console.log("TWEETED: " + text);
+    }
+};
+
 var app = {
 
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
 
-    addItem: function(text)
+    addItem: function(name, date)
     {
+        var text = name + " (" + formatDate(date) + ")";
 	var div = $("<div/>").attr('data-role','collapsible').trigger('create');
 	$("<h4/>").append(text).appendTo(div);
 	var buttons = $("<div/>").appendTo(div);
@@ -30,6 +43,7 @@ var app = {
 	         .attr('href','#')
 	         .append('Finished')
 	         .appendTo(buttons)
+		 .click(function() { app.finishItem(name, date); })
 		 .buttonMarkup({inline:true,icon:'delete'});
 	$("<a/>").attr('data-role','button')
 	         .attr('href','#')
@@ -39,14 +53,20 @@ var app = {
 	div.appendTo("#current").collapsible();
     },
 
+    finishItem: function(name, date)
+    {
+        var text = name + " (" + formatDate(date) + ")";
+	$("h4:contains("+text+")").parent().remove();
+	twitter.tweet("OFF: " + name);
+    },
+
     onFreshTweets: function(tweets)
     {
 	$("#current").empty();
 	var result = app.tweetsToCurrent(tweets);
 	$.each(keys(result).sort(), function(i, key)
         {
-	    var text = key + " (" + formatDate(result[key]) + ")";
-	    app.addItem(text);
+	    app.addItem(key, result[key]);
 	});
     },
 
@@ -67,9 +87,7 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function()
     {
-	//var url="https://api.twitter.com/1/statuses/user_timeline.json?screen_name=TheBatTaps&trim_user=t&include_rts=false&count=100&callback=?";
-	var url="js/sample.json";
-	$.getJSON(url, app.onJSON);
+	$.getJSON(twitter.timelineQuery("TheBatTaps"), app.onJSON);
     },
 
     tweetsToCurrent: function(tweets)
