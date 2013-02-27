@@ -61,47 +61,56 @@ Model.prototype.remove = function(name)
     }, this);
 };
 
+function View(container)
+{
+    this.container = container;
+}
+
+View.prototype.refresh = function(items)
+{
+    this.container.empty();
+    items.forEach(this.add, this);
+};
+
+View.prototype.add = function(item)
+{
+    var text = item.name + " (" + formatDate(item.date) + ")";
+    var div = $("<div/>").attr('data-role','collapsible').trigger('create');
+    $("<h4/>").append(text).appendTo(div);
+    var buttons = $("<div/>").appendTo(div);
+    $("<a/>").attr('data-role','button')
+	     .attr('href','#')
+	     .append('Remove')
+	     .appendTo(buttons)
+	     .click(function() { app.removeItem(item); })
+	     .buttonMarkup({inline:true,icon:'delete'});
+    $("<a/>").attr('data-role','button')
+	     .attr('href','#')
+	     .append('Change')
+	     .appendTo(buttons)
+	     .buttonMarkup({inline:true,icon:'edit'});
+    div.appendTo(this.container).collapsible();
+};
+
+View.prototype.remove = function(item)
+{
+    $("h4:contains('"+item.name+" (')").parent().remove();
+};
+
 var app = {
 
     model: new Model(),
+    view: new View($("#current")),
 
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
 
-    addItem: function(item)
+    removeItem: function(item)
     {
-	var name = item.name;
-	var date = item.date;
-        var text = name + " (" + formatDate(date) + ")";
-	var div = $("<div/>").attr('data-role','collapsible').trigger('create');
-	$("<h4/>").append(text).appendTo(div);
-	var buttons = $("<div/>").appendTo(div);
-	$("<a/>").attr('data-role','button')
-	         .attr('href','#')
-	         .append('Remove')
-	         .appendTo(buttons)
-		 .click(function() { app.removeItem(name); })
-		 .buttonMarkup({inline:true,icon:'delete'});
-	$("<a/>").attr('data-role','button')
-	         .attr('href','#')
-	         .append('Change')
-	         .appendTo(buttons)
-		 .buttonMarkup({inline:true,icon:'edit'});
-	div.appendTo("#current").collapsible();
-    },
-
-    removeItem: function(name)
-    {
-	$("h4:contains('"+name+" (')").parent().remove();
-	app.model.remove(name);
-	twitter.tweet("OFF: " + name);
-    },
-
-    refresh: function(items)
-    {
-	$("#current").empty();
-	items.forEach(app.addItem);
+	app.model.remove(item);
+	app.view.remove(item);
+	twitter.tweet("OFF: " + item.name);
     },
 
     // deviceready Event Handler
@@ -113,7 +122,7 @@ var app = {
 	$.getJSON(twitter.timelineQuery("TheBatTaps"), function(data)
         {
 	    app.model.parseTweets(data);
-	    app.refresh(app.model.items);
+	    app.view.refresh(app.model.items);
 	});
     },
 
