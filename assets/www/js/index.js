@@ -15,7 +15,44 @@ function formatDate(date)
     return fields.join('/');
 }
 
+function Model()
+{
+    this._items = {}
+}
+
+Model.prototype.parseTweets = function(data)
+{
+    var relevant = [];
+    $.each(data, function(index, item)
+    {
+	var text = item.text.replace(/\s+/g, ' ');
+	var matches = /OFF: *(.*) ON: *(.*)/.exec(text);
+	if (matches !== null)
+	{
+	    relevant.push({off:matches[1],on:matches[2],date:item.created_at});
+	}
+    });
+    relevant.reverse(); // chronological order please
+
+    this._items = [];
+    relevant.forEach(function(r)
+    {
+	delete this._items[r.off];
+	this._items[r.on] = new Date(r.date);
+    }, this);
+};
+
+Model.prototype.each = function(func)
+{
+    keys(this._items).sort().forEach(function(key)
+    {
+	func(key, this._items[key]);
+    }, this);
+};
+
 var app = {
+
+    model: new Model(),
 
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
@@ -48,25 +85,10 @@ var app = {
 	twitter.tweet("OFF: " + name);
     },
 
-    onFreshTweets: function(tweets)
+    refresh: function()
     {
 	$("#current").empty();
-	var result = app.tweetsToCurrent(tweets);
-	$.each(keys(result).sort(), function(i, key)
-        {
-	    app.addItem(key, result[key]);
-	});
-    },
-
-    onJSON: function(data)
-    {
-	var tweets = [];
-	$.each(data, function(index, item)
-	{
-	    tweets.push({text:item.text,date:item.created_at});
-	});
-	tweets.reverse(); // chronological order please
-	app.onFreshTweets(tweets);
+	app.model.each(app.addItem);
     },
 
     // deviceready Event Handler
@@ -75,25 +97,11 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function()
     {
-	$.getJSON(twitter.timelineQuery("TheBatTaps"), app.onJSON);
-    },
-
-    tweetsToCurrent: function(tweets)
-    {
-	var result = {};
-	tweets.forEach(function(tweet)
+	$.getJSON(twitter.timelineQuery("TheBatTaps"), function(data)
         {
-	    var text = tweet.text.replace(/\s+/g, ' ');
-	    var matches = /OFF: *(.*) ON: *(.*)/.exec(text);
-	    if (matches !== null)
-	    {
-		var off = matches[1];
-		if (off in result)
-		    delete result[off];
-		result[matches[2]] = new Date(tweet.date);
-	    }
+	    app.model.parseTweets(data);
+	    app.refresh();
 	});
-	return result;
     },
 
 };
