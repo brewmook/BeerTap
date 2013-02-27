@@ -5,7 +5,6 @@ function keys(obj) {
 	    keys.push(key);
 	}
     }
-    keys.sort();
     return keys;
 }
 
@@ -17,7 +16,7 @@ function formatDate(date)
 
 function Model()
 {
-    this._items = {}
+    this.items = [];
 }
 
 Model.prototype.parseTweets = function(data)
@@ -34,26 +33,33 @@ Model.prototype.parseTweets = function(data)
     });
     relevant.reverse(); // chronological order please
 
-    this._items = [];
+    var itemSet = {};
     relevant.forEach(function(r)
     {
-	delete this._items[r.off];
-	this._items[r.on] = new Date(r.date);
-    }, this);
-};
+	delete itemSet[r.off];
+	itemSet[r.on] = r.date;
+    });
 
-Model.prototype.each = function(func)
-{
-    keys(this._items).sort().forEach(function(key)
+    var items = [];
+    keys(itemSet).sort().forEach(function(key)
     {
-	func(key, this._items[key]);
-    }, this);
+	items.push({name:key, date:new Date(itemSet[key])});
+    });
+
+    this.items = items;
 };
 
 Model.prototype.remove = function(name)
 {
-    delete this._items[name];
-}
+    this.items.forEach(function(item, index)
+    {
+	if (item.name == name)
+	{
+	    this.items.splice(index,index);
+	    return;
+	}
+    }, this);
+};
 
 var app = {
 
@@ -63,15 +69,17 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
 
-    addItem: function(name, date)
+    addItem: function(item)
     {
+	var name = item.name;
+	var date = item.date;
         var text = name + " (" + formatDate(date) + ")";
 	var div = $("<div/>").attr('data-role','collapsible').trigger('create');
 	$("<h4/>").append(text).appendTo(div);
 	var buttons = $("<div/>").appendTo(div);
 	$("<a/>").attr('data-role','button')
 	         .attr('href','#')
-	         .append('Finished')
+	         .append('Remove')
 	         .appendTo(buttons)
 		 .click(function() { app.removeItem(name); })
 		 .buttonMarkup({inline:true,icon:'delete'});
@@ -90,10 +98,10 @@ var app = {
 	twitter.tweet("OFF: " + name);
     },
 
-    refresh: function()
+    refresh: function(items)
     {
 	$("#current").empty();
-	app.model.each(app.addItem);
+	items.forEach(app.addItem);
     },
 
     // deviceready Event Handler
@@ -105,7 +113,7 @@ var app = {
 	$.getJSON(twitter.timelineQuery("TheBatTaps"), function(data)
         {
 	    app.model.parseTweets(data);
-	    app.refresh();
+	    app.refresh(app.model.items);
 	});
     },
 
