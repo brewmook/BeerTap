@@ -1,18 +1,19 @@
-function App(viewDiv)
+function App(viewDiv, twitterScreenName)
 {
-    this.model = new Model();
-    this.view = new View(viewDiv)
-
     var app = this;
 
+    this.view = new View(viewDiv);
     this.view.itemRemoveClicked = function(item) { app.onItemRemoveClicked(item); };
 
-    $.getJSON(twitter.timelineQuery("TheBatTaps"), function(data)
-    {
-	app.model.parseTweets(data);
-	app.view.refresh(app.model.items);
-    });
+    this.model = new Model();
+    this.model.itemsLoaded = function() { app.onItemsLoaded(); };
+    this.model.load(twitterScreenName);
 }
+
+App.prototype.onItemsLoaded = function()
+{
+    this.view.refresh(this.model.items);
+};
 
 App.prototype.onItemRemoveClicked = function(item)
 {

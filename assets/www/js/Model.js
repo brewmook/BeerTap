@@ -8,12 +8,22 @@ function keys(obj) {
     return keys;
 }
 
-function Model()
+function Model(twitterScreenName)
 {
     this.items = [];
+    this.itemsLoaded = function(){};
 }
 
-Model.prototype.parseTweets = function(data)
+Model.prototype.load = function(twitterScreenName)
+{
+    var model = this;
+    $.getJSON(twitter.timelineQuery(twitterScreenName), function(data)
+    {
+	model._parseTweets(data);
+    });
+};
+
+Model.prototype._parseTweets = function(data)
 {
     var relevant = [];
     $.each(data, function(index, item)
@@ -41,6 +51,7 @@ Model.prototype.parseTweets = function(data)
     });
 
     this.items = items;
+    this.itemsLoaded();
 };
 
 Model.prototype.remove = function(name)
