@@ -50,6 +50,11 @@ Model.prototype.each = function(func)
     }, this);
 };
 
+Model.prototype.remove = function(name)
+{
+    delete this._items[name];
+}
+
 var app = {
 
     model: new Model(),
@@ -68,7 +73,7 @@ var app = {
 	         .attr('href','#')
 	         .append('Finished')
 	         .appendTo(buttons)
-		 .click(function() { app.finishItem(name, date); })
+		 .click(function() { app.removeItem(name); })
 		 .buttonMarkup({inline:true,icon:'delete'});
 	$("<a/>").attr('data-role','button')
 	         .attr('href','#')
@@ -78,10 +83,10 @@ var app = {
 	div.appendTo("#current").collapsible();
     },
 
-    finishItem: function(name, date)
+    removeItem: function(name)
     {
-        var text = name + " (" + formatDate(date) + ")";
-	$("h4:contains("+text+")").parent().remove();
+	$("h4:contains('"+name+" (')").parent().remove();
+	app.model.remove(name);
 	twitter.tweet("OFF: " + name);
     },
 
