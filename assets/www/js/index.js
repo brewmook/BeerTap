@@ -5,9 +5,10 @@ var app = {
 
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+	this.view.itemRemoveClicked = this.onItemRemoveClicked;
     },
 
-    removeItem: function(item)
+    onItemRemoveClicked: function(item)
     {
 	app.model.remove(item);
 	app.view.remove(item);

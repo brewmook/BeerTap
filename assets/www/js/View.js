@@ -7,6 +7,8 @@ function formatDate(date)
 function View(container)
 {
     this.container = container;
+    this.itemRemoveClicked = function(item){};
+    this.itemChangeClicked = function(item){};
 }
 
 View.prototype.refresh = function(items)
@@ -21,16 +23,18 @@ View.prototype.add = function(item)
     var div = $("<div/>").attr('data-role','collapsible').trigger('create');
     $("<h4/>").append(text).appendTo(div);
     var buttons = $("<div/>").appendTo(div);
+    var view = this;
     $("<a/>").attr('data-role','button')
 	     .attr('href','#')
 	     .append('Remove')
 	     .appendTo(buttons)
-	     .click(function() { app.removeItem(item); })
+	     .click(function() { view.itemRemoveClicked(item); })
 	     .buttonMarkup({inline:true,icon:'delete'});
     $("<a/>").attr('data-role','button')
 	     .attr('href','#')
 	     .append('Change')
 	     .appendTo(buttons)
+	     .click(function() { view.itemChangeClicked(item); })
 	     .buttonMarkup({inline:true,icon:'edit'});
     div.appendTo(this.container).collapsible();
 };
