@@ -68,3 +68,19 @@ Model.prototype.remove = function(name)
 	}
     }, this);
 };
+
+Model.prototype.change = function(oldname, newname)
+{
+    this.items.forEach(function(item, index)
+    {
+	if (item.name == oldname)
+	{
+	    var olditem = item;
+	    var newitem = {name:newname, date:new Date()};
+	    twitter.tweet("OFF: " + oldname + "\nON: " + newname);
+	    this.items[index] = newitem;
+	    this.itemsLoaded();
+	    return;
+	}
+    }, this);
+};
