@@ -55,32 +55,42 @@ Model.prototype._parseTweets = function(data)
     this.itemsLoaded();
 };
 
+Model.prototype.add = function(name)
+{
+    var i = 0;
+    while (i < this.items.length && this.items[i].name < name) ++i;
+    this.items.splice(i, 0, {name:name, date:new Date()});
+};
+
 Model.prototype.remove = function(name)
 {
-    this.items.forEach(function(item, index)
+    var index = this.findIndex(name);
+    if (index >= 0)
     {
-	if (item.name == name)
-	{
-	    twitter.tweet("OFF: " + item.name);
-	    this.items.splice(index,index);
-	    this.itemRemoved(item);
-	    return;
-	}
-    }, this);
+	var item = this.items[index];
+	twitter.tweet("OFF: " + name);
+	this.items.splice(index,1);
+	this.itemRemoved(item);
+    }
 };
 
 Model.prototype.change = function(oldname, newname)
 {
-    this.items.forEach(function(item, index)
+    var index = this.findIndex(oldname);
+    if (index >= 0)
     {
-	if (item.name == oldname)
-	{
-	    var olditem = item;
-	    var newitem = {name:newname, date:new Date()};
-	    twitter.tweet("OFF: " + oldname + "\nON: " + newname);
-	    this.items[index] = newitem;
-	    this.itemsLoaded();
-	    return;
-	}
-    }, this);
+	twitter.tweet("OFF: " + oldname + "\nON: " + newname);
+	this.items.splice(index,1);
+	this.add(newname);
+	this.itemsLoaded();
+    }
+};
+
+Model.prototype.findIndex = function(name)
+{
+    var i = 0;
+    while (i < this.items.length && this.items[i].name != name)
+	++i;
+    if (i == this.items.length) i = -1;
+    return i;
 };
