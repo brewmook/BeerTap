@@ -7,8 +7,11 @@ function formatDate(date)
 function View(container)
 {
     this.container = container;
+    this.addClicked = function(){};
     this.itemRemoveClicked = function(item){};
     this.itemChangeClicked = function(item){};
+
+    this._applyJQueryMobile();
 }
 
 View.prototype.refresh = function(items)
@@ -42,4 +45,11 @@ View.prototype.add = function(item)
 View.prototype.remove = function(item)
 {
     $("h4:contains('"+item.name+" (')").parent().remove();
+};
+
+View.prototype._applyJQueryMobile = function()
+{
+    var view = this;
+    $("#addButton").click(function() { view.addClicked(); })
+	           .buttonMarkup({icon:'delete'});
 };

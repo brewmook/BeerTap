@@ -3,6 +3,7 @@ function App(viewDiv, twitterScreenName)
     var app = this;
 
     this.view = new View(viewDiv);
+    this.view.addClicked = function() { app.onViewAddClicked(); };
     this.view.itemRemoveClicked = function(item) { app.onViewItemRemoveClicked(item); };
     this.view.itemChangeClicked = function(item) { app.onViewItemChangeClicked(item); };
 
@@ -11,6 +12,19 @@ function App(viewDiv, twitterScreenName)
     this.model.itemRemoved = function(item) { app.onModelItemRemoved(item); };
     this.model.load(twitterScreenName);
 }
+
+App.prototype.onViewAddClicked = function()
+{
+    var model = this.model;
+    var input = $('#newTextInput');
+    input.val('');
+    $('#newTextSubmit').unbind('click').click(function()
+    {
+	model.add(input.val());
+	$('#newTextDialog').dialog('close');
+    });
+    $.mobile.changePage('#newTextDialog');
+};
 
 App.prototype.onViewItemRemoveClicked = function(item)
 {
@@ -23,7 +37,7 @@ App.prototype.onViewItemChangeClicked = function(item)
     var input = $('#newTextInput');
     var name = item.name;
     input.val(name);
-    $('#newTextSubmit').click(function()
+    $('#newTextSubmit').unbind('click').click(function()
     {
 	model.change(name, input.val());
 	$('#newTextDialog').dialog('close');
