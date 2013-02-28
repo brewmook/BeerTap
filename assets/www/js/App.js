@@ -21,10 +21,11 @@ App.prototype.onViewItemChangeClicked = function(item)
 {
     var model = this.model;
     var input = $('#newTextInput');
-    input.val(item.name);
+    var name = item.name;
+    input.val(name);
     $('#newTextSubmit').click(function()
     {
-	model.change(item.name, input.val());
+	model.change(name, input.val());
 	$('#newTextDialog').dialog('close');
     });
     $.mobile.changePage('#newTextDialog');
