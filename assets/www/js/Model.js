@@ -55,9 +55,10 @@ Model.prototype._parseTweets = function(data)
     this.itemsLoaded();
 };
 
-Model.prototype.add = function(name)
+Model.prototype.add = function(name, tweet)
 {
     var i = 0;
+    if (tweet) twitter.tweet("ON: " + name);
     while (i < this.items.length && this.items[i].name < name) ++i;
     this.items.splice(i, 0, {name:name, date:new Date()});
     this.itemsLoaded();
@@ -82,7 +83,7 @@ Model.prototype.change = function(oldname, newname)
     {
 	twitter.tweet("OFF: " + oldname + "\nON: " + newname);
 	this.items.splice(index,1);
-	this.add(newname);
+	this.add(newname, false);
     }
 };
 

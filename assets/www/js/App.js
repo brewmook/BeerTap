@@ -16,7 +16,7 @@ function App(viewDiv, twitterScreenName)
 App.prototype.onViewAddClicked = function()
 {
     var model = this.model;
-	this.showNewTextDialog('', function(newText) { model.add(newText); });
+	this.showNewTextDialog('', function(newText) { model.add(newText, true); });
 };
 
 App.prototype.onViewItemRemoveClicked = function(item)
