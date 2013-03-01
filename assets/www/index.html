@@ -30,22 +30,22 @@
     <body>
         <div id="main" data-role="page">
           <div data-role="header"><h1>TheBatTaps</h1></div>
-	  <div data-role="content">
-	    <button id="addButton">Add new</button>
-	    <div id="current" data-role="collapsible-set" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-inset="false">
-	    </div>
+          <div data-role="content">
+            <button id="addButton">Add new</button>
+            <div id="current" data-role="collapsible-set" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-inset="false">
+            </div>
           </div>
-	</div>
+        </div>
 
-	<div id="newTextDialog" data-role="dialog">
-	  <div data-role="header"><h1>New text</h1></div>
-	  <div data-role="content">
-	    <label for="basic">Enter new text:</label>
-	    <input type="text" name="name" id="newTextInput" value="" />
-	    <button id="newTextSubmit">Submit</button>
-	    <a href="#" data-role="button" data-rel="back">Cancel</a>
-	  </div>
-	</div>
+        <div id="newTextDialog" data-role="dialog">
+          <div data-role="header"><h1>New text</h1></div>
+          <div data-role="content">
+            <label for="basic">Enter new text:</label>
+            <input type="text" name="name" id="newTextInput" value="" />
+            <button id="newTextSubmit">Submit</button>
+            <a href="#" data-role="button" data-rel="back">Cancel</a>
+          </div>
+        </div>
 
         <script type="text/javascript" src="cordova-2.4.0.js"></script>
         <script type="text/javascript" src="js/twitter.js"></script>
@@ -53,9 +53,9 @@
         <script type="text/javascript" src="js/View.js"></script>
         <script type="text/javascript" src="js/App.js"></script>
         <script type="text/javascript">
-	  var app = null;
+          var app = null;
           document.addEventListener('deviceready', function() {
-	      app=new App($("#current"), "TheBatTaps");
+              app=new App($("#current"), "TheBatTaps");
           }, false);
         </script>
     </body>

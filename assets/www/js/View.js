@@ -28,17 +28,17 @@ View.prototype.add = function(item)
     var buttons = $("<div/>").appendTo(div);
     var view = this;
     $("<a/>").attr('data-role','button')
-	     .attr('href','#')
-	     .append('Remove')
-	     .appendTo(buttons)
-	     .click(function() { view.itemRemoveClicked(item); })
-	     .buttonMarkup({inline:true,icon:'delete'});
+             .attr('href','#')
+             .append('Remove')
+             .appendTo(buttons)
+             .click(function() { view.itemRemoveClicked(item); })
+             .buttonMarkup({inline:true,icon:'delete'});
     $("<a/>").attr('data-role','button')
-	     .attr('href','#')
-	     .append('Change')
-	     .appendTo(buttons)
-	     .click(function() { view.itemChangeClicked(item); })
-	     .buttonMarkup({inline:true,icon:'edit'});
+             .attr('href','#')
+             .append('Change')
+             .appendTo(buttons)
+             .click(function() { view.itemChangeClicked(item); })
+             .buttonMarkup({inline:true,icon:'edit'});
     div.appendTo(this.container).collapsible();
 };
 
@@ -51,5 +51,5 @@ View.prototype._applyJQueryMobile = function()
 {
     var view = this;
     $("#addButton").click(function() { view.addClicked(); })
-	           .buttonMarkup({icon:'delete'});
+                   .buttonMarkup({icon:'delete'});
 };
