@@ -16,14 +16,7 @@ function App(viewDiv, twitterScreenName)
 App.prototype.onViewAddClicked = function()
 {
     var model = this.model;
-    var input = $('#newTextInput');
-    input.val('');
-    $('#newTextSubmit').unbind('click').click(function()
-    {
-	model.add(input.val());
-	$('#newTextDialog').dialog('close');
-    });
-    $.mobile.changePage('#newTextDialog');
+	this.showNewTextDialog('', function(newText) { model.add(newText); });
 };
 
 App.prototype.onViewItemRemoveClicked = function(item)
@@ -34,15 +27,8 @@ App.prototype.onViewItemRemoveClicked = function(item)
 App.prototype.onViewItemChangeClicked = function(item)
 {
     var model = this.model;
-    var input = $('#newTextInput');
     var name = item.name;
-    input.val(name);
-    $('#newTextSubmit').unbind('click').click(function()
-    {
-	model.change(name, input.val());
-	$('#newTextDialog').dialog('close');
-    });
-    $.mobile.changePage('#newTextDialog');
+	this.showNewTextDialog(name, function(newText) { model.change(name, newText); });
 };
 
 App.prototype.onModelItemsLoaded = function()
@@ -53,4 +39,16 @@ App.prototype.onModelItemsLoaded = function()
 App.prototype.onModelItemRemoved = function(item)
 {
     this.view.remove(item);
+};
+
+App.prototype.showNewTextDialog = function(text, callback)
+{
+    var input = $('#newTextInput');
+    input.val(text);
+    $('#newTextSubmit').unbind('click').click(function()
+    {
+        callback(input.val());
+        $('#newTextDialog').dialog('close');
+    });
+    $.mobile.changePage('#newTextDialog');
 };
