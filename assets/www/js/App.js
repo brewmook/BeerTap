@@ -7,7 +7,7 @@ function App(viewDiv, twitterScreenName)
     this.view.itemRemoveClicked = function(item) { app.onViewItemRemoveClicked(item); };
     this.view.itemChangeClicked = function(item) { app.onViewItemChangeClicked(item); };
 
-    this.model = new Model();
+    this.model = new Model(twitterScreenName);
     this.model.itemsLoaded = function() { app.onModelItemsLoaded(); };
     this.model.itemRemoved = function(item) { app.onModelItemRemoved(item); };
     this.model.load(twitterScreenName);
