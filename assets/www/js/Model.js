@@ -85,11 +85,12 @@ Model.prototype.change = function(oldname, newname)
 {
     if (oldname != newname)
     {
-        var index = this.findIndex(oldname);
-        if (index >= 0)
+        var oldindex = this.findIndex(oldname);
+        var newindex = this.findIndex(newname);
+        if (oldindex >= 0 && newindex < 0)
         {
             this.twitter.tweet("OFF: " + oldname + "\nON: " + newname);
-            this.items.splice(index,1);
+            this.items.splice(oldindex,1);
             this.add(newname, false);
         }
     }
