@@ -58,11 +58,15 @@ Model.prototype._parseTweets = function(data)
 
 Model.prototype.add = function(name, tweet)
 {
-    var i = 0;
-    if (tweet) this.twitter.tweet("ON: " + name);
-    while (i < this.items.length && this.items[i].name < name) ++i;
-    this.items.splice(i, 0, {name:name, date:new Date()});
-    this.itemsLoaded();
+    var index = this.findIndex(name);
+    if (index < 0)
+    {
+        var i = 0;
+        if (tweet) this.twitter.tweet("ON: " + name);
+        while (i < this.items.length && this.items[i].name < name) ++i;
+        this.items.splice(i, 0, {name:name, date:new Date()});
+        this.itemsLoaded();
+    }
 };
 
 Model.prototype.remove = function(name)
