@@ -79,12 +79,15 @@ Model.prototype.remove = function(name)
 
 Model.prototype.change = function(oldname, newname)
 {
-    var index = this.findIndex(oldname);
-    if (index >= 0)
+    if (oldname != newname)
     {
-        this.twitter.tweet("OFF: " + oldname + "\nON: " + newname);
-        this.items.splice(index,1);
-        this.add(newname, false);
+        var index = this.findIndex(oldname);
+        if (index >= 0)
+        {
+            this.twitter.tweet("OFF: " + oldname + "\nON: " + newname);
+            this.items.splice(index,1);
+            this.add(newname, false);
+        }
     }
 };
 
