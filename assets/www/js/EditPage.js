@@ -2,7 +2,9 @@ function EditPage(twitterScreenName)
 {
     var app = this;
 
-    this.view = new EditView(twitterScreenName);
+    this.newTextDialog = new TextInputDialog("newTextDialog", "New text", "Enter new text:");
+
+    this.view = new EditView(twitterScreenName, this.newTextDialog);
     this.view.addClicked = function() { app.onViewAddClicked(); };
     this.view.itemRemoveClicked = function(item) { app.onViewItemRemoveClicked(item); };
     this.view.itemChangeClicked = function(item) { app.onViewItemChangeClicked(item); };
@@ -12,8 +14,6 @@ function EditPage(twitterScreenName)
     this.model.itemRemoved = function(item) { app.onModelItemRemoved(item); };
     this.model.load(twitterScreenName);
   
-    this.newTextDialog = new TextInputDialog("New text", "Enter new text:");
-
     this.id = twitterScreenName;
 }
 

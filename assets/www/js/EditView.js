@@ -4,7 +4,7 @@ function formatDate(date)
     return fields.join('/');
 }
 
-function EditView(id)
+function EditView(id, inputDialog)
 {
     var view = this;
     var page = $("<div/>").attr({"data-role":"page",id:id});
@@ -12,7 +12,7 @@ function EditView(id)
     var h1 = $("<h1/>").append(id).appendTo(header);
     var content = $("<div/>").attr("data-role","content").appendTo(page);
     var addButton = $("<a/>")
-        .attr({href:"#","data-role":"button"})
+        .attr({href:"#"+inputDialog.id,"data-role":"button"})
         .append("Add new")
         .appendTo(content)
         .click(function() { view.addClicked(); })
@@ -30,6 +30,7 @@ function EditView(id)
     this.header = h1;
     this.addButton = addButton;
     this.itemList = itemList;
+    this.inputDialogId = inputDialog.id;
 
     this.addClicked = function(){};
     this.itemRemoveClicked = function(item){};
@@ -61,7 +62,7 @@ EditView.prototype.add = function(item)
       .click(function() { view.itemRemoveClicked(item); })
       .buttonMarkup({inline:true,icon:'delete'});
     $("<a/>")
-      .attr({href:"#","data-role":"button"})
+      .attr({href:"#"+this.inputDialogId,"data-role":"button"})
       .append('Change')
       .appendTo(buttons)
       .click(function() { view.itemChangeClicked(item); })
