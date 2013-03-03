@@ -4,9 +4,10 @@ function formatDate(date)
     return fields.join('/');
 }
 
-function View(container)
+function View(page)
 {
-    this.container = container;
+    this.page = page;
+    this.itemList = page.find(".itemList");
     this.addClicked = function(){};
     this.itemRemoveClicked = function(item){};
     this.itemChangeClicked = function(item){};
@@ -16,7 +17,7 @@ function View(container)
 
 View.prototype.refresh = function(items)
 {
-    this.container.empty();
+    this.itemList.empty();
     items.forEach(this.add, this);
 };
 
@@ -39,7 +40,7 @@ View.prototype.add = function(item)
              .appendTo(buttons)
              .click(function() { view.itemChangeClicked(item); })
              .buttonMarkup({inline:true,icon:'edit'});
-    div.appendTo(this.container).collapsible();
+    div.appendTo(this.itemList).collapsible();
 };
 
 View.prototype.remove = function(item)

@@ -14,7 +14,7 @@
         <script type="text/javascript" src="js/App.js"></script>
         <script type="text/javascript">
           var app = null;
-          $(document).ready(function() { app = new App($("#current"), "TheBatTaps"); });
+          $(document).ready(function() { app = new App($("#main"), "TheBatTaps"); });
         </script>
     </head>
     <body>
@@ -22,7 +22,7 @@
           <div data-role="header"><h1>TheBatTaps</h1></div>
           <div data-role="content">
             <button id="addButton">Add new</button>
-            <div id="current" data-role="collapsible-set" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-inset="false">
+            <div class="itemList" data-role="collapsible-set" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-inset="false">
             </div>
           </div>
         </div>
