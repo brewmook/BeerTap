@@ -12,12 +12,14 @@ function EditPage(viewDiv, twitterScreenName)
     this.model.itemsLoaded = function() { app.onModelItemsLoaded(); };
     this.model.itemRemoved = function(item) { app.onModelItemRemoved(item); };
     this.model.load(twitterScreenName);
+  
+    this.newTextDialog = new TextInputDialog("New text", "Enter new text:");
 }
 
 EditPage.prototype.onViewAddClicked = function()
 {
     var model = this.model;
-    this.showNewTextDialog('', function(newText) { model.add(newText, true); });
+    this.newTextDialog.show('', function(newText) { model.add(newText, true); });
 };
 
 EditPage.prototype.onViewItemRemoveClicked = function(item)
@@ -29,7 +31,7 @@ EditPage.prototype.onViewItemChangeClicked = function(item)
 {
     var model = this.model;
     var name = item.name;
-    this.showNewTextDialog(name, function(newText) { model.change(name, newText); });
+    this.newTextDialog.show(name, function(newText) { model.change(name, newText); });
 };
 
 EditPage.prototype.onModelItemsLoaded = function()
@@ -40,16 +42,4 @@ EditPage.prototype.onModelItemsLoaded = function()
 EditPage.prototype.onModelItemRemoved = function(item)
 {
     this.view.remove(item);
-};
-
-EditPage.prototype.showNewTextDialog = function(text, callback)
-{
-    var input = $('#newTextInput');
-    input.val(text);
-    $('#newTextSubmit').unbind('click').click(function()
-    {
-        callback(input.val());
-        $('#newTextDialog').dialog('close');
-    });
-    $.mobile.changePage('#newTextDialog');
 };
