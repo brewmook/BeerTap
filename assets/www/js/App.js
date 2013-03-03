@@ -3,6 +3,7 @@ function App(viewDiv, twitterScreenName)
     var app = this;
 
     this.view = new View(viewDiv);
+    this.view.setHeader(twitterScreenName);
     this.view.addClicked = function() { app.onViewAddClicked(); };
     this.view.itemRemoveClicked = function(item) { app.onViewItemRemoveClicked(item); };
     this.view.itemChangeClicked = function(item) { app.onViewItemChangeClicked(item); };

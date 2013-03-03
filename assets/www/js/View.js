@@ -8,6 +8,8 @@ function View(page)
 {
     this.page = page;
     this.itemList = page.find(".itemList");
+    this.header = page.find(".header");
+
     this.addClicked = function(){};
     this.itemRemoveClicked = function(item){};
     this.itemChangeClicked = function(item){};
@@ -19,6 +21,11 @@ View.prototype.refresh = function(items)
 {
     this.itemList.empty();
     items.forEach(this.add, this);
+};
+
+View.prototype.setHeader = function(text)
+{
+    this.header.html(text);
 };
 
 View.prototype.add = function(item)
