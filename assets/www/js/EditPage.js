@@ -1,4 +1,4 @@
-function App(viewDiv, twitterScreenName)
+function EditPage(viewDiv, twitterScreenName)
 {
     var app = this;
 
@@ -14,35 +14,35 @@ function App(viewDiv, twitterScreenName)
     this.model.load(twitterScreenName);
 }
 
-App.prototype.onViewAddClicked = function()
+EditPage.prototype.onViewAddClicked = function()
 {
     var model = this.model;
     this.showNewTextDialog('', function(newText) { model.add(newText, true); });
 };
 
-App.prototype.onViewItemRemoveClicked = function(item)
+EditPage.prototype.onViewItemRemoveClicked = function(item)
 {
     this.model.remove(item.name);
 };
 
-App.prototype.onViewItemChangeClicked = function(item)
+EditPage.prototype.onViewItemChangeClicked = function(item)
 {
     var model = this.model;
     var name = item.name;
     this.showNewTextDialog(name, function(newText) { model.change(name, newText); });
 };
 
-App.prototype.onModelItemsLoaded = function()
+EditPage.prototype.onModelItemsLoaded = function()
 {
     this.view.refresh(this.model.items);
 };
 
-App.prototype.onModelItemRemoved = function(item)
+EditPage.prototype.onModelItemRemoved = function(item)
 {
     this.view.remove(item);
 };
 
-App.prototype.showNewTextDialog = function(text, callback)
+EditPage.prototype.showNewTextDialog = function(text, callback)
 {
     var input = $('#newTextInput');
     input.val(text);

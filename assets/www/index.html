@@ -11,14 +11,14 @@
         <script type="text/javascript" src="js/Twitter.js"></script>
         <script type="text/javascript" src="js/Model.js"></script>
         <script type="text/javascript" src="js/View.js"></script>
-        <script type="text/javascript" src="js/App.js"></script>
+        <script type="text/javascript" src="js/EditPage.js"></script>
         <script type="text/javascript">
-          var app = null;
-          $(document).ready(function() { app = new App($("#main"), "TheBatTaps"); });
+          var editPage = null;
+          $(document).ready(function() { editPage = new EditPage($("#edit"), "TheBatTaps"); });
         </script>
     </head>
     <body>
-        <div id="main" data-role="page">
+        <div id="edit" data-role="page">
           <div data-role="header"><h1 class="header">Loading...</h1></div>
           <div data-role="content">
             <button class="add">Add new</button>
