@@ -4,18 +4,36 @@ function formatDate(date)
     return fields.join('/');
 }
 
-function View(page)
+function View(id)
 {
+    var view = this;
+    var page = $("<div/>").attr({"data-role":"page",id:id});
+    var header = $("<div/>").attr("data-role","header").appendTo(page);
+    var h1 = $("<h1/>").append(id).appendTo(header);
+    var content = $("<div/>").attr("data-role","content").appendTo(page);
+    var addButton = $("<a/>")
+        .attr({href:"#","data-role":"button"})
+        .append("Add new")
+        .appendTo(content)
+        .click(function() { view.addClicked(); })
+        .buttonMarkup({icon:'plus', inline:true});
+    var itemList = $("<div/>")
+        .attr({"data-role":"collapsible-set",
+               "data-collapsed-icon":"arrow-r",
+               "data-expanded-icon": "arrow-d",
+               "data-inset":"false"})
+        .appendTo(content);
+
+    page.appendTo("body").trigger('create');
+
     this.page = page;
-    this.header = page.find(".header");
-    this.addButton = page.find(".add");
-    this.itemList = page.find(".itemList");
+    this.header = h1;
+    this.addButton = addButton;
+    this.itemList = itemList;
 
     this.addClicked = function(){};
     this.itemRemoveClicked = function(item){};
     this.itemChangeClicked = function(item){};
-
-    this._applyJQueryMobile();
 }
 
 View.prototype.refresh = function(items)
@@ -36,26 +54,22 @@ View.prototype.add = function(item)
     $("<h4/>").append(text).appendTo(div);
     var buttons = $("<div/>").appendTo(div);
     var view = this;
-    $("<button/>").append('Remove')
-                  .appendTo(buttons)
-                  .click(function() { view.itemRemoveClicked(item); })
-                  .buttonMarkup({inline:true,icon:'delete'});
-    $("<button/>").append('Change')
-                  .appendTo(buttons)
-                  .click(function() { view.itemChangeClicked(item); })
-                  .buttonMarkup({inline:true,icon:'edit'});
+    $("<a/>")
+      .attr({href:"#","data-role":"button"})
+      .append('Remove')
+      .appendTo(buttons)
+      .click(function() { view.itemRemoveClicked(item); })
+      .buttonMarkup({inline:true,icon:'delete'});
+    $("<a/>")
+      .attr({href:"#","data-role":"button"})
+      .append('Change')
+      .appendTo(buttons)
+      .click(function() { view.itemChangeClicked(item); })
+      .buttonMarkup({inline:true,icon:'edit'});
     div.appendTo(this.itemList).collapsible();
 };
 
 View.prototype.remove = function(item)
 {
     $("h4:contains('"+item.name+" (')").parent().remove();
-};
-
-View.prototype._applyJQueryMobile = function()
-{
-    var view = this;
-    this.addButton
-        .click(function() { view.addClicked(); })
-        .buttonMarkup({icon:'plus', inline:true});
 };

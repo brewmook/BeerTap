@@ -13,18 +13,22 @@
         <script type="text/javascript" src="js/View.js"></script>
         <script type="text/javascript" src="js/TextInputDialog.js"></script>
         <script type="text/javascript" src="js/EditPage.js"></script>
+        <script type="text/javascript" src="js/OnTap.js"></script>
         <script type="text/javascript">
-          var editPage = null;
-          $(document).ready(function() { editPage = new EditPage($("#edit"), "TheBatTaps"); });
+          var app = null;
+          $(document).ready(function()
+          {
+              app = new OnTap();
+              app.addPage(new EditPage("TheBatTaps"));
+          });
         </script>
     </head>
     <body>
-        <div id="edit" data-role="page">
-          <div data-role="header"><h1 class="header">Loading...</h1></div>
+        <div id="main" data-role="page">
+          <div data-role="header"><h1>OnTap</h1></div>
           <div data-role="content">
-            <button class="add">Add new</button>
-            <div class="itemList" data-role="collapsible-set" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-inset="false">
-            </div>
+            <ul id="pages" data-role="listview">
+            </ul>
           </div>
         </div>
     </body>
