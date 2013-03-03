@@ -7,8 +7,9 @@ function formatDate(date)
 function View(page)
 {
     this.page = page;
-    this.itemList = page.find(".itemList");
     this.header = page.find(".header");
+    this.addButton = page.find(".add");
+    this.itemList = page.find(".itemList");
 
     this.addClicked = function(){};
     this.itemRemoveClicked = function(item){};
@@ -58,6 +59,7 @@ View.prototype.remove = function(item)
 View.prototype._applyJQueryMobile = function()
 {
     var view = this;
-    $("#addButton").click(function() { view.addClicked(); })
-                   .buttonMarkup({icon:'delete'});
+    this.addButton
+        .click(function() { view.addClicked(); })
+        .buttonMarkup({icon:'plus', inline:true});
 };
