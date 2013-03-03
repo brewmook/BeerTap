@@ -2,7 +2,7 @@ function EditPage(twitterScreenName)
 {
     var app = this;
 
-    this.view = new View(twitterScreenName);
+    this.view = new EditView(twitterScreenName);
     this.view.addClicked = function() { app.onViewAddClicked(); };
     this.view.itemRemoveClicked = function(item) { app.onViewItemRemoveClicked(item); };
     this.view.itemChangeClicked = function(item) { app.onViewItemChangeClicked(item); };

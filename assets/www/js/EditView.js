@@ -4,7 +4,7 @@ function formatDate(date)
     return fields.join('/');
 }
 
-function View(id)
+function EditView(id)
 {
     var view = this;
     var page = $("<div/>").attr({"data-role":"page",id:id});
@@ -36,18 +36,18 @@ function View(id)
     this.itemChangeClicked = function(item){};
 }
 
-View.prototype.refresh = function(items)
+EditView.prototype.refresh = function(items)
 {
     this.itemList.empty();
     items.forEach(this.add, this);
 };
 
-View.prototype.setHeader = function(text)
+EditView.prototype.setHeader = function(text)
 {
     this.header.html(text);
 };
 
-View.prototype.add = function(item)
+EditView.prototype.add = function(item)
 {
     var text = item.name + " (" + formatDate(item.date) + ")";
     var div = $("<div/>").attr('data-role','collapsible').trigger('create');
@@ -69,7 +69,7 @@ View.prototype.add = function(item)
     div.appendTo(this.itemList).collapsible();
 };
 
-View.prototype.remove = function(item)
+EditView.prototype.remove = function(item)
 {
     $("h4:contains('"+item.name+" (')").parent().remove();
 };
