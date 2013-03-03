@@ -36,18 +36,14 @@ View.prototype.add = function(item)
     $("<h4/>").append(text).appendTo(div);
     var buttons = $("<div/>").appendTo(div);
     var view = this;
-    $("<a/>").attr('data-role','button')
-             .attr('href','#')
-             .append('Remove')
-             .appendTo(buttons)
-             .click(function() { view.itemRemoveClicked(item); })
-             .buttonMarkup({inline:true,icon:'delete'});
-    $("<a/>").attr('data-role','button')
-             .attr('href','#')
-             .append('Change')
-             .appendTo(buttons)
-             .click(function() { view.itemChangeClicked(item); })
-             .buttonMarkup({inline:true,icon:'edit'});
+    $("<button/>").append('Remove')
+                  .appendTo(buttons)
+                  .click(function() { view.itemRemoveClicked(item); })
+                  .buttonMarkup({inline:true,icon:'delete'});
+    $("<button/>").append('Change')
+                  .appendTo(buttons)
+                  .click(function() { view.itemChangeClicked(item); })
+                  .buttonMarkup({inline:true,icon:'edit'});
     div.appendTo(this.itemList).collapsible();
 };
 
