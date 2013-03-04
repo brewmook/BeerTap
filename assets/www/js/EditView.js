@@ -72,5 +72,5 @@ EditView.prototype.add = function(item)
 
 EditView.prototype.remove = function(item)
 {
-    $("h4:contains('"+item.name+" (')").parent().remove();
+    this.itemList.find("h4:contains('"+item.name+" (')").parent().remove();
 };
