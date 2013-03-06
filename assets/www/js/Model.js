@@ -8,9 +8,9 @@ function keys(obj) {
     return result;
 }
 
-function Model(twitterScreenName)
+function Model(twitter)
 {
-	this.twitter = new Twitter(twitterScreenName);
+    this.twitter = twitter;
     this.items = [];
     this.itemsLoaded = function(){};
     this.itemRemoved = function(item){};
@@ -62,7 +62,7 @@ Model.prototype.add = function(name, tweet)
     if (index < 0)
     {
         var i = 0;
-        if (tweet) this.twitter.tweet("ON: " + name);
+        if (tweet) this.twitter.tweet("ON: " + name, function(data){}, function(data){});
         while (i < this.items.length && this.items[i].name < name) ++i;
         this.items.splice(i, 0, {name:name, date:new Date()});
         this.itemsLoaded();
@@ -75,7 +75,7 @@ Model.prototype.remove = function(name)
     if (index >= 0)
     {
         var item = this.items[index];
-        this.twitter.tweet("OFF: " + name);
+        this.twitter.tweet("OFF: " + name, function(data){}, function(data){});
         this.items.splice(index,1);
         this.itemRemoved(item);
     }
@@ -89,7 +89,7 @@ Model.prototype.change = function(oldname, newname)
         var newindex = this.findIndex(newname);
         if (oldindex >= 0 && newindex < 0)
         {
-            this.twitter.tweet("OFF: " + oldname + "\nON: " + newname);
+            this.twitter.tweet("OFF: " + oldname + "\nON: " + newname, function(data){}, function(data){});
             this.items.splice(oldindex,1);
             this.add(newname, false);
         }

@@ -4,7 +4,7 @@ function formatDate(date)
     return fields.join('/');
 }
 
-function EditView(id, inputDialog)
+function EditView(id, inputDialog, authoriseDialog)
 {
     var view = this;
     var page = $("<div/>").attr({"data-role":"page",id:id});
@@ -17,6 +17,12 @@ function EditView(id, inputDialog)
         .appendTo(content)
         .click(function() { view.addClicked(); })
         .buttonMarkup({icon:'plus', inline:true});
+    var authoriseButton = $("<a/>")
+        .attr({href:"#"+authoriseDialog.id,"data-role":"button"})
+        .append("Authorise")
+        .appendTo(content)
+        .click(function() { view.authoriseClicked(); })
+        .buttonMarkup({icon:'plus', inline:true});
     var itemList = $("<div/>")
         .attr({"data-role":"collapsible-set",
                "data-collapsed-icon":"arrow-r",
@@ -28,11 +34,11 @@ function EditView(id, inputDialog)
 
     this.page = page;
     this.header = h1;
-    this.addButton = addButton;
     this.itemList = itemList;
     this.inputDialogId = inputDialog.id;
 
     this.addClicked = function(){};
+    this.authoriseClicked = function(){};
     this.itemRemoveClicked = function(item){};
     this.itemChangeClicked = function(item){};
 }

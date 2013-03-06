@@ -1,7 +1,4 @@
-function oAuthConfig()
-{
-    return {
-        consumerKey: 'Xxxxxxxxxxxxxxxxxxxxxx',
-        consumerSecret: 'Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    };
-}
+var oAuthConfig = {
+    consumerKey: 'Xxxxxxxxxxxxxxxxxxxxxx',
+    consumerSecret: 'Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+};

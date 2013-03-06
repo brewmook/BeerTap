@@ -21,7 +21,8 @@
           $(document).ready(function()
           {
               app = new OnTap();
-              app.addPage(new EditPage("TheBatTaps"));
+              twitter = new Twitter("daveappendix", oAuthConfig);
+              app.addPage(new EditPage("TheBatTaps", twitter));
           });
         </script>
     </head>
