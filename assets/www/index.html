@@ -16,6 +16,8 @@
         <script type="text/javascript" src="js/EditView.js"></script>
         <script type="text/javascript" src="js/TextInputDialog.js"></script>
         <script type="text/javascript" src="js/EditPage.js"></script>
+        <script type="text/javascript" src="js/ListView.js"></script>
+        <script type="text/javascript" src="js/ListPage.js"></script>
         <script type="text/javascript" src="js/OnTap.js"></script>
         <script type="text/javascript">
           var app = null;
@@ -23,6 +25,7 @@
           {
               app = new OnTap();
               app.addPage(new EditPage("daveappendix", app.twitter));
+              app.addPage(new ListPage("TheBatTaps", app.twitter));
           });
         </script>
     </head>
