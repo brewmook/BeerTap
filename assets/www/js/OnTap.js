@@ -1,10 +1,11 @@
 function OnTap()
 {
     this.pages = [];
-    this.twitter = new Twitter("daveappendix", oAuthConfig);
+    this.twitter = new Twitter(oAuthConfig, localStorage);
     this.pinDialog = new TextInputDialog("pinDialog", "Twitter PIN", "Enter authorisation PIN:");
     var ontap = this;
     $("#twitterAuthorise").click(function() { ontap.onTwitterAuthoriseClicked(); });
+    if (this.twitter.store.screenName) $("#twitterScreenName").html(this.twitter.store.screenName);
 }
 
 OnTap.prototype.addPage = function(page)
@@ -35,10 +36,12 @@ OnTap.prototype.onTwitterAuthoriseClicked = function()
 
 OnTap.prototype.onPinSubmit = function(pin)
 {
+    var ontap = this;
     this.twitter.setAuthorisationPin(
         pin,
         function(data) {
-            alert("You're all set, sending real tweets now!");
+            alert("You're all set, sending real tweets as " + ontap.twitter.store.screenName + " now!");
+            $("#twitterScreenName").html(ontap.twitter.store.screenName);
             console.log("Twitter authorisation successful.");
             console.log(data);
         },

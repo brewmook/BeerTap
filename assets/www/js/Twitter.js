@@ -1,6 +1,6 @@
-function Twitter(screenName, oAuthConfig)
+function Twitter(oAuthConfig, store)
 {
-    this.screenName = screenName;
+    this.store = store;
 
     this.oAuth = OAuth({
         consumerKey: oAuthConfig.consumerKey,
@@ -12,9 +12,9 @@ function Twitter(screenName, oAuthConfig)
         accessTokenUrl: 'https://twitter.com/oauth/access_token',
     });
   
-    if (localStorage.accessTokenKey && localStorage.accessTokenSecret)
+    if (store.accessTokenKey && store.accessTokenSecret)
     {
-        this.oAuth.setAccessToken(localStorage.accessTokenKey, localStorage.accessTokenSecret);
+        this.oAuth.setAccessToken(store.accessTokenKey, store.accessTokenSecret);
     }
 }
 
@@ -32,7 +32,7 @@ Twitter.prototype.getUserTimeline = function(screenName, callback)
 
 Twitter.prototype.tweet = function(text, success, failure)
 {
-    var logMessage = "### TWEETED as " + this.screenName + ":\n" + text;
+    var logMessage = "### TWEETED as " + this.store.screenName + ":\n" + text;
     if (this.authorised())
     {
         this.oAuth.post("https://api.twitter.com/1.1/statuses/update.json",
@@ -57,7 +57,24 @@ Twitter.prototype.setAuthorisationPin = function(pin, success, failure)
 {
     if (this.oAuth !== undefined)
     {
+        var store = this.store;
         this.oAuth.setVerifier(pin);
-        this.oAuth.fetchAccessToken(success, failure);
+        this.oAuth.fetchAccessToken(
+            function(data) {
+                var match = /oauth_token=(.*)&oauth_token_secret=(.*)&user_id=(.*)&screen_name=(.*)/.exec(data.text);
+                if (match)
+                {
+                    store.accessTokenKey = match[1];
+                    store.accessTokenSecret = match[2];
+                    store.userId = match[3];
+                    store.screenName = match[4];
+                    success(data);
+                }
+                else
+                {
+                    failure(data);
+                }
+            },
+            failure);
     }
 };
