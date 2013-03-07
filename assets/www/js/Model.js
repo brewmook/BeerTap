@@ -27,23 +27,31 @@ Model.prototype.load = function(twitterScreenName)
 
 Model.prototype._parseTweets = function(data)
 {
-    var relevant = [];
+    var tweets = [];
     $.each(data, function(index, item)
     {
-        var text = item.text.replace(/\s+/g, ' ');
-        var matches = /OFF: *(.*) ON: *(.*)/.exec(text);
-        if (matches !== null)
-        {
-            relevant.push({off:matches[1],on:matches[2],date:item.created_at});
-        }
+        tweets.push(item);
     });
-    relevant.reverse(); // chronological order please
+    tweets.reverse(); // chronological order please
 
     var itemSet = {};
-    relevant.forEach(function(r)
+    var offOnRegExp = /(OFF|ON): *(.*)/;
+    tweets.forEach(function(tweet)
     {
-        delete itemSet[r.off];
-        itemSet[r.on] = r.date;
+        var lines = tweet.text.split('\n');
+        lines.forEach(function(line)
+        {
+            var matches = offOnRegExp.exec(line);
+            if (matches)
+            {
+                var command = matches[1];
+                var text = matches[2];
+                if (command == "OFF")
+                    delete itemSet[text];
+                else if (command == "ON")
+                    itemSet[text] = tweet.created_at;
+            }
+        });
     });
 
     var items = [];
