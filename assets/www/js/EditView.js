@@ -9,7 +9,7 @@ function EditView(id, inputDialog)
     var view = this;
     var page = $("<div/>").attr({"data-role":"page",id:id});
     var header = $("<div/>").attr("data-role","header").appendTo(page);
-    var h1 = $("<h1/>").append(id).appendTo(header);
+    var h1 = $("<h1/>").append("@"+id).appendTo(header);
     var content = $("<div/>").attr("data-role","content").appendTo(page);
     var addButton = $("<a/>")
         .attr({href:"#"+inputDialog.id,"data-role":"button"})
@@ -44,7 +44,7 @@ EditView.prototype.refresh = function(items)
 
 EditView.prototype.setHeader = function(text)
 {
-    this.header.html(text);
+    this.header.html("@" + text);
 };
 
 EditView.prototype.add = function(item)
