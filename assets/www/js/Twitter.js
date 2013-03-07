@@ -25,8 +25,9 @@ Twitter.prototype.authorised = function()
 
 Twitter.prototype.getUserTimeline = function(screenName, callback)
 {
-    //var url = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screenName+"&trim_user=t&include_rts=false&count=100&callback=?";
     var url = "js/sample.json";
+    if (this.authorised())
+        url = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screenName+"&trim_user=true&include_rts=false&count=100";
     $.getJSON(url, callback);
 };
 
