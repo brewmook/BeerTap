@@ -25,13 +25,8 @@ Model.prototype.load = function(twitterScreenName)
     });
 };
 
-Model.prototype._parseTweets = function(data)
+Model.prototype._parseTweets = function(tweets)
 {
-    var tweets = [];
-    $.each(data, function(index, item)
-    {
-        tweets.push(item);
-    });
     tweets.reverse(); // chronological order please
 
     var itemSet = {};
