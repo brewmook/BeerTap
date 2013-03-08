@@ -2,18 +2,25 @@ function ListView(id, refreshCallback)
 {
     var view = this;
     var page = $("<div/>").attr({"data-role":"page", id:id});
-    var header = $("<div/>").attr("data-role","header").appendTo(page);
+    var header = $("<div/>")
+        .attr({"data-role":"header",
+               "data-position":"fixed"})
+        .appendTo(page);
     var h1 = $("<h1/>").append("@"+id).appendTo(header);
     var content = $("<div/>").attr("data-role","content").appendTo(page);
-    var refreshButton = $("<a/>")
-        .attr({href:"#","data-role":"button"})
-        .append("Refresh")
-        .appendTo(content)
-        .click(refreshCallback)
-        .buttonMarkup({icon:'refresh', inline:true});
     var itemList = $("<ul/>")
         .attr({"data-role":"listview"})
         .appendTo(content);
+    var footer = $("<div/>")
+        .attr({"data-role":"footer",
+               "data-position":"fixed"})
+        .appendTo(page);
+    var refreshButton = $("<a/>")
+        .attr({href:"#","data-role":"button"})
+        .append("Refresh")
+        .appendTo(footer)
+        .click(refreshCallback)
+        .buttonMarkup({icon:'refresh', inline:true, mini:false});
 
     page.appendTo("body");
 
