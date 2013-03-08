@@ -26,9 +26,9 @@ ListView.prototype.refresh = function(items)
     this.itemList.empty();
     items.forEach(function(item)
     {
-        var date = [item.date.getFullYear(), item.date.getMonth()+1, item.date.getDate()].join('/');
-        var text = item.name + " (" + date + ")";
-        var li = $("<li/>").append(text).appendTo(this.itemList);
-        this.itemList.listview('refresh');
+        var date = item.date.toISOString().substring(0,10);
+        var li = $("<li/>").append(item.name).appendTo(this.itemList).css("padding-right","5em");
+        $("<span/>").attr("class","ui-li-count").append(date).appendTo(li);
     }, this);
+    this.itemList.listview('refresh');
 };
