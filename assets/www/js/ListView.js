@@ -23,6 +23,7 @@ function ListView(id, refreshCallback)
         .buttonMarkup({icon:'refresh', inline:true, mini:false});
 
     page.appendTo("body");
+    page.on("pageshow", refreshCallback);
 
     this.page = page;
     this.itemList = itemList;
