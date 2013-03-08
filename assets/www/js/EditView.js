@@ -14,10 +14,10 @@ function EditView(id, inputDialog)
         .appendTo(page);
     var h1 = $("<h1/>").append("@"+id).appendTo(header);
     var content = $("<div/>").attr("data-role","content").appendTo(page);
-    var itemList = $("<div/>")
-        .attr({"data-role":"collapsible-set",
-               "data-collapsed-icon":"arrow-r",
-               "data-expanded-icon": "arrow-d",
+    var itemList = $("<ul/>")
+        .attr({"data-role":"listview",
+               "data-split-icon":"delete",
+               "data-split-theme":"e",
                "data-inset":"false"})
         .appendTo(content);
     var footer = $("<div/>")
@@ -31,7 +31,7 @@ function EditView(id, inputDialog)
         .click(function() { view.addClicked(); })
         .buttonMarkup({icon:'plus', inline:true, mini:false});
 
-    page.appendTo("body").trigger('create');
+    page.appendTo("body");
 
     this.page = page;
     this.header = h1;
@@ -47,6 +47,7 @@ EditView.prototype.refresh = function(items)
 {
     this.itemList.empty();
     items.forEach(this.add, this);
+    this.itemList.listview('refresh');
 };
 
 EditView.prototype.setHeader = function(text)
@@ -56,27 +57,22 @@ EditView.prototype.setHeader = function(text)
 
 EditView.prototype.add = function(item)
 {
-    var text = item.name + " (" + formatDate(item.date) + ")";
-    var div = $("<div/>").attr('data-role','collapsible').trigger('create');
-    $("<h4/>").append(text).appendTo(div);
-    var buttons = $("<div/>").appendTo(div);
     var view = this;
+    var li = $("<li/>");
     $("<a/>")
-      .attr({href:"#","data-role":"button"})
+      .attr({href:"#"+this.inputDialogId})
+      .append(item.name)
+      .appendTo(li)
+      .click(function() { view.itemChangeClicked(item); });
+    $("<a/>")
+      .attr({href:"#"})
       .append('Remove')
-      .appendTo(buttons)
-      .click(function() { view.itemRemoveClicked(item); })
-      .buttonMarkup({inline:true,icon:'delete'});
-    $("<a/>")
-      .attr({href:"#"+this.inputDialogId,"data-role":"button"})
-      .append('Change')
-      .appendTo(buttons)
-      .click(function() { view.itemChangeClicked(item); })
-      .buttonMarkup({inline:true,icon:'edit'});
-    div.appendTo(this.itemList).collapsible();
+      .appendTo(li)
+      .click(function() { view.itemRemoveClicked(item); });
+    li.appendTo(this.itemList);
 };
 
 EditView.prototype.remove = function(item)
 {
-    this.itemList.find("h4:contains('"+item.name+" (')").parent().remove();
+    this.itemList.find("a").filter(function(i){return $(this).text() == item.name;}).parents("li").remove();
 };
