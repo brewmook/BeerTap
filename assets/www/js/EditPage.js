@@ -9,9 +9,10 @@ function EditPage(twitterScreenName, twitter)
     this.view.itemRemoveClicked = function(item) { app.onViewItemRemoveClicked(item); };
     this.view.itemChangeClicked = function(item) { app.onViewItemChangeClicked(item); };
 
-    this.model = new Model(twitter);
-    this.model.itemsLoaded = function() { app.onModelItemsLoaded(); };
-    this.model.itemRemoved = function(item) { app.onModelItemRemoved(item); };
+    this.model = new Model(twitter, {
+            itemsLoaded: function() { app.view.refresh(app.model.items); },
+            itemRemoved: function(item) { app.view.remove(item); }
+        });
     this.model.load(twitterScreenName);
   
     this.id = twitterScreenName;
@@ -33,14 +34,4 @@ EditPage.prototype.onViewItemChangeClicked = function(item)
     var model = this.model;
     var name = item.name;
     this.newTextDialog.show(name, function(newText) { model.change(name, newText); });
-};
-
-EditPage.prototype.onModelItemsLoaded = function()
-{
-    this.view.refresh(this.model.items);
-};
-
-EditPage.prototype.onModelItemRemoved = function(item)
-{
-    this.view.remove(item);
 };

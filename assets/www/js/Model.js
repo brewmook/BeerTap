@@ -8,12 +8,15 @@ function keys(obj) {
     return result;
 }
 
-function Model(twitter)
+function Model(twitter, callbacks)
 {
     this.twitter = twitter;
     this.items = [];
-    this.itemsLoaded = function(){};
-    this.itemRemoved = function(item){};
+    if (callbacks)
+    {
+        this.itemsLoaded = callbacks.itemsLoaded || function(){};
+        this.itemRemoved = callbacks.itemRemoved || function(item){};
+    }
 }
 
 Model.prototype.load = function(twitterScreenName)
