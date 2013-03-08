@@ -8,21 +8,28 @@ function EditView(id, inputDialog)
 {
     var view = this;
     var page = $("<div/>").attr({"data-role":"page",id:id});
-    var header = $("<div/>").attr("data-role","header").appendTo(page);
+    var header = $("<div/>")
+        .attr({"data-role":"header",
+               "data-position":"fixed"})
+        .appendTo(page);
     var h1 = $("<h1/>").append("@"+id).appendTo(header);
     var content = $("<div/>").attr("data-role","content").appendTo(page);
-    var addButton = $("<a/>")
-        .attr({href:"#"+inputDialog.id,"data-role":"button"})
-        .append("Add new")
-        .appendTo(content)
-        .click(function() { view.addClicked(); })
-        .buttonMarkup({icon:'plus', inline:true});
     var itemList = $("<div/>")
         .attr({"data-role":"collapsible-set",
                "data-collapsed-icon":"arrow-r",
                "data-expanded-icon": "arrow-d",
                "data-inset":"false"})
         .appendTo(content);
+    var footer = $("<div/>")
+        .attr({"data-role":"footer",
+               "data-position":"fixed"})
+        .appendTo(page);
+    var addButton = $("<a/>")
+        .attr({href:"#"+inputDialog.id,"data-role":"button"})
+        .append("Add new")
+        .appendTo(footer)
+        .click(function() { view.addClicked(); })
+        .buttonMarkup({icon:'plus', inline:true, mini:false});
 
     page.appendTo("body").trigger('create');
 
