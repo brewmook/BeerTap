@@ -2,7 +2,7 @@ function EditPage(twitterScreenName, twitter)
 {
     var app = this;
 
-    this.newTextDialog = new TextInputDialog("newTextDialog", "New text", "Enter new text:");
+    this.newTextDialog = new TextInputDialog("newTextDialog");
 
     this.view = new EditView(twitterScreenName, this.newTextDialog);
     this.view.addClicked = function() { app.onViewAddClicked(); };
@@ -21,7 +21,7 @@ function EditPage(twitterScreenName, twitter)
 EditPage.prototype.onViewAddClicked = function()
 {
     var model = this.model;
-    this.newTextDialog.show('', function(newText) { model.add(newText, true); });
+    this.newTextDialog.show("Add Item", "Enter new text:", '', function(newText) { model.add(newText, true); });
 };
 
 EditPage.prototype.onViewItemRemoveClicked = function(item)
@@ -33,5 +33,5 @@ EditPage.prototype.onViewItemChangeClicked = function(item)
 {
     var model = this.model;
     var name = item.name;
-    this.newTextDialog.show(name, function(newText) { model.change(name, newText); });
+    this.newTextDialog.show("Change Item", "Enter new text:", name, function(newText) { model.change(name, newText); });
 };

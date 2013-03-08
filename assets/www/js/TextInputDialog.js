@@ -1,34 +1,41 @@
-function TextInputDialog(id, title, prompt)
+function TextInputDialog(id)
 {
     var dialog = $("<div/>").attr({"data-role":"dialog", id:id});
     var header = $("<div/>").attr("data-role","header").appendTo(dialog);
-    var h1 = $("<h1/>").append(title).appendTo(header);
+    var h1 = $("<h1/>").appendTo(header);
     var content = $("<div/>").attr("data-role","content").appendTo(dialog);
-    var label = $("<label/>").attr("for","input").append(prompt).appendTo(content);
-    var input = $("<input/>").attr({type:"text",name:"name"}).appendTo(content);
-    var submit = $("<a/>")
-        .attr({href:"#","data-role":"button","data-rel":"back"})
-        .append("Ok")
-        .appendTo(content)
-        .buttonMarkup({inline:true,icon:'check'});
+    var label = $("<label/>").attr("for","input").appendTo(content);
+    var input = $("<input/>").attr({type:"text",name:"input"}).appendTo(content);
+    var buttongroup = $("<div/>").attr("class","ui-grid-a").appendTo(content);
+    var left = $("<div/>").attr("class","ui-block-a").appendTo(buttongroup);
+    var right = $("<div/>").attr("class","ui-block-b").appendTo(buttongroup);
     var cancel = $("<a/>")
         .attr({href:"#","data-role":"button","data-rel":"back"})
         .append("Cancel")
-        .appendTo(content)
-        .buttonMarkup({inline:true,icon:'delete'});
+        .appendTo(left)
+        .buttonMarkup({icon:'delete'});
+    var submit = $("<a/>")
+        .attr({href:"#","data-role":"button","data-rel":"back","data-theme":"e"})
+        .append("Ok")
+        .appendTo(right)
+        .buttonMarkup({icon:'check'});
 
     dialog.appendTo("body").trigger('create');
   
     this.id = id;
+    this.title = h1;
+    this.label = label;
     this.dialog = dialog;
     this.input = input;
     this.submit = submit;
 }
 
-TextInputDialog.prototype.show = function(text, callback)
+TextInputDialog.prototype.show = function(title, prompt, text, callback)
 {
     var input = this.input;
     var dialog = this.dialog;
+    this.title.html(title);
+    this.label.html(prompt);
     input.val(text);
     this.submit.unbind('click').click(function()
     {
