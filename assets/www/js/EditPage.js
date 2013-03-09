@@ -3,14 +3,19 @@ function EditPage(twitterScreenName, twitter)
     var app = this;
 
     this.newTextDialog = new TextInputDialog("newTextDialog");
-
-    this.view = new EditView(twitterScreenName, this.newTextDialog);
-    this.view.addClicked = function() { app.onViewAddClicked(); };
-    this.view.itemRemoveClicked = function(item) { app.onViewItemRemoveClicked(item); };
-    this.view.itemChangeClicked = function(item) { app.onViewItemChangeClicked(item); };
+    
+    var viewCallbacks = {
+        addHref:       "#"+this.newTextDialog.id,
+        addClicked:    function() { app.onViewAddClicked(); },
+        changeHref:    "#"+this.newTextDialog.id,
+        changeClicked: function(item) { app.onViewItemChangeClicked(item); },
+        removeHref:    "#",
+        removeClicked: function(item) { app.onViewItemRemoveClicked(item); },
+    };
+    this.view = new EditView(twitterScreenName, viewCallbacks);
 
     this.model = new Model(twitter, {
-            itemsLoaded: function() { app.view.refresh(app.model.items); },
+            itemsLoaded: function() { app.view.refresh(app.model.items, viewCallbacks); },
             itemRemoved: function(item) { app.view.remove(item); }
         });
     this.model.load(twitterScreenName);

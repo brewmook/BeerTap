@@ -4,7 +4,7 @@ function formatDate(date)
     return fields.join('/');
 }
 
-function EditView(id, inputDialog)
+function EditView(id, callbacks)
 {
     var view = this;
     var page = $("<div/>").attr({"data-role":"page",id:id});
@@ -25,10 +25,10 @@ function EditView(id, inputDialog)
                "data-position":"fixed"})
         .appendTo(page);
     var addButton = $("<a/>")
-        .attr({href:"#"+inputDialog.id,"data-role":"button"})
+        .attr({href:callbacks.addHref,"data-role":"button"})
         .append("Add new")
         .appendTo(footer)
-        .click(function() { view.addClicked(); })
+        .click(callbacks.addClicked)
         .buttonMarkup({icon:'plus', inline:true, mini:false});
 
     page.appendTo("body");
@@ -36,17 +36,13 @@ function EditView(id, inputDialog)
     this.page = page;
     this.header = h1;
     this.itemList = itemList;
-    this.inputDialogId = inputDialog.id;
-
-    this.addClicked = function(){};
-    this.itemRemoveClicked = function(item){};
-    this.itemChangeClicked = function(item){};
 }
 
-EditView.prototype.refresh = function(items)
+EditView.prototype.refresh = function(items, callbacks)
 {
+    var view = this;
     this.itemList.empty();
-    items.forEach(this.add, this);
+    items.forEach(function(item){ view.add(item, callbacks); });
     this.itemList.listview('refresh');
 };
 
@@ -55,20 +51,19 @@ EditView.prototype.setHeader = function(text)
     this.header.html("@" + text);
 };
 
-EditView.prototype.add = function(item)
+EditView.prototype.add = function(item, callbacks)
 {
-    var view = this;
     var li = $("<li/>");
     $("<a/>")
-      .attr({href:"#"+this.inputDialogId})
+      .attr({href:callbacks.changeHref})
       .append(item.name)
       .appendTo(li)
-      .click(function() { view.itemChangeClicked(item); });
+      .click(function() { callbacks.changeClicked(item); });
     $("<a/>")
-      .attr({href:"#"})
+      .attr({href:callbacks.removeHref})
       .append('Remove')
       .appendTo(li)
-      .click(function() { view.itemRemoveClicked(item); });
+      .click(function() { callbacks.removeClicked(item); });
     li.appendTo(this.itemList);
 };
 
