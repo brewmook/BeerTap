@@ -67,11 +67,18 @@ Model.prototype.add = function(name, tweet)
     var index = this.findIndex(name);
     if (index < 0)
     {
-        var i = 0;
-        if (tweet) this.twitter.tweet("ON: " + name, function(data){}, function(data){});
-        while (i < this.items.length && this.items[i].name < name) ++i;
-        this.items.splice(i, 0, {name:name, date:new Date()});
-        this.itemsLoaded();
+        var model = this;
+        function success()
+        {
+            var i = 0;
+            while (i < model.items.length && model.items[i].name < name) ++i;
+            model.items.splice(i, 0, {name:name, date:new Date()});
+            model.itemsLoaded();
+        }
+        if (tweet)
+            this.twitter.tweet("ON: " + name, success, function(data){});
+        else
+            success();
     }
 };
 
@@ -80,10 +87,14 @@ Model.prototype.remove = function(name)
     var index = this.findIndex(name);
     if (index >= 0)
     {
-        var item = this.items[index];
-        this.twitter.tweet("OFF: " + name, function(data){}, function(data){});
-        this.items.splice(index,1);
-        this.itemRemoved(item);
+        var model = this;
+        function success()
+        {
+            var item = model.items[index];
+            model.items.splice(index,1);
+            model.itemRemoved(item);
+        }
+        this.twitter.tweet("OFF: " + name, success, function(data){});
     }
 };
 
@@ -95,9 +106,13 @@ Model.prototype.change = function(oldname, newname)
         var newindex = this.findIndex(newname);
         if (oldindex >= 0 && newindex < 0)
         {
-            this.twitter.tweet("OFF: " + oldname + "\nON: " + newname, function(data){}, function(data){});
-            this.items.splice(oldindex,1);
-            this.add(newname, false);
+            var model = this;
+            function success()
+            {
+                model.items.splice(oldindex,1);
+                model.add(newname, false);
+            }
+            this.twitter.tweet("OFF: " + oldname + "\nON: " + newname, success, function(data){});
         }
     }
 };
