@@ -33,6 +33,7 @@ Twitter.prototype.getUserTimeline = function(screenName, callback)
     else
     {
         console.log('### Twitter not authorised, faking it!');
+        $.mobile.loading( 'show' );
         setTimeout(function() { $.getJSON("js/sample.json", callback); }, 1000);
     }
 };
@@ -50,8 +51,12 @@ Twitter.prototype.tweet = function(text, success, failure)
     else
     {
         console.log('### Twitter not authorised, faking it!');
-        console.log(logMessage);
-        success('FAKE');
+        $.mobile.loading('show');
+        setTimeout(function() {
+            $.mobile.loading('hide');
+            console.log(logMessage);
+            success('FAKE');
+        }, 1000);
     }
 };
 
