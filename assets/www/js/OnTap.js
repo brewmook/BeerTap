@@ -2,7 +2,7 @@ function OnTap()
 {
     this.pages = [];
     this.twitter = new Twitter(oAuthConfig, localStorage);
-    this.pinDialog = new TextInputDialog("pinDialog", "Twitter PIN", "Enter authorisation PIN:");
+    this.pinDialog = new TextInputDialog("pinDialog");
     var ontap = this;
     $("#twitterAuthorise").click(function() { ontap.onTwitterAuthoriseClicked(); });
     if (this.twitter.store.screenName) $("#twitterScreenName").html(this.twitter.store.screenName);
@@ -23,7 +23,7 @@ OnTap.prototype.onTwitterAuthoriseClicked = function()
     this.twitter.requestAuthorisationPinURL(
         function(url) {
             console.log("Success - sending user to "+url);
-            ontap.pinDialog.show(url, function(pin) { ontap.onPinSubmit(pin); });
+            ontap.pinDialog.show("Twitter PIN", "Enter authorisation PIN:", url, function(pin) { ontap.onPinSubmit(pin); });
             alert("Go to the URL shown in the PIN dialog, authorise with Twitter, then come back and enter the PIN instead of the URL.");
         },
         function(data) {
