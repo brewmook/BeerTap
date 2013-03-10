@@ -17,15 +17,12 @@ function EditPage(twitterScreenName, twitter, parentPage)
     };
 
     var modelCallbacks = {
-        itemsLoaded: function()
-        {
-            app.view.refresh(app.model.items, viewCallbacks);
-        },
+        itemsLoaded: function() { app.view.refresh(app.model.items, viewCallbacks); },
         itemRemoved: function(item) { app.view.remove(item); }
     };
 
     this.view = new EditView(twitterScreenName, viewCallbacks);
-    this.model = new Model(twitter, modelCallbacks);
+    this.model = new Model(new TwitterConfirmer(twitter, this.view.page), modelCallbacks);
 
     this.view.page.on("pageshow", function( event, ui )
     {
@@ -38,7 +35,13 @@ function EditPage(twitterScreenName, twitter, parentPage)
 EditPage.prototype.onViewAddClicked = function()
 {
     var model = this.model;
-    this.newTextDialog.show("Add Item", "Enter new text:", '', function(newText) { model.add(newText, true); });
+    function callback(newText)
+    {
+        // Timeout is here to give page chance to change back from the TextInputDialog
+        // so that the twitter confirmer dialog shows properly.
+        setTimeout(function() { model.add(newText, true); }, 200);
+    }
+    this.newTextDialog.show("Add Item", "Enter new text:", '', callback);
 };
 
 EditPage.prototype.onViewItemRemoveClicked = function(item)
@@ -50,5 +53,11 @@ EditPage.prototype.onViewItemChangeClicked = function(item)
 {
     var model = this.model;
     var name = item.name;
-    this.newTextDialog.show("Change Item", "Enter new text:", name, function(newText) { model.change(name, newText); });
+    function callback(newText)
+    {
+        // Timeout is here to give page chance to change back from the TextInputDialog
+        // so that the twitter confirmer dialog shows properly.
+        setTimeout(function() { model.change(name, newText); }, 200);
+    }
+    this.newTextDialog.show("Change Item", "Enter new text:", name, callback);
 };
