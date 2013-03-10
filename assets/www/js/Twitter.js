@@ -25,10 +25,16 @@ Twitter.prototype.authorised = function()
 
 Twitter.prototype.getUserTimeline = function(screenName, callback)
 {
-    var url = "js/sample.json";
     if (this.authorised())
-        url = "https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screenName+"&trim_user=true&include_rts=false&count=100";
-    $.getJSON(url, callback);
+    {
+        $.getJSON("https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screenName+"&trim_user=true&include_rts=false&count=100",
+                  callback);
+    }
+    else
+    {
+        console.log('### Twitter not authorised, faking it!');
+        setTimeout(function() { $.getJSON("js/sample.json", callback); }, 1000);
+    }
 };
 
 Twitter.prototype.tweet = function(text, success, failure)
