@@ -4,12 +4,14 @@ function OnTap(mainPage)
     this.pages = mainPage.find(".pages");
     this.twitter = new Twitter(oAuthConfig, localStorage);
     this.pinDialog = new TextInputDialog("pinDialog");
+    this.followDialog = new TextInputDialog("followDialog");
     var ontap = this;
     $("#twitterAuthorise").click(function() { ontap.onTwitterAuthoriseClicked(); });
     if (this.twitter.store.screenName) $("#twitterScreenName").html(this.twitter.store.screenName);
 
     this.pages.find(".editableDivider").hide();
     this.pages.find(".followingDivider").hide();
+    this.main.find(".follow").click(function() { ontap.followDialog.show("Follow", "Twitter user", "@", function(user) { ontap.addPage(user); });})
 
     $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
     $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });
@@ -20,6 +22,10 @@ OnTap.prototype.addPage = function(twitterScreenName)
 {
     var page;
     var after;
+
+    if (twitterScreenName[0] == "@")
+        twitterScreenName = twitterScreenName.substring(1);
+
     if (twitterScreenName == this.twitter.authorisedScreenName())
     {
         page = new EditPage(twitterScreenName, this.twitter, this.main);

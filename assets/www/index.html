@@ -22,12 +22,7 @@
         <script type="text/javascript" src="js/OnTap.js"></script>
         <script type="text/javascript">
           var app = null;
-          $(document).ready(function()
-          {
-              app = new OnTap($("#main"));
-              app.addPage("daveappendix");
-              app.addPage("TheBatTaps");
-          });
+          $(document).ready(function() { app = new OnTap($("#main")); });
         </script>
     </head>
     <body>
@@ -40,6 +35,7 @@
             </ul>
           </div>
           <div data-role="footer" data-position="fixed">
+            <a class="follow" href="#followDialog" data-role="button" data-icon="bird" data-inline="true" data-mini="false">Follow</a>
             <a href="#settings" data-role="button" data-icon="gear" data-inline="true" data-mini="false">Settings</a>
           </div>
         </div>
