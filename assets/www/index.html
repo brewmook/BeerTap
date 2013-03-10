@@ -24,9 +24,9 @@
           var app = null;
           $(document).ready(function()
           {
-              app = new OnTap();
-              app.addPage(new EditPage("daveappendix", app.twitter, $("#main")));
-              app.addPage(new ListPage("TheBatTaps", app.twitter));
+              app = new OnTap($("#main"));
+              app.addPage("daveappendix");
+              app.addPage("TheBatTaps");
           });
         </script>
     </head>
@@ -34,7 +34,9 @@
         <div id="main" data-role="page">
           <div data-role="header" data-position="fixed"><h1>OnTap</h1></div>
           <div data-role="content">
-            <ul id="pages" data-role="listview">
+            <ul class="pages" data-role="listview">
+                <li class="editableDivider" data-role="list-divider">Editable</li>
+                <li class="followingDivider" data-role="list-divider">Following</li>
             </ul>
           </div>
           <div data-role="footer" data-position="fixed">

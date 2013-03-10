@@ -90,3 +90,8 @@ Twitter.prototype.setAuthorisationPin = function(pin, success, failure)
             failure);
     }
 };
+
+Twitter.prototype.authorisedScreenName = function()
+{
+    return this.store.screenName;
+}

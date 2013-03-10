@@ -1,23 +1,40 @@
-function OnTap()
+function OnTap(mainPage)
 {
-    this.pages = [];
+    this.main = mainPage;
+    this.pages = mainPage.find(".pages");
     this.twitter = new Twitter(oAuthConfig, localStorage);
     this.pinDialog = new TextInputDialog("pinDialog");
     var ontap = this;
     $("#twitterAuthorise").click(function() { ontap.onTwitterAuthoriseClicked(); });
     if (this.twitter.store.screenName) $("#twitterScreenName").html(this.twitter.store.screenName);
 
+    this.pages.find(".editableDivider").hide();
+    this.pages.find(".followingDivider").hide();
+
     $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
     $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });
     $(document).ajaxError(function() { alert("Error fetching data"); });
 }
 
-OnTap.prototype.addPage = function(page)
+OnTap.prototype.addPage = function(twitterScreenName)
 {
-    this.pages.push(page);
-    var li = $("<li/>").appendTo("#pages");
+    var page;
+    var after;
+    if (twitterScreenName == this.twitter.authorisedScreenName())
+    {
+        page = new EditPage(twitterScreenName, this.twitter, this.main);
+        after = this.pages.find(".editableDivider");
+    }
+    else
+    {
+        page = new ListPage(twitterScreenName, this.twitter);
+        after = this.pages.find(".followingDivider");
+    }
+
+    var li = $("<li/>").insertAfter(after);
     var a = $("<a/>").attr("href","#"+page.id).append("@"+page.id).appendTo(li);
-    $("#pages").listview('refresh');
+    after.show();
+    $(this.pages).listview('refresh');
 };
 
 OnTap.prototype.onTwitterAuthoriseClicked = function()
