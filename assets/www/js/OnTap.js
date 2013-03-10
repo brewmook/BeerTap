@@ -6,6 +6,10 @@ function OnTap()
     var ontap = this;
     $("#twitterAuthorise").click(function() { ontap.onTwitterAuthoriseClicked(); });
     if (this.twitter.store.screenName) $("#twitterScreenName").html(this.twitter.store.screenName);
+
+    $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
+    $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });
+    $(document).ajaxError(function() { alert("Error fetching data"); });
 }
 
 OnTap.prototype.addPage = function(page)
