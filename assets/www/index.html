@@ -24,7 +24,7 @@
           $(document).ready(function()
           {
               app = new OnTap();
-              app.addPage(new EditPage("daveappendix", app.twitter));
+              app.addPage(new EditPage("daveappendix", app.twitter, $("#main")));
               app.addPage(new ListPage("TheBatTaps", app.twitter));
           });
         </script>

@@ -1,9 +1,3 @@
-function formatDate(date)
-{
-    var fields = [date.getFullYear(), date.getMonth()+1, date.getDate()];
-    return fields.join('/');
-}
-
 function EditView(id, callbacks)
 {
     var view = this;
@@ -24,6 +18,12 @@ function EditView(id, callbacks)
         .attr({"data-role":"footer",
                "data-position":"fixed"})
         .appendTo(page);
+    var refreshButton = $("<a/>")
+        .attr({href:callbacks.refreshHref,"data-role":"button"})
+        .append("Refresh")
+        .appendTo(footer)
+        .click(callbacks.refreshClicked)
+        .buttonMarkup({icon:'refresh', inline:true, mini:false});
     var addButton = $("<a/>")
         .attr({href:callbacks.addHref,"data-role":"button"})
         .append("Add new")

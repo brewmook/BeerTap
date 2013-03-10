@@ -1,25 +1,37 @@
-function EditPage(twitterScreenName, twitter)
+function EditPage(twitterScreenName, twitter, parentPage)
 {
     var app = this;
 
     this.newTextDialog = new TextInputDialog("newTextDialog");
     
+    var newTextHref = "#"+this.newTextDialog.id;
     var viewCallbacks = {
-        addHref:       "#"+this.newTextDialog.id,
+        addHref:       newTextHref,
         addClicked:    function() { app.onViewAddClicked(); },
-        changeHref:    "#"+this.newTextDialog.id,
+        changeHref:    newTextHref,
         changeClicked: function(item) { app.onViewItemChangeClicked(item); },
         removeHref:    "#",
         removeClicked: function(item) { app.onViewItemRemoveClicked(item); },
+        refreshHref:    "#",
+        refreshClicked: function() { app.model.load(twitterScreenName); }
     };
-    this.view = new EditView(twitterScreenName, viewCallbacks);
 
-    this.model = new Model(twitter, {
-            itemsLoaded: function() { app.view.refresh(app.model.items, viewCallbacks); },
-            itemRemoved: function(item) { app.view.remove(item); }
-        });
-    this.model.load(twitterScreenName);
-  
+    var modelCallbacks = {
+        itemsLoaded: function()
+        {
+            app.view.refresh(app.model.items, viewCallbacks);
+        },
+        itemRemoved: function(item) { app.view.remove(item); }
+    };
+
+    this.view = new EditView(twitterScreenName, viewCallbacks);
+    this.model = new Model(twitter, modelCallbacks);
+
+    this.view.page.on("pageshow", function( event, ui )
+    {
+        if (parentPage[0] == ui.prevPage[0]) viewCallbacks.refreshClicked();
+    });
+
     this.id = twitterScreenName;
 }
 
