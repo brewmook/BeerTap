@@ -4,8 +4,8 @@ function TextInputDialog(id)
     var header = $("<div/>").attr("data-role","header").appendTo(dialog);
     var h1 = $("<h1/>").appendTo(header);
     var content = $("<div/>").attr("data-role","content").appendTo(dialog);
-    var label = $("<label/>").attr("for","input").appendTo(content);
-    var input = $("<input/>").attr({type:"text",name:"input"}).appendTo(content);
+    var label = $("<label/>").attr("for",id+"Input").appendTo(content);
+    var input = $("<input/>").attr({type:"text",id:id+"Input"}).appendTo(content);
     var buttongroup = $("<div/>").attr("class","ui-grid-a").appendTo(content);
     var left = $("<div/>").attr("class","ui-block-a").appendTo(buttongroup);
     var right = $("<div/>").attr("class","ui-block-b").appendTo(buttongroup);
