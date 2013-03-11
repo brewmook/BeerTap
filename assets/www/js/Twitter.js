@@ -5,13 +5,9 @@ function Twitter(oAuthConfig, store)
     this.oAuth = OAuth({
         consumerKey: oAuthConfig.consumerKey,
         consumerSecret: oAuthConfig.consumerSecret,
-        callbackUrl: 'oob',
         enablePrivilege: false,
-        requestTokenUrl: 'https://api.twitter.com/oauth/request_token',
-        authorizationUrl: 'https://twitter.com/oauth/authorize',
-        accessTokenUrl: 'https://twitter.com/oauth/access_token',
     });
-  
+
     if (store.accessTokenKey && store.accessTokenSecret)
     {
         this.oAuth.setAccessToken(store.accessTokenKey, store.accessTokenSecret);
@@ -60,36 +56,14 @@ Twitter.prototype.tweet = function(text, success, failure)
     }
 };
 
-Twitter.prototype.requestAuthorisationPinURL = function(success, failure)
+Twitter.prototype.setAuthorisation = function(accessTokenKey, accessTokenSecret, userId, screenName)
 {
-    this.oAuth.fetchRequestToken(success, failure);
-};
-
-Twitter.prototype.setAuthorisationPin = function(pin, success, failure)
-{
-    if (this.oAuth !== undefined)
-    {
-        var store = this.store;
-        this.oAuth.setVerifier(pin);
-        this.oAuth.fetchAccessToken(
-            function(data) {
-                var match = /oauth_token=(.*)&oauth_token_secret=(.*)&user_id=(.*)&screen_name=(.*)/.exec(data.text);
-                if (match)
-                {
-                    store.accessTokenKey = match[1];
-                    store.accessTokenSecret = match[2];
-                    store.userId = match[3];
-                    store.screenName = match[4];
-                    success(data);
-                }
-                else
-                {
-                    failure(data);
-                }
-            },
-            failure);
-    }
-};
+    this.store.accessTokenKey = accessTokenKey;
+    this.store.accessTokenSecret = accessTokenSecret;
+    this.store.userId = userId;
+    this.store.screenName = screenName;
+    this.oAuth.setAccessToken(accessTokenKey, accessTokenSecret);
+}
 
 Twitter.prototype.authorisedScreenName = function()
 {
