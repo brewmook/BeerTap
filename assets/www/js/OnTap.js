@@ -11,7 +11,19 @@ function OnTap(mainPage)
 
     this.pages.find(".editableDivider").hide();
     this.pages.find(".followingDivider").hide();
-    this.main.find(".follow").click(function() { ontap.followDialog.show("Follow", "Twitter user", "@", function(user) { ontap.addPage(user); });})
+    this.main.find(".follow").click(function() {
+        ontap.followDialog.show("Follow", "Twitter user", "@", function(user) {
+            ontap.following.push(user);
+            localStorage.setItem('following', JSON.stringify(ontap.following));
+            ontap.addPage(user);
+        });
+    });
+
+    this.following = JSON.parse(localStorage.getItem('following')) || [];
+    this.following.forEach(function(follow)
+    {
+        ontap.addPage(follow);
+    });
 
     $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
     $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });
