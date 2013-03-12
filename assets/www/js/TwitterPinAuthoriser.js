@@ -38,8 +38,8 @@ TwitterPinAuthoriser.prototype.onPinSubmit = function(twitter, oAuth, pin)
     
     function success(data)
     {
-        alert("You're all set, sending real tweets as " + twitter.store.screenName + " now!");
-        $("#twitterScreenName").text(twitter.store.screenName);
+        alert("You're all set, sending real tweets as " + twitter.authorisedScreenName() + " now!");
+        $("#twitterScreenName").text(twitter.authorisedScreenName());
         console.log("Twitter authorisation successful.");
         console.log(data);
     }

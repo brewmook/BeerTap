@@ -7,7 +7,7 @@ function OnTap(mainPage)
     this.twitterPinAuthoriser = new TwitterPinAuthoriser(oAuthConfig);
     var ontap = this;
     $("#twitterAuthorise").click(function() { ontap.twitterPinAuthoriser.authorise(ontap.twitter); });
-    if (this.twitter.store.screenName) $("#twitterScreenName").html(this.twitter.store.screenName);
+    if (this.twitter.authorisedScreenName()) $("#twitterScreenName").html(this.twitter.authorisedScreenName());
 
     this.pages.find(".editableDivider").hide();
     this.pages.find(".followingDivider").hide();
