@@ -23,7 +23,7 @@
         <script type="text/javascript" src="js/OnTap.js"></script>
         <script type="text/javascript">
           var app = null;
-          $(document).ready(function() { app = new OnTap($("#main")); });
+          $(document).ready(function() { app = new OnTap($("#main"), $("#settings")); });
         </script>
     </head>
     <body>
@@ -47,8 +47,8 @@
               <div data-role="collapsible" id="twitter-settings">
                 <h4>Twitter</h4>
                 <div>
-                  <a id="twitterAuthorise" href="#pinDialog" data-role="button" data-icon="bird">Authorise</a>
                   <p>Screen Name: <span id="twitterScreenName"></span></p>
+                  <div class="authorisers" />
                 </div>
               </div>
             </div>

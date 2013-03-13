@@ -1,12 +1,11 @@
-function OnTap(mainPage)
+function OnTap(mainPage, settingsPage)
 {
+    var ontap = this;
     this.main = mainPage;
     this.pages = mainPage.find(".pages");
     this.twitter = new Twitter(oAuthConfig, localStorage);
     this.followDialog = new TextInputDialog("followDialog");
-    this.twitterPinAuthoriser = new TwitterPinAuthoriser(oAuthConfig);
-    var ontap = this;
-    $("#twitterAuthorise").click(function() { ontap.twitterPinAuthoriser.authorise(ontap.twitter); });
+    this.twitterPinAuthoriser = new TwitterPinAuthoriser(this.twitter, oAuthConfig, settingsPage.find(".authorisers"));
     if (this.twitter.authorisedScreenName()) $("#twitterScreenName").html(this.twitter.authorisedScreenName());
 
     this.pages.find(".editableDivider").hide();
