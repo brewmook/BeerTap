@@ -1,6 +1,6 @@
-function OnTap(mainPage, settingsPage)
+function BeerTap(mainPage, settingsPage)
 {
-    var ontap = this;
+    var beertap = this;
     this.main = mainPage;
     this.pages = mainPage.find(".pages");
     this.twitter = new Twitter(oAuthConfig, localStorage);
@@ -12,17 +12,17 @@ function OnTap(mainPage, settingsPage)
     this.pages.find(".editableDivider").hide();
     this.pages.find(".followingDivider").hide();
     this.main.find(".follow").click(function() {
-        ontap.followDialog.show("Follow", "Twitter user", "@", function(user) {
-            ontap.following.push(user);
-            localStorage.setItem('following', JSON.stringify(ontap.following));
-            ontap.addPage(user);
+        beertap.followDialog.show("Follow", "Twitter user", "@", function(user) {
+            beertap.following.push(user);
+            localStorage.setItem('following', JSON.stringify(beertap.following));
+            beertap.addPage(user);
         });
     });
 
     this.following = JSON.parse(localStorage.getItem('following')) || [];
     this.following.forEach(function(follow)
     {
-        ontap.addPage(follow);
+        beertap.addPage(follow);
     });
 
     $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
@@ -30,7 +30,7 @@ function OnTap(mainPage, settingsPage)
     $(document).ajaxError(function() { alert("Error fetching data"); });
 }
 
-OnTap.prototype.addPage = function(twitterScreenName)
+BeerTap.prototype.addPage = function(twitterScreenName)
 {
     var page;
     var after;

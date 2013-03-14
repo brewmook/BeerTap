@@ -9,7 +9,7 @@ function TwitterBrowserAuthoriser(twitter, oAuthConfig, parentDiv)
 
 TwitterBrowserAuthoriser.prototype.authorise = function(twitter)
 {
-    var callbackUrl = 'https://github.com/coolhandmook/OnTap';
+    var callbackUrl = 'https://github.com/coolhandmook/BeerTap';
     var oAuth = OAuth({
         consumerKey: this.oAuthConfig.consumerKey,
         consumerSecret: this.oAuthConfig.consumerSecret,

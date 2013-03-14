@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>OnTap</title>
+        <title>BeerTap</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
@@ -21,14 +21,14 @@
         <script type="text/javascript" src="js/EditPage.js"></script>
         <script type="text/javascript" src="js/ListView.js"></script>
         <script type="text/javascript" src="js/ListPage.js"></script>
-        <script type="text/javascript" src="js/OnTap.js"></script>
+        <script type="text/javascript" src="js/BeerTap.js"></script>
         <script type="text/javascript" src="cordova-2.4.0.js"></script>
         <script type="text/javascript">
           var cordovaReady = false;
           var documentReady = false;
           var app = null;
 
-          function tryInitialise() { if (cordovaReady && documentReady) app = new OnTap($("#main"), $("#settings")); }
+          function tryInitialise() { if (cordovaReady && documentReady) app = new BeerTap($("#main"), $("#settings")); }
           function onDeviceReady() { cordovaReady = true; tryInitialise(); }
           function onDocumentReady() { documentReady = true; tryInitialise(); }
 
@@ -38,7 +38,7 @@
     </head>
     <body>
         <div id="main" data-role="page">
-          <div data-role="header" data-position="fixed"><h1>OnTap</h1></div>
+          <div data-role="header" data-position="fixed"><h1>BeerTap</h1></div>
           <div data-role="content">
             <ul class="pages" data-role="listview">
                 <li class="editableDivider" data-role="list-divider">Editable</li>
