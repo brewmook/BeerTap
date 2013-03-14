@@ -5,6 +5,7 @@ function OnTap(mainPage, settingsPage)
     this.pages = mainPage.find(".pages");
     this.twitter = new Twitter(oAuthConfig, localStorage);
     this.followDialog = new TextInputDialog("followDialog");
+    this.twitterBrowserAuthoriser = new TwitterBrowserAuthoriser(this.twitter, oAuthConfig, settingsPage.find(".authorisers"));
     this.twitterPinAuthoriser = new TwitterPinAuthoriser(this.twitter, oAuthConfig, settingsPage.find(".authorisers"));
     if (this.twitter.authorisedScreenName()) $("#twitterScreenName").html(this.twitter.authorisedScreenName());
 

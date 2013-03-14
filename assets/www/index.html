@@ -14,6 +14,7 @@
         <script type="text/javascript" src="js/Twitter.js"></script>
         <script type="text/javascript" src="js/TwitterConfirmer.js"></script>
         <script type="text/javascript" src="js/TwitterPinAuthoriser.js"></script>
+        <script type="text/javascript" src="js/TwitterBrowserAuthoriser.js"></script>
         <script type="text/javascript" src="js/Model.js"></script>
         <script type="text/javascript" src="js/EditView.js"></script>
         <script type="text/javascript" src="js/TextInputDialog.js"></script>
@@ -21,9 +22,18 @@
         <script type="text/javascript" src="js/ListView.js"></script>
         <script type="text/javascript" src="js/ListPage.js"></script>
         <script type="text/javascript" src="js/OnTap.js"></script>
+        <script type="text/javascript" src="cordova-2.4.0.js"></script>
         <script type="text/javascript">
+          var cordovaReady = false;
+          var documentReady = false;
           var app = null;
-          $(document).ready(function() { app = new OnTap($("#main"), $("#settings")); });
+
+          function tryInitialise() { if (cordovaReady && documentReady) app = new OnTap($("#main"), $("#settings")); }
+          function onDeviceReady() { cordovaReady = true; tryInitialise(); }
+          function onDocumentReady() { documentReady = true; tryInitialise(); }
+
+          document.addEventListener("deviceready", onDeviceReady, false);
+          $(document).ready(onDocumentReady);
         </script>
     </head>
     <body>
