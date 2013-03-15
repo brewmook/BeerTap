@@ -1,42 +1,24 @@
 function ListView(id, refreshCallback)
 {
-    var view = this;
-    var page = $("<div/>").attr({"data-role":"page", id:id});
-    var header = $("<div/>")
-        .attr({"data-role":"header",
-               "data-position":"fixed"})
-        .appendTo(page);
-    var h1 = $("<h1/>").append("@"+id).appendTo(header);
-    var content = $("<div/>").attr("data-role","content").appendTo(page);
-    var itemList = $("<ul/>")
-        .attr({"data-role":"listview"})
-        .appendTo(content);
-    var footer = $("<div/>")
-        .attr({"data-role":"footer",
-               "data-position":"fixed"})
-        .appendTo(page);
-    var refreshButton = $("<a/>")
-        .attr({href:"#","data-role":"button"})
-        .append("Refresh")
-        .appendTo(footer)
-        .click(refreshCallback)
-        .buttonMarkup({icon:'refresh', inline:true, mini:false});
+    this.page =
+    $('<div class="listview">\
+         <div class="header"><h1>@'+id+'</h1></div>\
+         <div class="content">\
+           <ul></ul>\
+         </div>\
+         <div class="footer"><a class="refresh" href="#">Refresh</a></div>\
+       </div>');
 
-    page.appendTo("body");
-    page.on("pageshow", refreshCallback);
-
-    this.page = page;
-    this.itemList = itemList;
+    this.page.find(".refresh").click(refreshCallback);
 }
 
 ListView.prototype.refresh = function(items)
 {
-    this.itemList.empty();
+    var itemList = this.page.find("ul");
+    itemList.empty();
     items.forEach(function(item)
     {
         var date = item.date.toISOString().substring(0,10);
-        var li = $("<li/>").append(item.name).appendTo(this.itemList).css("padding-right","5em");
-        $("<span/>").attr("class","ui-li-count").append(date).appendTo(li);
-    }, this);
-    this.itemList.listview('refresh');
+        itemList.append('<li>'+item.name+' <span>'+date+'</span></li>');
+    });
 };
