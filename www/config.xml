@@ -6,7 +6,7 @@
     version   = "0.1.0">
 
 <name>BeerTap</name>
-<description>Find out what beers are on tap at your favourit pubs.</description>
+<description>Find out what beers are on tap at your favourite pubs.</description>
 <author href="https://github.com/coolhandmook/BeerTap" email="dave.beertap@coolhandmook.com">Dave E</author>
 
 <preference name="permissions" value="none"/>
