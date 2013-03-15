@@ -45,7 +45,8 @@ BeerTap.prototype.addPage = function(twitterScreenName)
     }
     else
     {
-        page = new ListPage(twitterScreenName, this.twitter);
+        var jqmFactory = {newListView:function(x,y){return new JQMListView(x,y);}};
+        page = new ListPage(twitterScreenName, this.twitter, jqmFactory);
         after = this.pages.find(".followingDivider");
     }
 

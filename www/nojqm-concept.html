@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BeerTap</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="js/jsOAuth-1.3.6.min.js"></script>
+        <script type="text/javascript" src="js/oAuthConfig.js"></script>
+        <script type="text/javascript" src="js/Twitter.js"></script>
+        <script type="text/javascript" src="js/Model.js"></script>
+        <script type="text/javascript" src="js/ListView.js"></script>
+        <script type="text/javascript" src="js/ListPage.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function() {
+              var twitter = new Twitter(oAuthConfig, localStorage);
+              var factory = {newListView:function(x,y){return new ListView(x,y);}};
+              var view = new ListPage('daveappendix', twitter, factory);
+              view.view.page.appendTo('body');
+          });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
