@@ -21,38 +21,25 @@ Twitter.prototype.authorised = function()
 
 Twitter.prototype.getUserTimeline = function(screenName, callback)
 {
-    if (this.authorised())
-    {
-        $.getJSON("https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screenName+"&trim_user=true&include_rts=false&count=100",
-                  callback);
-    }
-    else
-    {
-        console.log('### Twitter not authorised, faking it!');
-        $.mobile.loading( 'show' );
-        setTimeout(function() { $.getJSON("js/sample.json", callback); }, 1000);
-    }
+    $.getJSON("https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screenName+"&trim_user=true&include_rts=false&count=100",
+              callback);
 };
 
 Twitter.prototype.tweet = function(text, success, failure)
 {
-    var logMessage = "### TWEETED as " + this.store.screenName + ":\n" + text;
     if (this.authorised())
     {
         this.oAuth.post("https://api.twitter.com/1.1/statuses/update.json",
                         { status: text },
-                        function(data) { console.log(logMessage); success(data); },
+                        function(data) {
+                            console.log("### TWEETED as " + this.store.screenName + ":\n" + text);
+                            success(data);
+                        },
                         failure);
     }
     else
     {
-        console.log('### Twitter not authorised, faking it!');
-        $.mobile.loading('show');
-        setTimeout(function() {
-            $.mobile.loading('hide');
-            console.log(logMessage);
-            success('FAKE');
-        }, 1000);
+        failure("Twitter not authorised");
     }
 };
 
