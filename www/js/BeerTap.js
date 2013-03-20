@@ -38,14 +38,18 @@ BeerTap.prototype.addPage = function(twitterScreenName)
     if (twitterScreenName[0] == "@")
         twitterScreenName = twitterScreenName.substring(1);
 
+    var jqmFactory = {
+        newListView: function(id, refreshCallback) { return new JQMListView(id, refreshCallback); },
+        newEditView: function(id, callbacks) { return new JQMEditView(id, callbacks); },
+    };
+
     if (twitterScreenName == this.twitter.authorisedScreenName())
     {
-        page = new EditPage(twitterScreenName, this.twitter, this.main);
+        page = new EditPage(twitterScreenName, this.twitter, this.main, jqmFactory);
         after = this.pages.find(".editableDivider");
     }
     else
     {
-        var jqmFactory = {newListView:function(x,y){return new JQMListView(x,y);}};
         page = new ListPage(twitterScreenName, this.twitter, jqmFactory);
         after = this.pages.find(".followingDivider");
     }

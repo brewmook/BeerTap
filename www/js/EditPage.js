@@ -1,4 +1,4 @@
-function EditPage(twitterScreenName, twitter, parentPage)
+function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
 {
     var app = this;
 
@@ -21,7 +21,7 @@ function EditPage(twitterScreenName, twitter, parentPage)
         itemRemoved: function(item) { app.view.remove(item); }
     };
 
-    this.view = new EditView(twitterScreenName, viewCallbacks);
+    this.view = viewFactory.newEditView(twitterScreenName, viewCallbacks);
     this.model = new Model(new TwitterConfirmer(twitter, this.view.page), modelCallbacks);
 
     this.view.page.on("pageshow", function( event, ui )

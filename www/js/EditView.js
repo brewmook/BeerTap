@@ -19,24 +19,7 @@ function EditView(id, callbacks)
         .attr("href", callbacks.addHref)
         .click(callbacks.addClicked);
 
-    this.page.attr({id:id, "data-role":"page"});
-    this.page.find(".header").attr({"data-role":"header", "data-position":"fixed"});
-    this.page.find(".content").attr("data-role","content");
-    this.page.find(".footer").attr({"data-role":"footer", "data-position":"fixed"});
-    this.page.find(".refreshButton")
-        .attr("data-role","button")
-        .buttonMarkup({icon:'refresh', inline:true, mini:false});
-    this.page.find(".addButton")
-        .attr("data-role","button")
-        .buttonMarkup({icon:'plus', inline:true, mini:false});
-
     this.itemList = this.page.find("ul");
-    this.itemList.attr({"data-role":"listview",
-                        "data-split-icon":"delete",
-                        "data-split-theme":"e",
-                        "data-inset":"false"});
-
-    this.page.appendTo("body");
 }
 
 EditView.prototype.refresh = function(items, callbacks)
@@ -44,7 +27,6 @@ EditView.prototype.refresh = function(items, callbacks)
     var view = this;
     this.itemList.empty();
     items.forEach(function(item){ view.add(item, callbacks); });
-    this.itemList.listview('refresh');
 };
 
 EditView.prototype.add = function(item, callbacks)
