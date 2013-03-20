@@ -1,41 +1,42 @@
 function EditView(id, callbacks)
 {
-    var view = this;
-    var page = $("<div/>").attr({"data-role":"page",id:id});
-    var header = $("<div/>")
-        .attr({"data-role":"header",
-               "data-position":"fixed"})
-        .appendTo(page);
-    var h1 = $("<h1/>").append("@"+id).appendTo(header);
-    var content = $("<div/>").attr("data-role","content").appendTo(page);
-    var itemList = $("<ul/>")
-        .attr({"data-role":"listview",
-               "data-split-icon":"delete",
-               "data-split-theme":"e",
-               "data-inset":"false"})
-        .appendTo(content);
-    var footer = $("<div/>")
-        .attr({"data-role":"footer",
-               "data-position":"fixed"})
-        .appendTo(page);
-    var refreshButton = $("<a/>")
-        .attr({href:callbacks.refreshHref,"data-role":"button"})
-        .append("Refresh")
-        .appendTo(footer)
-        .click(callbacks.refreshClicked)
+    this.page =
+    $('<div class="editview">\
+         <div class="header"><h1>@'+id+'</h1></div>\
+         <div class="content">\
+           <ul></ul>\
+         </div>\
+         <div class="footer">\
+           <a class="refreshButton">Refresh</a>\
+           <a class="addButton">Add new</a>\
+         </div>\
+       </div>');
+
+    this.page.find(".refreshButton")
+        .attr("href", callbacks.refreshHref)
+        .click(callbacks.refreshClicked);
+    this.page.find(".addButton")
+        .attr("href", callbacks.addHref)
+        .click(callbacks.addClicked);
+
+    this.page.attr({id:id, "data-role":"page"});
+    this.page.find(".header").attr({"data-role":"header", "data-position":"fixed"});
+    this.page.find(".content").attr("data-role","content");
+    this.page.find(".footer").attr({"data-role":"footer", "data-position":"fixed"});
+    this.page.find(".refreshButton")
+        .attr("data-role","button")
         .buttonMarkup({icon:'refresh', inline:true, mini:false});
-    var addButton = $("<a/>")
-        .attr({href:callbacks.addHref,"data-role":"button"})
-        .append("Add new")
-        .appendTo(footer)
-        .click(callbacks.addClicked)
+    this.page.find(".addButton")
+        .attr("data-role","button")
         .buttonMarkup({icon:'plus', inline:true, mini:false});
 
-    page.appendTo("body");
+    this.itemList = this.page.find("ul");
+    this.itemList.attr({"data-role":"listview",
+                        "data-split-icon":"delete",
+                        "data-split-theme":"e",
+                        "data-inset":"false"});
 
-    this.page = page;
-    this.header = h1;
-    this.itemList = itemList;
+    this.page.appendTo("body");
 }
 
 EditView.prototype.refresh = function(items, callbacks)
@@ -44,11 +45,6 @@ EditView.prototype.refresh = function(items, callbacks)
     this.itemList.empty();
     items.forEach(function(item){ view.add(item, callbacks); });
     this.itemList.listview('refresh');
-};
-
-EditView.prototype.setHeader = function(text)
-{
-    this.header.html("@" + text);
 };
 
 EditView.prototype.add = function(item, callbacks)
