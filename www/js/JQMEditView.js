@@ -14,7 +14,7 @@ function JQMEditView(id, callbacks)
         .attr("data-role","button")
         .buttonMarkup({icon:'plus', inline:true, mini:false});
 
-    this.itemList = this.view.itemList;
+    this.itemList = this.page.find("ul");
     this.itemList.attr({"data-role":"listview",
                         "data-split-icon":"delete",
                         "data-split-theme":"e",

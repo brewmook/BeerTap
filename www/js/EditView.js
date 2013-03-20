@@ -18,34 +18,27 @@ function EditView(id, callbacks)
     this.page.find(".addButton")
         .attr("href", callbacks.addHref)
         .click(callbacks.addClicked);
-
-    this.itemList = this.page.find("ul");
 }
 
 EditView.prototype.refresh = function(items, callbacks)
 {
-    var view = this;
-    this.itemList.empty();
-    items.forEach(function(item){ view.add(item, callbacks); });
-};
-
-EditView.prototype.add = function(item, callbacks)
-{
-    var li = $("<li/>");
-    $("<a/>")
-      .attr({href:callbacks.changeHref})
-      .append(item.name)
-      .appendTo(li)
-      .click(function() { callbacks.changeClicked(item); });
-    $("<a/>")
-      .attr({href:callbacks.removeHref})
-      .append('Remove')
-      .appendTo(li)
-      .click(function() { callbacks.removeClicked(item); });
-    li.appendTo(this.itemList);
+    var itemList = this.page.find("ul");
+    itemList.empty();
+    items.forEach(function(item) {
+        var li = $("<li/>");
+        li.append($("<a/>")
+                  .append(item.name)
+                  .attr("href", callbacks.changeHref)
+                  .click(function() { callbacks.changeClicked(item); }));
+        li.append($("<a>Remove</a>")
+                  .attr("href", callbacks.removeHref)
+                  .click(function() { callbacks.removeClicked(item); }));
+        itemList.append(li);
+    });
 };
 
 EditView.prototype.remove = function(item)
 {
-    this.itemList.find("a").filter(function(i){return $(this).text() == item.name;}).parents("li").remove();
+    var itemList = this.page.find("ul");
+    itemList.find("a").filter(function(i){return $(this).text() == item.name;}).parents("li").remove();
 };
