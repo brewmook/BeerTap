@@ -8,4 +8,6 @@ function ListPage(twitterScreenName, twitter, factory)
     this.id = twitterScreenName;
 }
 
+return ListPage;
+
 });

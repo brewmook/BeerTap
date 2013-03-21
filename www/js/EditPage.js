@@ -1,4 +1,5 @@
-define(function() {
+define(['Model', 'TextInputDialog', 'TwitterConfirmer'],
+function(Model, TextInputDialog, TwitterConfirmer) {
 
 function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
 {

@@ -1,4 +1,5 @@
-define(function() {
+define(['TextInputDialog'],
+function(TextInputDialog) {
 
 function TwitterPinAuthoriser(twitter, oAuthConfig, parentDiv)
 {
