@@ -10,7 +10,7 @@ function (doc, BeerTap) {
     
     var app = null;
     
-    function onDeviceReady() { app = new BeerTap($("#main"), $("#settings")); }
+    function onDeviceReady() { app = new BeerTap($("#main")); }
 
     doc.addEventListener("deviceready", onDeviceReady, false);
 });

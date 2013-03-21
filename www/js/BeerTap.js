@@ -1,18 +1,14 @@
-define(['Twitter', 'TextInputDialog', 'TwitterBrowserAuthoriser', 'TwitterPinAuthoriser',
-        'JQMListView', 'JQMEditView', 'ListPage', 'EditPage'],
-function(Twitter, TextInputDialog, TwitterBrowserAuthoriser, TwitterPinAuthoriser,
-         JQMListView, JQMEditView, ListPage, EditPage) {
+define(['Twitter', 'TextInputDialog', 'JQMListView', 'JQMEditView', 'ListPage', 'EditPage', 'SettingsPage'],
+function(Twitter, TextInputDialog, JQMListView, JQMEditView, ListPage, EditPage, SettingsPage) {
 
-function BeerTap(mainPage, settingsPage)
+function BeerTap(mainPage)
 {
     var beertap = this;
     this.main = mainPage;
     this.pages = mainPage.find(".pages");
     this.twitter = new Twitter(localStorage);
     this.followDialog = new TextInputDialog("followDialog");
-    this.twitterBrowserAuthoriser = new TwitterBrowserAuthoriser(this.twitter, settingsPage.find(".authorisers"));
-    this.twitterPinAuthoriser = new TwitterPinAuthoriser(this.twitter, settingsPage.find(".authorisers"));
-    if (this.twitter.authorisedScreenName()) $("#twitterScreenName").html(this.twitter.authorisedScreenName());
+    this.settings = new SettingsPage("settings", this.twitter);
 
     this.pages.find(".editableDivider").hide();
     this.pages.find(".followingDivider").hide();
