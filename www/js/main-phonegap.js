@@ -1,15 +1,11 @@
 requirejs.config({
     baseUrl: 'js',
+    paths: {
+        lib: '../lib'
+    }
 });
 
-//requirejs(['jquerymobile'],
-//function(jqm)
-//{
-//    //jQuery, canvas and the app/sub module are all
-//    //loaded and can be used here now.
-//});
-
-requirejs(['domReady!', 'BeerTap'],
+requirejs(['lib/domReady!', 'BeerTap'],
 function (doc, BeerTap) {
     
     var app = null;
