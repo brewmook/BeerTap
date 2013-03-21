@@ -1,9 +1,8 @@
-define(function() {
+define(['oAuthConfig'], function(oAuthConfig) {
 
-function TwitterBrowserAuthoriser(twitter, oAuthConfig, parentDiv)
+function TwitterBrowserAuthoriser(twitter, parentDiv)
 {
     var authoriser = this;
-    this.oAuthConfig = oAuthConfig;
     this.button = $('<a id="twitterAuthorise" href="#" data-role="button" data-icon="plus">Authorise (browser)</a>')
                   .appendTo(parentDiv)
                   .click(function() { authoriser.authorise(twitter); });
@@ -13,8 +12,8 @@ TwitterBrowserAuthoriser.prototype.authorise = function(twitter)
 {
     var callbackUrl = 'https://github.com/coolhandmook/BeerTap';
     var oAuth = OAuth({
-        consumerKey: this.oAuthConfig.consumerKey,
-        consumerSecret: this.oAuthConfig.consumerSecret,
+        consumerKey: oAuthConfig.consumerKey,
+        consumerSecret: oAuthConfig.consumerSecret,
         callbackUrl: callbackUrl,
         enablePrivilege: false,
         requestTokenUrl: 'https://api.twitter.com/oauth/request_token',

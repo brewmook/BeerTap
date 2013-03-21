@@ -1,10 +1,9 @@
-define(['TextInputDialog'],
-function(TextInputDialog) {
+define(['oAuthConfig', 'TextInputDialog'],
+function(oAuthConfig, TextInputDialog) {
 
-function TwitterPinAuthoriser(twitter, oAuthConfig, parentDiv)
+function TwitterPinAuthoriser(twitter, parentDiv)
 {
     var authoriser = this;
-    this.oAuthConfig = oAuthConfig;
     this.pinDialog = new TextInputDialog("twitterPinDialog");
     this.button = $('<a id="twitterAuthorise" href="#twitterPinDialog" data-role="button" data-icon="plus">Authorise (PIN)</a>')
                   .appendTo(parentDiv)
@@ -14,8 +13,8 @@ function TwitterPinAuthoriser(twitter, oAuthConfig, parentDiv)
 TwitterPinAuthoriser.prototype.authorise = function(twitter)
 {
     var oAuth = OAuth({
-        consumerKey: this.oAuthConfig.consumerKey,
-        consumerSecret: this.oAuthConfig.consumerSecret,
+        consumerKey: oAuthConfig.consumerKey,
+        consumerSecret: oAuthConfig.consumerSecret,
         callbackUrl: 'oob',
         enablePrivilege: false,
         requestTokenUrl: 'https://api.twitter.com/oauth/request_token',

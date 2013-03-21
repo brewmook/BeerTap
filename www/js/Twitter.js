@@ -1,6 +1,6 @@
-define(function() {
+define(['oAuthConfig'], function(oAuthConfig) {
 
-function Twitter(oAuthConfig, store)
+function Twitter(store)
 {
     this.store = store;
 
