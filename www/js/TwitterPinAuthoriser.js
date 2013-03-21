@@ -5,7 +5,7 @@ function TwitterPinAuthoriser(twitter, parentDiv)
 {
     var authoriser = this;
     this.pinDialog = new TextInputDialog("twitterPinDialog");
-    this.button = $('<a id="twitterAuthorise" href="#twitterPinDialog" data-role="button" data-icon="plus">Authorise (PIN)</a>')
+    this.button = $('<a href="#twitterPinDialog" data-role="button" data-icon="plus">Authorise (PIN)</a>')
                   .appendTo(parentDiv)
                   .click(function() { authoriser.authorise(twitter); });
 }
