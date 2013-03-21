@@ -1,3 +1,5 @@
+define(function() {
+
 function TextInputDialog(id)
 {
     var dialog = $("<div/>").attr({"data-role":"dialog", id:id});
@@ -42,3 +44,7 @@ TextInputDialog.prototype.show = function(title, prompt, text, callback)
         callback(input.val());
     });
 };
+
+return TextInputDialog;
+
+});

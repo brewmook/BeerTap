@@ -1,3 +1,8 @@
+define(['oAuthConfig', 'Twitter', 'TextInputDialog', 'TwitterBrowserAuthoriser', 'TwitterPinAuthoriser',
+        'JQMListView', 'JQMEditView', 'ListPage', 'EditPage'],
+function(oAuthConfig, Twitter, TextInputDialog, TwitterBrowserAuthoriser, TwitterPinAuthoriser,
+         JQMListView, JQMEditView, ListPage, EditPage) {
+
 function BeerTap(mainPage, settingsPage)
 {
     var beertap = this;
@@ -59,3 +64,7 @@ BeerTap.prototype.addPage = function(twitterScreenName)
     after.show();
     $(this.pages).listview('refresh');
 };
+
+return BeerTap;
+
+});

@@ -1,3 +1,5 @@
+define(function() {
+
 function TwitterPinAuthoriser(twitter, oAuthConfig, parentDiv)
 {
     var authoriser = this;
@@ -71,3 +73,7 @@ TwitterPinAuthoriser.prototype.onPinSubmit = function(twitter, oAuth, pin)
         },
         failure);
 };
+    
+return TwitterPinAuthoriser;
+
+});

@@ -1,3 +1,5 @@
+define(function() {
+
 function Twitter(oAuthConfig, store)
 {
     this.store = store;
@@ -56,3 +58,7 @@ Twitter.prototype.authorisedScreenName = function()
 {
     return this.store.screenName;
 }
+
+return Twitter;
+
+});

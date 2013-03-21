@@ -1,3 +1,5 @@
+define(function() {
+
 function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
 {
     var app = this;
@@ -61,3 +63,7 @@ EditPage.prototype.onViewItemChangeClicked = function(item)
     }
     this.newTextDialog.show("Change Item", "Enter new text:", name, callback);
 };
+
+return EditPage;
+
+});

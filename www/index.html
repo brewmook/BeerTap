@@ -11,32 +11,7 @@
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/jquerymobile.js"></script>
         <script type="text/javascript" src="js/jsOAuth.js"></script>
-        <script type="text/javascript" src="js/oAuthConfig.js"></script>
-        <script type="text/javascript" src="js/Twitter.js"></script>
-        <script type="text/javascript" src="js/TwitterConfirmer.js"></script>
-        <script type="text/javascript" src="js/TwitterPinAuthoriser.js"></script>
-        <script type="text/javascript" src="js/TwitterBrowserAuthoriser.js"></script>
-        <script type="text/javascript" src="js/Model.js"></script>
-        <script type="text/javascript" src="js/EditView.js"></script>
-        <script type="text/javascript" src="js/TextInputDialog.js"></script>
-        <script type="text/javascript" src="js/EditPage.js"></script>
-        <script type="text/javascript" src="js/ListView.js"></script>
-        <script type="text/javascript" src="js/JQMEditView.js"></script>
-        <script type="text/javascript" src="js/JQMListView.js"></script>
-        <script type="text/javascript" src="js/ListPage.js"></script>
-        <script type="text/javascript" src="js/BeerTap.js"></script>
-        <script type="text/javascript">
-          var cordovaReady = false;
-          var documentReady = false;
-          var app = null;
-
-          function tryInitialise() { if (cordovaReady && documentReady) app = new BeerTap($("#main"), $("#settings")); }
-          function onDeviceReady() { cordovaReady = true; tryInitialise(); }
-          function onDocumentReady() { documentReady = true; tryInitialise(); }
-
-          document.addEventListener("deviceready", onDeviceReady, false);
-          $(document).ready(onDocumentReady);
-        </script>
+        <script data-main="js/main.js" src="js/require.js"></script>
     </head>
     <body>
         <div id="main" data-role="page">

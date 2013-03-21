@@ -1,3 +1,5 @@
+define(['EditView'], function(EditView) {
+
 function JQMEditView(id, callbacks)
 {
     this.view = new EditView(id, callbacks);
@@ -33,3 +35,7 @@ JQMEditView.prototype.remove = function(item)
 {
     this.view.remove(item);
 };
+
+return JQMEditView;
+
+});

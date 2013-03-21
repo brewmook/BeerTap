@@ -1,3 +1,5 @@
+define(function() {
+
 function ListView(id, refreshCallback)
 {
     this.page =
@@ -22,3 +24,7 @@ ListView.prototype.refresh = function(items)
         itemList.append('<li>'+item.name+' <span>'+date+'</span></li>');
     });
 };
+
+return ListView;
+
+});

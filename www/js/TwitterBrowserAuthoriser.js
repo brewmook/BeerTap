@@ -1,3 +1,5 @@
+define(function() {
+
 function TwitterBrowserAuthoriser(twitter, oAuthConfig, parentDiv)
 {
     var authoriser = this;
@@ -77,3 +79,7 @@ TwitterBrowserAuthoriser.prototype.onVerifierSuccess = function(twitter, oAuth, 
         },
         failure);
 };
+
+return TwitterBrowserAuthoriser;
+
+});

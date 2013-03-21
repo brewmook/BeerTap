@@ -1,3 +1,5 @@
+define(function() {
+
 function TwitterConfirmer(twitter, parentPage)
 {
     this.twitter = twitter;
@@ -25,3 +27,7 @@ TwitterConfirmer.prototype.getUserTimeline = function(screenName, callback)
 {
     this.twitter.getUserTimeline(screenName, callback);
 };
+
+return TwitterConfirmer;
+
+});

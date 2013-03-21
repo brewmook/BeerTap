@@ -1,3 +1,5 @@
+define(['ListView'], function(ListView) {
+
 function JQMListView(id, refreshCallback)
 {
     this.view = new ListView(id, refreshCallback);
@@ -22,3 +24,7 @@ JQMListView.prototype.refresh = function(items)
     this.page.find("span.date").addClass("ui-li-count").css("padding-right","5em");
     this.page.find("ul").listview('refresh');
 };
+
+return JQMListView;
+
+});

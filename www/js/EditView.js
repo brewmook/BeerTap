@@ -1,3 +1,5 @@
+define(function() {
+
 function EditView(id, callbacks)
 {
     this.page =
@@ -42,3 +44,7 @@ EditView.prototype.remove = function(item)
     var itemList = this.page.find("ul");
     itemList.find("a").filter(function(i){return $(this).text() == item.name;}).parents("li").remove();
 };
+
+return EditView;
+
+});

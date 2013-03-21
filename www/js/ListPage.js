@@ -1,3 +1,5 @@
+define(['Model'], function(Model) {
+
 function ListPage(twitterScreenName, twitter, factory)
 {
     var page = this;
@@ -5,3 +7,5 @@ function ListPage(twitterScreenName, twitter, factory)
     this.model = new Model(twitter, {itemsLoaded: function() { page.view.refresh(page.model.items); }});
     this.id = twitterScreenName;
 }
+
+});

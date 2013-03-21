@@ -1,3 +1,5 @@
+define(function() {
+
 function keys(obj) {
     var result = [];
     for (var key in obj) {
@@ -124,3 +126,7 @@ Model.prototype.findIndex = function(name)
     if (i == this.items.length) i = -1;
     return i;
 };
+
+return Model;
+
+});
