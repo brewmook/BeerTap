@@ -31,10 +31,11 @@ Twitter.prototype.tweet = function(text, success, failure)
 {
     if (this.authorised())
     {
+        var screenName = this.store.screenName;
         this.oAuth.post("https://api.twitter.com/1.1/statuses/update.json",
                         { status: text },
                         function(data) {
-                            console.log("### TWEETED as " + this.store.screenName + ":\n" + text);
+                            console.log("### TWEETED as " + screenName + ":\n" + text);
                             success(data);
                         },
                         failure);
