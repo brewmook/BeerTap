@@ -21,7 +21,7 @@ ListView.prototype.refresh = function(items)
     items.forEach(function(item)
     {
         var date = item.date.toISOString().substring(0,10);
-        itemList.append('<li>'+item.name+' <span>'+date+'</span></li>');
+        itemList.append('<li>'+item.name+' <span class="date">'+date+'</span></li>');
     });
 };
 
