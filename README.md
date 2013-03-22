@@ -1,7 +1,16 @@
 Description
 -----------
 
-Inspired by @TheBatTaps twitter feed, this app reads a twitter feed for specially formatted messages describing beers on tap at a pub, turning them into a list of what's currently on tap. It also helps with maintaining one of these lists if you're a pub manager/worker.
+Inspired by [@TheBatTaps](https://twitter.com/TheBatTaps) twitter feed, this app reads a twitter feed for specially formatted messages describing beers on tap at a pub, turning them into a list of what's currently on tap. It also helps with maintaining one of these lists if you're a pub manager/worker.
+
+Download
+--------
+
+A fairly up-to-date build will be available [on phonegap build](https://build.phonegap.com/apps/335079/share).
+
+I don't have any developer accounts on Google Play, Apple etc, so only debug builds are available. There is no IOS build at all.
+
+The only device I've tested on so far is a Samsung Galaxy S2, Android 4.0.3, so your mileage may vary.
 
 Licence
 -------
@@ -19,6 +28,16 @@ As a tool for bar staff
 -----------------------
 
 If you go to the settings page and authenticate with a twitter account, then add that same account as somebody to follow, the app will show a different page allowing you to add, change or remove beers and get the tweet format correct automatically.
+
+Authentication
+--------------
+
+There are two authentication methods, "Browser" and "PIN". Browser should be considered the default for authentication on a real device, and PIN is only there to make testing in a browser easier/possible. You are of course free to use this on a mobile device, but it's a bit of a hassle cutting and pasteing.
+
+Plans
+-----
+
+See the [issues page](https://github.com/coolhandmook/BeerTap/issues) for plans and known bugs.
 
 Tweet format
 ------------
@@ -64,4 +83,3 @@ You'd end up with this list:
 * Worts And All
 * Magic Bevvy
 * Great Grog
-
