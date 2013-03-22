@@ -5,8 +5,12 @@ function SettingsPage(id, twitter)
 {
     this.view = new SettingsView(id);
     this.view.setTwitterScreenName(twitter.authorisedScreenName());
-    this.twitterBrowserAuthoriser = new TwitterBrowserAuthoriser(twitter, this.view.authorisers);
-    this.twitterPinAuthoriser = new TwitterPinAuthoriser(twitter, this.view.authorisers);
+
+    var browserAuthoriser = new TwitterBrowserAuthoriser();
+    this.view.addAuthoriser("Browser", "#", function() { browserAuthoriser.authorise(twitter); });
+
+    var pinAuthoriser = new TwitterPinAuthoriser("twitterPinDialog");
+    this.view.addAuthoriser("PIN", "#twitterPinDialog", function() { pinAuthoriser.authorise(twitter); });
 
     var view = this.view;
     twitter.addAuthorisationListener(function(userId, screenName) { view.setTwitterScreenName(screenName); });

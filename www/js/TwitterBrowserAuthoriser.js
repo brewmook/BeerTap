@@ -1,11 +1,7 @@
 define(['oAuthConfig'], function(oAuthConfig) {
 
-function TwitterBrowserAuthoriser(twitter, parentDiv)
+function TwitterBrowserAuthoriser()
 {
-    var authoriser = this;
-    this.button = $('<a href="#" data-role="button" data-icon="plus">Authorise (browser)</a>')
-                  .appendTo(parentDiv)
-                  .click(function() { authoriser.authorise(twitter); });
 }
 
 TwitterBrowserAuthoriser.prototype.authorise = function(twitter)

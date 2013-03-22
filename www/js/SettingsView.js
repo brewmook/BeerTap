@@ -28,6 +28,13 @@ SettingsView.prototype.setTwitterScreenName = function(screenName)
     this.page.find(".twitterScreenName").text(screenName || "");
 }
 
+SettingsView.prototype.addAuthoriser = function(label, href, click)
+{
+    var button = $('<a href="'+href+'" data-role="button" data-icon="plus">Authorise ('+label+')</a>')
+                 .appendTo(this.page.find(".authorisers"))
+                 .click(click);
+}
+
 return SettingsView;
 
 });
