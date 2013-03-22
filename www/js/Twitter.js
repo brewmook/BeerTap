@@ -3,6 +3,7 @@ define(['oAuthConfig'], function(oAuthConfig) {
 function Twitter(store)
 {
     this.store = store;
+    this.authorisationListeners = [];
 
     this.oAuth = OAuth({
         consumerKey: oAuthConfig.consumerKey,
@@ -14,6 +15,11 @@ function Twitter(store)
     {
         this.oAuth.setAccessToken(store.accessTokenKey, store.accessTokenSecret);
     }
+}
+
+Twitter.prototype.addAuthorisationListener = function(callback)
+{
+    this.authorisationListeners.push(callback);
 }
 
 Twitter.prototype.authorised = function()
@@ -53,6 +59,7 @@ Twitter.prototype.setAuthorisation = function(accessTokenKey, accessTokenSecret,
     this.store.userId = userId;
     this.store.screenName = screenName;
     this.oAuth.setAccessToken(accessTokenKey, accessTokenSecret);
+    this.authorisationListeners.forEach(function(callback) { callback(userId, screenName); });
 }
 
 Twitter.prototype.authorisedScreenName = function()

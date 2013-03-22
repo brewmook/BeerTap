@@ -10,7 +10,7 @@ function SettingsView(id)
              <div data-role="collapsible" id="twitter-settings">\
                <h4>Twitter</h4>\
                <div>\
-                 <p>Screen Name: <span id="twitterScreenName"></span></p>\
+                 <p>Screen Name: <span class="twitterScreenName"></span></p>\
                  <div class="authorisers" />\
                </div>\
              </div>\
