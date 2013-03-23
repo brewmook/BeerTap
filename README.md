@@ -34,8 +34,8 @@ Authentication
 
 There are two authentication methods, "Browser" and "PIN". Browser should be considered the default for authentication on a real device, and PIN is only there to make testing in a browser easier/possible. You are of course free to use this on a mobile device, but it's a bit of a hassle cutting and pasteing.
 
-Plans
------
+Plans/bugs
+----------
 
 See the [issues page](https://github.com/coolhandmook/BeerTap/issues) for plans and known bugs.
 
@@ -43,6 +43,8 @@ Tweet format
 ------------
 
 You can still of course do the tweets by hand if they're in the correct format.
+
+There's a demo feed here: [@BeerTapDemo](https://twitter.com/BeerTapDemo).
 
 Tweets must follow this simple format:
 
