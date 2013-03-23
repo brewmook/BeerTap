@@ -27,10 +27,19 @@ Twitter.prototype.authorised = function()
     return this.oAuth !== undefined && this.oAuth.getAccessTokenKey() != "";
 }
 
-Twitter.prototype.getUserTimeline = function(screenName, callback)
+Twitter.prototype.getUserTimeline = function(screenName, success)
 {
-    $.getJSON("https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screenName+"&trim_user=true&include_rts=false&count=100",
-              callback);
+    var url;
+    if (this.authorised())
+    {
+        url = "https://api.twitter.com/1.1/statuses/user_timeline.json?trim_user=true&include_rts=false&count=100&screen_name=";
+        this.oAuth.getJSON(url+screenName, success, function(data) { alert("Get timeline failed"); });
+    }
+    else
+    {
+        var url = "https://api.twitter.com/1/statuses/user_timeline.json?trim_user=true&include_rts=false&count=100&screen_name="
+        $.getJSON(url+screenName, success);
+    }
 };
 
 Twitter.prototype.tweet = function(text, success, failure)
