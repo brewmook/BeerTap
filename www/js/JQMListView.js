@@ -21,7 +21,7 @@ function JQMListView(id, refreshCallback)
 JQMListView.prototype.refresh = function(items)
 {
     this.view.refresh(items);
-    this.page.find("span.date").addClass("ui-li-count").css("padding-right","5em");
+    this.page.find("span.date").addClass("ui-li-count");
     this.page.find("ul").listview('refresh');
 };
 
