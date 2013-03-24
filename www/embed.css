@@ -1,5 +1,7 @@
-html, body { font-family: sans-serif; padding:0; margin:0; }
+html, body { font-family: sans-serif; padding:0; margin:0; background:#DDE; font-size:16px; }
 .header, .footer { background:black; color:white; padding:4px; }
 a { color: white; }
-h1 { font-size:16px; padding:0; margin:0; }
+h1 { font-size:18px; padding:0; margin:0; }
 .footer { position:absolute; bottom:0; width:100%; }
+span.date { font-style: italic; font-size: 14px; }
+
