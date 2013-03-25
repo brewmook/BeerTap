@@ -27,14 +27,13 @@ function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
 {
     var app = this;
 
-    this.newTextDialog = new TextInputDialog("newTextDialog");
+    var newTextDialog = new TextInputDialog("newTextDialog");
     
-    var newTextHref = "#"+this.newTextDialog.id;
     var viewCallbacks = {
-        addHref:       newTextHref,
-        addClicked:    function() { onViewAddClicked(app.model, app.newTextDialog); },
-        changeHref:    newTextHref,
-        changeClicked: function(item) { onViewItemChangeClicked(app.model, app.newTextDialog, item.name); },
+        addHref:       "#newTextDialog",
+        addClicked:    function() { onViewAddClicked(app.model, newTextDialog); },
+        changeHref:    "#newTextDialog",
+        changeClicked: function(item) { onViewItemChangeClicked(app.model, newTextDialog, item.name); },
         removeHref:    "#",
         removeClicked: function(item) { app.model.remove(item.name); },
         refreshHref:    "#",
