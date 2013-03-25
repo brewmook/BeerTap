@@ -1,5 +1,5 @@
-define(['MainView', 'TextInputDialog', 'ListPage', 'EditPage'],
-function(MainView, TextInputDialog, ListPage, EditPage) {
+define(['MainView', 'TextInputDialog', 'ListPage', 'EditPage', 'SubscriptionsModel'],
+function(MainView, TextInputDialog, ListPage, EditPage, SubscriptionsModel) {
 
 function addFollowToView(twitterScreenName, twitter, view, viewFactory, refreshList)
 {
@@ -21,18 +21,17 @@ function addFollowToView(twitterScreenName, twitter, view, viewFactory, refreshL
 function MainPage(id, twitter, viewFactory, settingsHref)
 {
     var followDialog = new TextInputDialog("followDialog");
-    var model = JSON.parse(localStorage.getItem('following')) || [];
+    var model = new SubscriptionsModel();
     var view = new MainView(id, "#followDialog", settingsHref);
 
     view.setFollowClick(function() {
         followDialog.show("Follow", "Twitter user", "@", function(user) {
-            model.push(user);
-            localStorage.setItem('following', JSON.stringify(model));
+            model.add(user);
             addFollowToView(user, twitter, view, viewFactory, true);
         });
     });
 
-    model.forEach(function(follow)
+    model.subscriptions.forEach(function(follow)
     {
         addFollowToView(follow, twitter, view, viewFactory, false);
     });
