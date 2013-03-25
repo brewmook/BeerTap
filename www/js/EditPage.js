@@ -12,6 +12,17 @@ function onViewAddClicked(model, newTextDialog)
     newTextDialog.show("Add Item", "Enter new text:", '', callback);
 };
 
+function onViewItemChangeClicked(model, newTextDialog, originalName)
+{
+    function callback(newText)
+    {
+        // Timeout is here to give page chance to change back from the TextInputDialog
+        // so that the twitter confirmer dialog shows properly.
+        setTimeout(function() { model.change(originalName, newText); }, 300);
+    }
+    newTextDialog.show("Change Item", "Enter new text:", originalName, callback);
+};
+
 function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
 {
     var app = this;
@@ -23,9 +34,9 @@ function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
         addHref:       newTextHref,
         addClicked:    function() { onViewAddClicked(app.model, app.newTextDialog); },
         changeHref:    newTextHref,
-        changeClicked: function(item) { app.onViewItemChangeClicked(item); },
+        changeClicked: function(item) { onViewItemChangeClicked(app.model, app.newTextDialog, item.name); },
         removeHref:    "#",
-        removeClicked: function(item) { app.onViewItemRemoveClicked(item); },
+        removeClicked: function(item) { app.model.remove(item.name); },
         refreshHref:    "#",
         refreshClicked: function() { app.model.load(twitterScreenName); }
     };
@@ -45,24 +56,6 @@ function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
 
     this.id = twitterScreenName;
 }
-
-EditPage.prototype.onViewItemRemoveClicked = function(item)
-{
-    this.model.remove(item.name);
-};
-
-EditPage.prototype.onViewItemChangeClicked = function(item)
-{
-    var model = this.model;
-    var name = item.name;
-    function callback(newText)
-    {
-        // Timeout is here to give page chance to change back from the TextInputDialog
-        // so that the twitter confirmer dialog shows properly.
-        setTimeout(function() { model.change(name, newText); }, 200);
-    }
-    this.newTextDialog.show("Change Item", "Enter new text:", name, callback);
-};
 
 return EditPage;
 
