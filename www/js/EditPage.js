@@ -1,6 +1,17 @@
 define(['Model', 'TextInputDialog', 'TwitterConfirmer'],
 function(Model, TextInputDialog, TwitterConfirmer) {
 
+function onViewAddClicked(model, newTextDialog)
+{
+    function callback(newText)
+    {
+        // Timeout is here to give page chance to change back from the TextInputDialog
+        // so that the twitter confirmer dialog shows properly.
+        setTimeout(function() { model.add(newText, true); }, 300);
+    }
+    newTextDialog.show("Add Item", "Enter new text:", '', callback);
+};
+
 function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
 {
     var app = this;
@@ -10,7 +21,7 @@ function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
     var newTextHref = "#"+this.newTextDialog.id;
     var viewCallbacks = {
         addHref:       newTextHref,
-        addClicked:    function() { app.onViewAddClicked(); },
+        addClicked:    function() { onViewAddClicked(app.model, app.newTextDialog); },
         changeHref:    newTextHref,
         changeClicked: function(item) { app.onViewItemChangeClicked(item); },
         removeHref:    "#",
@@ -34,18 +45,6 @@ function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
 
     this.id = twitterScreenName;
 }
-
-EditPage.prototype.onViewAddClicked = function()
-{
-    var model = this.model;
-    function callback(newText)
-    {
-        // Timeout is here to give page chance to change back from the TextInputDialog
-        // so that the twitter confirmer dialog shows properly.
-        setTimeout(function() { model.add(newText, true); }, 200);
-    }
-    this.newTextDialog.show("Add Item", "Enter new text:", '', callback);
-};
 
 EditPage.prototype.onViewItemRemoveClicked = function(item)
 {
