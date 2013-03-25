@@ -10,7 +10,7 @@ function addLink(page, selector, title, href, refresh)
     if (refresh) list.listview('refresh');
 }
 
-function MainView(id, followHref, settingsHref)
+function MainView(id)
 {
     this.page =
     $('<div>\
@@ -22,8 +22,8 @@ function MainView(id, followHref, settingsHref)
            </ul>\
          </div>\
          <div class="footer">\
-           <a class="follow" href="'+followHref+'">Follow</a>\
-           <a class="settings" href="'+settingsHref+'">Settings</a>\
+           <a class="follow" href="#">Follow</a>\
+           <a class="settings" href="#">Settings</a>\
          </div>\
        </div>');
 
@@ -53,9 +53,14 @@ MainView.prototype.addFollowing = function(title, href, refresh)
     addLink(this.page, ".followingDivider", title, href, refresh);
 };
 
-MainView.prototype.setFollowClick = function(callback)
+MainView.prototype.setFollowButton = function(href, click)
 {
-    this.page.find(".follow").click(callback);
+    this.page.find(".follow").attr("href",href).click(click);
+};
+
+MainView.prototype.setSettingsButton = function(href, click)
+{
+    this.page.find(".settings").attr("href",href).click(click);
 };
 
 return MainView;

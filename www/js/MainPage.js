@@ -22,14 +22,16 @@ function MainPage(id, twitter, viewFactory, settingsHref)
 {
     var followDialog = new TextInputDialog("followDialog");
     var model = new FollowingModel();
-    var view = new MainView(id, "#followDialog", settingsHref);
+    var view = new MainView(id);
 
-    view.setFollowClick(function() {
+    view.setFollowButton("#followDialog", function() {
         followDialog.show("Follow", "Twitter user", "@", function(user) {
             model.add(user);
             addFollowToView(user, twitter, view, viewFactory, true);
         });
     });
+
+    view.setSettingsButton(settingsHref, function(){});
 
     model.following.forEach(function(follow)
     {
