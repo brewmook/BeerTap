@@ -1,5 +1,5 @@
-define(['MainView', 'TextInputDialog', 'ListPage', 'EditPage', 'FollowingModel'],
-function(MainView, TextInputDialog, ListPage, EditPage, FollowingModel) {
+define(['MainView', 'TextInputDialog', 'ListPage', 'EditPage', 'FollowingModel', 'Model'],
+function(MainView, TextInputDialog, ListPage, EditPage, FollowingModel, Model) {
 
 function addFollowToView(twitterScreenName, twitter, view, viewFactory, refreshList)
 {
@@ -13,7 +13,8 @@ function addFollowToView(twitterScreenName, twitter, view, viewFactory, refreshL
     }
     else
     {
-        new ListPage(twitterScreenName, twitter, viewFactory);
+        var model = new Model(twitter);
+        new ListPage(twitterScreenName, model, viewFactory);
         view.addFollowing("@"+twitterScreenName, "#"+twitterScreenName, refreshList)
     }
 };

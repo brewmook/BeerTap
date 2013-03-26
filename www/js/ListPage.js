@@ -1,10 +1,10 @@
-define(['Model'], function(Model) {
+define(function() {
 
-function ListPage(twitterScreenName, twitter, factory)
+function ListPage(twitterScreenName, model, factory)
 {
     var page = this;
-    this.view = factory.newListView(twitterScreenName, function() { page.model.load(twitterScreenName); });
-    this.model = new Model(twitter);
+    this.view = factory.newListView(twitterScreenName, function() { model.load(twitterScreenName); });
+    this.model = model;
     this.model.onItemsLoaded(function(items) { page.view.refresh(items); });
     this.id = twitterScreenName;
 }
