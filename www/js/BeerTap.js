@@ -4,7 +4,7 @@ function(Twitter, JQMListView, JQMEditView, MainPage, SettingsPage) {
 function BeerTap()
 {
     var jQueryMobileViewFactory = {
-        newListView: function(id, refreshCallback) { return new JQMListView(id, refreshCallback); },
+        newListView: function(id) { return new JQMListView(id); },
         newEditView: function(id, callbacks) { return new JQMEditView(id, callbacks); },
     };
 

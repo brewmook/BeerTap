@@ -1,6 +1,6 @@
 define(function() {
 
-function ListView(id, refreshCallback)
+function ListView(id)
 {
     this.page =
     $('<div class="listview">\
@@ -11,7 +11,14 @@ function ListView(id, refreshCallback)
          <div class="footer"><a class="refresh" href="#">Refresh</a></div>\
        </div>');
 
-    this.page.find(".refresh").click(refreshCallback);
+    var view = this;
+    this.page.find(".refresh").click(function() { view._fireRefreshClicked(); });
+    this._refreshClickedCallbacks = [];
+}
+
+ListView.prototype.onRefreshClicked = function(callback)
+{
+    this._refreshClickedCallbacks.push(callback);
 }
 
 ListView.prototype.refresh = function(items)
@@ -24,6 +31,11 @@ ListView.prototype.refresh = function(items)
         itemList.append('<li>'+item.name+' <span class="date">'+date+'</span></li>');
     });
 };
+
+ListView.prototype._fireRefreshClicked = function()
+{
+    this._refreshClickedCallbacks.forEach(function(callback) { callback(); });
+}
 
 return ListView;
 

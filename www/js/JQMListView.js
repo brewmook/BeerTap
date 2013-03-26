@@ -1,8 +1,8 @@
 define(['ListView'], function(ListView) {
 
-function JQMListView(id, refreshCallback)
+function JQMListView(id)
 {
-    this.view = new ListView(id, refreshCallback);
+    this.view = new ListView(id);
 
     this.page = this.view.page;
     this.page.attr({id:id, "data-role":"page"});
@@ -14,8 +14,14 @@ function JQMListView(id, refreshCallback)
                               .buttonMarkup({icon: 'refresh',
                                              inline: true,
                                              mini: false});
-    this.page.on("pageshow", refreshCallback);
+    var view = this.view;
+    this.page.on("pageshow", function() { view._fireRefreshClicked(); });
     this.page.appendTo("body");
+}
+
+JQMListView.prototype.onRefreshClicked = function(callback)
+{
+    this.view.onRefreshClicked(callback);
 }
 
 JQMListView.prototype.refresh = function(items)
