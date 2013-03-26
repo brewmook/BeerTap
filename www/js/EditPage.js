@@ -40,13 +40,10 @@ function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
         refreshClicked: function() { app.model.load(twitterScreenName); }
     };
 
-    var modelCallbacks = {
-        itemsLoaded: function() { app.view.refresh(app.model.items, viewCallbacks); },
-        itemRemoved: function(item) { app.view.remove(item); }
-    };
-
     this.view = viewFactory.newEditView(twitterScreenName, viewCallbacks);
-    this.model = new Model(new TwitterConfirmer(twitter, this.view.page), modelCallbacks);
+    this.model = new Model(new TwitterConfirmer(twitter, this.view.page));
+    this.model.onItemsLoaded(function(items) { app.view.refresh(items, viewCallbacks); });
+    this.model.onItemRemoved(function(item) { app.view.remove(item); });
 
     this.view.page.on("pageshow", function( event, ui )
     {

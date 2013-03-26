@@ -10,15 +10,22 @@ function keys(obj) {
     return result;
 }
 
-function Model(twitter, callbacks)
+function Model(twitter)
 {
     this.twitter = twitter;
     this.items = [];
-    if (callbacks)
-    {
-        this.itemsLoaded = callbacks.itemsLoaded || function(){};
-        this.itemRemoved = callbacks.itemRemoved || function(item){};
-    }
+    this._itemsLoadedCallbacks = [];
+    this._itemRemovedCallbacks = [];
+}
+
+Model.prototype.onItemsLoaded = function(callback)
+{
+    this._itemsLoadedCallbacks.push(callback);
+}
+
+Model.prototype.onItemRemoved = function(callback)
+{
+    this._itemRemovedCallbacks.push(callback);
 }
 
 Model.prototype.load = function(twitterScreenName)
@@ -61,7 +68,7 @@ Model.prototype._parseTweets = function(tweets)
     });
 
     this.items = items;
-    this.itemsLoaded();
+    this._fireItemsLoaded();
 };
 
 Model.prototype.add = function(name, tweet)
@@ -75,7 +82,7 @@ Model.prototype.add = function(name, tweet)
             var i = 0;
             while (i < model.items.length && model.items[i].name < name) ++i;
             model.items.splice(i, 0, {name:name, date:new Date()});
-            model.itemsLoaded();
+            model._fireItemsLoaded();
         }
         if (tweet)
             this.twitter.tweet("ON: " + name, success, function(data){});
@@ -94,7 +101,7 @@ Model.prototype.remove = function(name)
         {
             var item = model.items[index];
             model.items.splice(index,1);
-            model.itemRemoved(item);
+            model._fireItemRemoved(item);
         }
         this.twitter.tweet("OFF: " + name, success, function(data){});
     }
@@ -126,6 +133,16 @@ Model.prototype.findIndex = function(name)
     if (i == this.items.length) i = -1;
     return i;
 };
+
+Model.prototype._fireItemsLoaded = function()
+{
+    this._itemsLoadedCallbacks.forEach(function(callback) { callback(this.items); }, this);
+}
+
+Model.prototype._fireItemRemoved = function(item)
+{
+    this._itemRemovedCallbacks.forEach(function(callback) { callback(item); });
+}
 
 return Model;
 
