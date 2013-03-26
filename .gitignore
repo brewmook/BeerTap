@@ -1,5 +1,6 @@
 phonegap.js
 .classpath
+.idea
 .project
 .settings
 bin
