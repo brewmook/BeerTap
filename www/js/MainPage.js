@@ -1,5 +1,5 @@
-define(['MainView', 'TextInputDialog', 'EditPage', 'FollowingModel'],
-function(MainView, TextInputDialog, EditPage, FollowingModel) {
+define(['MainView', 'TextInputDialog', 'FollowingModel'],
+function(MainView, TextInputDialog, FollowingModel) {
 
 function stripLeadingAt(text)
 {
@@ -21,13 +21,11 @@ function addFollowToView(twitterScreenName, twitter, view, listPageId, editPageI
     }
 };
 
-function MainPage(id, twitter, listPage, viewFactory, settingsHref)
+function MainPage(id, twitter, listPage, editPage, settingsHref)
 {
     var followDialog = new TextInputDialog("followDialog");
     var model = new FollowingModel(localStorage);
     var view = new MainView(id);
-
-    var editPage = new EditPage("editPage", twitter, viewFactory);
 
     view.onEditableClicked(function(title) {
         editPage.show(title, stripLeadingAt(title));

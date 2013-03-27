@@ -1,5 +1,5 @@
-define(['Twitter', 'Model', 'JQMListView', 'ListPage', 'JQMEditView', 'MainPage', 'SettingsPage'],
-function(Twitter, Model, JQMListView, ListPage, JQMEditView, MainPage, SettingsPage) {
+define(['Twitter', 'Model', 'JQMListView', 'ListPage', 'JQMEditView', 'EditPage', 'MainPage', 'SettingsPage'],
+function(Twitter, Model, JQMListView, ListPage, JQMEditView, EditPage, MainPage, SettingsPage) {
 
 function BeerTap()
 {
@@ -13,7 +13,9 @@ function BeerTap()
     var listView = new JQMListView("listPage");
     var listPresenter = new ListPage("listPage", listModel, listView);
 
-    this.mainPage = new MainPage("main", this.twitter, listPresenter, jQueryMobileViewFactory, "#settings");
+    var editPresenter = new EditPage("editPage", this.twitter, jQueryMobileViewFactory);
+
+    this.mainPage = new MainPage("main", this.twitter, listPresenter, editPresenter, "#settings");
     this.settings = new SettingsPage("settings", this.twitter);
 
     $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
