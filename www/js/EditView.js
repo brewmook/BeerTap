@@ -4,7 +4,7 @@ function EditView(id, callbacks)
 {
     this.page =
     $('<div class="editview">\
-         <div class="header"><h1>@'+id+'</h1></div>\
+         <div class="header"><h1></h1></div>\
          <div class="content">\
            <ul></ul>\
          </div>\
@@ -21,6 +21,18 @@ function EditView(id, callbacks)
         .attr("href", callbacks.addHref)
         .click(callbacks.addClicked);
 }
+
+EditView.prototype.clear = function()
+{
+    var itemList = this.page.find("ul");
+    itemList.empty();
+    itemList.append('<li>Loading...</li>');
+};
+
+EditView.prototype.setHeading = function(heading)
+{
+    this.page.find("h1").text(heading);
+};
 
 EditView.prototype.refresh = function(items, callbacks)
 {

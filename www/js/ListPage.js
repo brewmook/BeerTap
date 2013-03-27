@@ -14,7 +14,7 @@ ListPage.prototype.show = function(title, twitterScreenName)
     this.view.clear();
     this.view.setHeading(title);
     this.model.load(twitterScreenName);
-}
+};
 
 return ListPage;
 

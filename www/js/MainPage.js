@@ -7,14 +7,13 @@ function stripLeadingAt(text)
     return text;
 }
 
-function addFollowToView(twitterScreenName, twitter, view, listPageId, viewFactory, refreshList)
+function addFollowToView(twitterScreenName, twitter, view, listPageId, editPageId, refreshList)
 {
     twitterScreenName = stripLeadingAt(twitterScreenName);
 
     if (twitterScreenName == twitter.authorisedScreenName())
     {
-        new EditPage(twitterScreenName, twitter, view.page, viewFactory);
-        view.addEditable("@"+twitterScreenName, "#"+twitterScreenName, refreshList)
+        view.addEditable("@"+twitterScreenName, "#"+editPageId, refreshList)
     }
     else
     {
@@ -28,6 +27,12 @@ function MainPage(id, twitter, listPage, viewFactory, settingsHref)
     var model = new FollowingModel(localStorage);
     var view = new MainView(id);
 
+    var editPage = new EditPage("editPage", twitter, viewFactory);
+
+    view.onEditableClicked(function(title) {
+        editPage.show(title, stripLeadingAt(title));
+    });
+
     view.onFollowingClicked(function(title) {
         listPage.show(title, stripLeadingAt(title));
     });
@@ -35,7 +40,7 @@ function MainPage(id, twitter, listPage, viewFactory, settingsHref)
     view.onFollowClicked("#followDialog", function() {
         followDialog.show("Follow", "Twitter user", "@", function(user) {
             model.add(user);
-            addFollowToView(user, twitter, view, listPage.id, viewFactory, true);
+            addFollowToView(user, twitter, view, listPage.id, editPage.id, true);
         });
     });
 
@@ -43,7 +48,7 @@ function MainPage(id, twitter, listPage, viewFactory, settingsHref)
 
     model.following.forEach(function(follow)
     {
-        addFollowToView(follow, twitter, view, listPage.id, viewFactory, false);
+        addFollowToView(follow, twitter, view, listPage.id, editPage.id, false);
     });
 }
 

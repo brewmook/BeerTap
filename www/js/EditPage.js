@@ -23,7 +23,7 @@ function onViewItemChangeClicked(model, newTextDialog, originalName)
     newTextDialog.show("Change Item", "Enter new text:", originalName, callback);
 };
 
-function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
+function EditPage(twitterScreenName, twitter, viewFactory)
 {
     var app = this;
 
@@ -45,13 +45,15 @@ function EditPage(twitterScreenName, twitter, parentPage, viewFactory)
     this.model.onItemsLoaded(function(items) { app.view.refresh(items, viewCallbacks); });
     this.model.onItemRemoved(function(item) { app.view.remove(item); });
 
-    this.view.page.on("pageshow", function( event, ui )
-    {
-        if (parentPage[0] == ui.prevPage[0]) viewCallbacks.refreshClicked();
-    });
-
     this.id = twitterScreenName;
 }
+
+EditPage.prototype.show = function(title, twitterScreenName)
+{
+    this.view.clear();
+    this.view.setHeading(title);
+    this.model.load(twitterScreenName);
+};
 
 return EditPage;
 

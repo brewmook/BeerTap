@@ -40,6 +40,7 @@ function MainView(id)
         .attr("data-role","button")
         .buttonMarkup({icon:'gear', inline:true, mini:false});
 
+    this._editableClickedCallback = function(title){};
     this._followingClickedCallback = function(title){};
 
     this.page.appendTo("body");
@@ -47,7 +48,7 @@ function MainView(id)
 
 MainView.prototype.addEditable = function(title, href, refresh)
 {
-    addLink(this.page, ".editableDivider", title, href, function(){}, refresh);
+    addLink(this.page, ".editableDivider", title, href, this._editableClickedCallback, refresh);
 };
 
 MainView.prototype.addFollowing = function(title, href, refresh)
@@ -68,6 +69,11 @@ MainView.prototype.onSettingsClicked = function(href, click)
 MainView.prototype.onFollowingClicked = function(callback)
 {
     this._followingClickedCallback = callback;
+};
+
+MainView.prototype.onEditableClicked = function(callback)
+{
+    this._editableClickedCallback = callback;
 };
 
 return MainView;

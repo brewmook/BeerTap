@@ -25,6 +25,16 @@ function JQMEditView(id, callbacks)
     this.page.appendTo("body");
 }
 
+JQMEditView.prototype.clear = function()
+{
+    this.view.clear();
+}
+
+JQMEditView.prototype.setHeading = function(heading)
+{
+    this.view.setHeading(heading);
+}
+
 JQMEditView.prototype.refresh = function(items, callbacks)
 {
     this.view.refresh(items, callbacks);
