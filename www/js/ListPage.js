@@ -1,9 +1,9 @@
 define(function() {
 
-function ListPage(twitterScreenName, model, factory)
+function ListPage(twitterScreenName, model, view)
 {
     var page = this;
-    this.view = factory.newListView(twitterScreenName);
+    this.view = view;
     this.view.onRefreshClicked(function() { model.load(twitterScreenName); });
     this.model = model;
     this.model.onItemsLoaded(function(items) { page.view.refresh(items); });
