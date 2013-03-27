@@ -14,10 +14,13 @@ function JQMListView(id)
                               .buttonMarkup({icon: 'refresh',
                                              inline: true,
                                              mini: false});
-    var view = this.view;
-    this.page.on("pageshow", function() { view._fireRefreshClicked(); });
     this.page.appendTo("body");
 }
+
+JQMListView.prototype.clear = function()
+{
+    this.view.clear();
+};
 
 JQMListView.prototype.setHeading = function(heading)
 {

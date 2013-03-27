@@ -16,6 +16,13 @@ function ListView(id)
     this._refreshClickedCallbacks = [];
 }
 
+ListView.prototype.clear = function()
+{
+    var itemList = this.page.find("ul");
+    itemList.empty();
+    itemList.append('<li>Loading...</li>');
+};
+
 ListView.prototype.setHeading = function(heading)
 {
     this.page.find("h1").text(heading);

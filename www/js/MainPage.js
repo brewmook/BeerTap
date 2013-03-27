@@ -1,10 +1,15 @@
-define(['MainView', 'TextInputDialog', 'ListPage', 'EditPage', 'FollowingModel', 'Model'],
-function(MainView, TextInputDialog, ListPage, EditPage, FollowingModel, Model) {
+define(['MainView', 'TextInputDialog', 'EditPage', 'FollowingModel'],
+function(MainView, TextInputDialog, EditPage, FollowingModel) {
 
-function addFollowToView(twitterScreenName, twitter, view, viewFactory, refreshList)
+function stripLeadingAt(text)
 {
-    if (twitterScreenName[0] == "@")
-        twitterScreenName = twitterScreenName.substring(1);
+    if (text[0] == "@") return text.substring(1);
+    return text;
+}
+
+function addFollowToView(twitterScreenName, twitter, view, listPageId, viewFactory, refreshList)
+{
+    twitterScreenName = stripLeadingAt(twitterScreenName);
 
     if (twitterScreenName == twitter.authorisedScreenName())
     {
@@ -13,24 +18,24 @@ function addFollowToView(twitterScreenName, twitter, view, viewFactory, refreshL
     }
     else
     {
-        var model = new Model(twitter);
-        var listView = viewFactory.newListView(twitterScreenName);
-        listView.setHeading('@'+twitterScreenName);
-        new ListPage(twitterScreenName, model, listView);
-        view.addFollowing("@"+twitterScreenName, "#"+twitterScreenName, refreshList)
+        view.addFollowing("@"+twitterScreenName, "#"+listPageId, refreshList)
     }
 };
 
-function MainPage(id, twitter, viewFactory, settingsHref)
+function MainPage(id, twitter, listPage, viewFactory, settingsHref)
 {
     var followDialog = new TextInputDialog("followDialog");
     var model = new FollowingModel(localStorage);
     var view = new MainView(id);
 
+    view.onFollowingClicked(function(title) {
+        listPage.show(title, stripLeadingAt(title));
+    });
+
     view.setFollowButton("#followDialog", function() {
         followDialog.show("Follow", "Twitter user", "@", function(user) {
             model.add(user);
-            addFollowToView(user, twitter, view, viewFactory, true);
+            addFollowToView(user, twitter, view, listPage.id, viewFactory, true);
         });
     });
 
@@ -38,7 +43,7 @@ function MainPage(id, twitter, viewFactory, settingsHref)
 
     model.following.forEach(function(follow)
     {
-        addFollowToView(follow, twitter, view, viewFactory, false);
+        addFollowToView(follow, twitter, view, listPage.id, viewFactory, false);
     });
 }
 

@@ -1,11 +1,11 @@
 define(function() {
 
-function addLink(page, selector, title, href, refresh)
+function addLink(page, selector, title, href, click, refresh)
 {
     var list = page.find("ul");
     var after = list.find(selector);
     var li = $("<li/>").insertAfter(after);
-    var a = $("<a/>").attr("href",href).append(title).appendTo(li);
+    var a = $("<a/>").attr("href",href).append(title).appendTo(li).click(function() { click(title); });
     after.show();
     if (refresh) list.listview('refresh');
 }
@@ -40,17 +40,19 @@ function MainView(id)
         .attr("data-role","button")
         .buttonMarkup({icon:'gear', inline:true, mini:false});
 
+    this._followingClickedCallback = function(title){};
+
     this.page.appendTo("body");
 }
 
 MainView.prototype.addEditable = function(title, href, refresh)
 {
-    addLink(this.page, ".editableDivider", title, href, refresh);
+    addLink(this.page, ".editableDivider", title, href, function(){}, refresh);
 };
 
 MainView.prototype.addFollowing = function(title, href, refresh)
 {
-    addLink(this.page, ".followingDivider", title, href, refresh);
+    addLink(this.page, ".followingDivider", title, href, this._followingClickedCallback, refresh);
 };
 
 MainView.prototype.setFollowButton = function(href, click)
@@ -61,6 +63,11 @@ MainView.prototype.setFollowButton = function(href, click)
 MainView.prototype.setSettingsButton = function(href, click)
 {
     this.page.find(".settings").attr("href",href).click(click);
+};
+
+MainView.prototype.onFollowingClicked = function(callback)
+{
+    this._followingClickedCallback = callback;
 };
 
 return MainView;

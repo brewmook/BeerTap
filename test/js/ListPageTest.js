@@ -11,7 +11,9 @@ function(ListPage) {
                 onItemsLoadedArgument: function(){}
             }
             this.view = {
+                clear: function() { this.clearCalled = true; },
                 refresh: function(arg) { this.refreshArgument = arg; },
+                setHeading: function(title) { this.setHeadingArgument = title; },
                 onRefreshClicked: function(arg) { this.onRefreshClickedArgument = arg; },
                 onRefreshClickedArgument: function(){}
             }
@@ -42,6 +44,18 @@ function(ListPage) {
             var listPage = new ListPage("twitterid", this.model, this.view);
             this.model.onItemsLoadedArgument(items);
             assertSame(items, this.view.refreshArgument);
+        },
+
+        "test show(): set view header, clear view, load feed": function() {
+            var title = 'a title';
+            var twitterid = 'something';
+
+            var listPage = new ListPage("whatever", this.model, this.view);
+            listPage.show(title, twitterid);
+
+            assertTrue(this.view.clearCalled);
+            assertEquals(title, this.view.setHeadingArgument);
+            assertEquals(twitterid, this.model.loadArgument);
         }
 
     });
