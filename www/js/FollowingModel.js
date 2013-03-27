@@ -1,16 +1,17 @@
 define([],
 function() {
 
-function FollowingModel()
+function FollowingModel(store)
 {
-    this.following = JSON.parse(localStorage.getItem('following')) || [];
+    this.store = store;
+    this.following = JSON.parse(store.getItem('following')) || [];
 }
 
 FollowingModel.prototype.add = function(user)
 {
     this.following.push(user);
-    localStorage.setItem('following', JSON.stringify(this.following));
-}
+    this.store.setItem('following', JSON.stringify(this.following));
+};
 
 return FollowingModel;
 

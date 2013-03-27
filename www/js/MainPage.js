@@ -23,7 +23,7 @@ function addFollowToView(twitterScreenName, twitter, view, viewFactory, refreshL
 function MainPage(id, twitter, viewFactory, settingsHref)
 {
     var followDialog = new TextInputDialog("followDialog");
-    var model = new FollowingModel();
+    var model = new FollowingModel(localStorage);
     var view = new MainView(id);
 
     view.setFollowButton("#followDialog", function() {
