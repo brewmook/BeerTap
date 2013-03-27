@@ -4,7 +4,7 @@ function ListView(id)
 {
     this.page =
     $('<div class="listview">\
-         <div class="header"><h1>@'+id+'</h1></div>\
+         <div class="header"><h1></h1></div>\
          <div class="content">\
            <ul></ul>\
          </div>\
@@ -16,10 +16,15 @@ function ListView(id)
     this._refreshClickedCallbacks = [];
 }
 
+ListView.prototype.setHeading = function(heading)
+{
+    this.page.find("h1").text(heading);
+};
+
 ListView.prototype.onRefreshClicked = function(callback)
 {
     this._refreshClickedCallbacks.push(callback);
-}
+};
 
 ListView.prototype.refresh = function(items)
 {
@@ -35,7 +40,7 @@ ListView.prototype.refresh = function(items)
 ListView.prototype._fireRefreshClicked = function()
 {
     this._refreshClickedCallbacks.forEach(function(callback) { callback(); });
-}
+};
 
 return ListView;
 

@@ -15,6 +15,7 @@ function addFollowToView(twitterScreenName, twitter, view, viewFactory, refreshL
     {
         var model = new Model(twitter);
         var listView = viewFactory.newListView(twitterScreenName);
+        listView.setHeading('@'+twitterScreenName);
         new ListPage(twitterScreenName, model, listView);
         view.addFollowing("@"+twitterScreenName, "#"+twitterScreenName, refreshList)
     }

@@ -5,7 +5,7 @@ function BeerTap()
 {
     var jQueryMobileViewFactory = {
         newListView: function(id) { return new JQMListView(id); },
-        newEditView: function(id, callbacks) { return new JQMEditView(id, callbacks); },
+        newEditView: function(id, callbacks) { return new JQMEditView(id, callbacks); }
     };
 
     this.twitter = new Twitter(localStorage);

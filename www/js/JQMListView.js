@@ -19,10 +19,15 @@ function JQMListView(id)
     this.page.appendTo("body");
 }
 
+JQMListView.prototype.setHeading = function(heading)
+{
+    this.view.setHeading(heading);
+};
+
 JQMListView.prototype.onRefreshClicked = function(callback)
 {
     this.view.onRefreshClicked(callback);
-}
+};
 
 JQMListView.prototype.refresh = function(items)
 {
