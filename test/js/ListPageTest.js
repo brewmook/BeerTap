@@ -40,7 +40,7 @@ function(ListPage) {
         "test when model items loaded, view.refresh() is called": function() {
             var items = [1, 2, 3];
             var listPage = new ListPage("twitterid", this.model, this.view);
-            this.model.onItemsLoadedArgument();
+            this.model.onItemsLoadedArgument(items);
             assertSame(items, this.view.refreshArgument);
         }
 
