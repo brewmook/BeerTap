@@ -9,8 +9,14 @@ function FollowingModel(store)
 
 FollowingModel.prototype.add = function(user)
 {
-    this.following.push(user);
-    this.store.setItem('following', JSON.stringify(this.following));
+    for (var i = 0; i < this.following.length; ++i)
+        if (this.following[i] == user) break;
+
+    if (i == this.following.length)
+    {
+        this.following.push(user);
+        this.store.setItem('following', JSON.stringify(this.following));
+    }
 };
 
 return FollowingModel;

@@ -45,6 +45,18 @@ define(['FollowingModel'],
 
                 assertEquals(expected, model.following);
                 assertEquals(JSON.stringify(expected), store.contents.following);
+            },
+
+            "test add(): following list is unique, so is serialisation to store": function() {
+                var expected = ['summer'];
+                var store = new MockLocalStore({});
+                var model = new FollowingModel(store);
+
+                model.add('summer');
+                model.add('summer');
+
+                assertEquals(expected, model.following);
+                assertEquals(JSON.stringify(expected), store.contents.following);
             }
         });
 
