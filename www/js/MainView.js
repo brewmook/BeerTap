@@ -55,12 +55,12 @@ MainView.prototype.addFollowing = function(title, href, refresh)
     addLink(this.page, ".followingDivider", title, href, this._followingClickedCallback, refresh);
 };
 
-MainView.prototype.setFollowButton = function(href, click)
+MainView.prototype.onFollowClicked = function(href, click)
 {
     this.page.find(".follow").attr("href",href).click(click);
 };
 
-MainView.prototype.setSettingsButton = function(href, click)
+MainView.prototype.onSettingsClicked = function(href, click)
 {
     this.page.find(".settings").attr("href",href).click(click);
 };

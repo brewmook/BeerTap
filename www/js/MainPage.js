@@ -32,14 +32,14 @@ function MainPage(id, twitter, listPage, viewFactory, settingsHref)
         listPage.show(title, stripLeadingAt(title));
     });
 
-    view.setFollowButton("#followDialog", function() {
+    view.onFollowClicked("#followDialog", function() {
         followDialog.show("Follow", "Twitter user", "@", function(user) {
             model.add(user);
             addFollowToView(user, twitter, view, listPage.id, viewFactory, true);
         });
     });
 
-    view.setSettingsButton(settingsHref, function(){});
+    view.onSettingsClicked(settingsHref, function(){});
 
     model.following.forEach(function(follow)
     {
