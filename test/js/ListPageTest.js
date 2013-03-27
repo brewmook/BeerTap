@@ -3,33 +3,45 @@ function(ListPage) {
 
     TestCase("ListPageTest", {
 
-        "test id is assigned from twitter user id": function() {
-            var factory = {
-                newListView : function(id, callback) {}
-            };
-            var listPage = new ListPage("pies", "twitter", factory);
-
-            assertEquals("pies", listPage.id);
+        setUp: function() {
+            var mock = this;
+            this.model = {
+                load: function(arg) { this.loadArgument = arg; },
+                onItemsLoaded: function(arg) { this.onItemsLoadedArgument = arg; },
+                onItemsLoadedArgument: function(){}
+            }
+            this.view = {
+                refresh: function(arg) { this.refreshArgument = arg; },
+                onRefreshClicked: function(arg) { this.onRefreshClickedArgument = arg; },
+                onRefreshClickedArgument: function(){}
+            }
         },
 
-        "test ListView created with id": function() {
-            var factory = {
-                newModel : function() {},
-                newListView : function(id, callback) { if (id == "pies") return "fake ListView"; }
-            };
-            var listPage = new ListPage("pies", "twitter", factory);
-
-            assertEquals("fake ListView", listPage.view);
+        tearDown: function() {
+            delete this.model;
+            delete this.view;
         },
 
-        "test id is passed to new ListView": function() {
-            var factory = {
-                newListView : function(id, callback) { if (id == "pies") return "fake ListView"; }
-            };
-            var listPage = new ListPage("pies", "twitter", factory);
+        "test id, model and view are assigned from construction arguments": function() {
+            var id = "pies";
+            var listPage = new ListPage(id, this.model, this.view);
 
-            assertEquals("fake ListView", listPage.view);
-            assert
+            assertSame(id, listPage.id);
+            assertSame(this.model, listPage.model);
+            assertSame(this.view, listPage.view);
+        },
+
+        "test when refresh clicked, model.load() is called": function() {
+            var listPage = new ListPage("twitterid", this.model, this.view);
+            this.view.onRefreshClickedArgument();
+            assertSame("twitterid", this.model.loadArgument);
+        },
+
+        "test when model items loaded, view.refresh() is called": function() {
+            var items = [1, 2, 3];
+            var listPage = new ListPage("twitterid", this.model, this.view);
+            this.model.onItemsLoadedArgument();
+            assertSame(items, this.view.refreshArgument);
         }
 
     });
