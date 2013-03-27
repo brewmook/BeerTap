@@ -38,8 +38,8 @@ define(['FollowingModel'],
             "test add(): names are added to following and serialised to store": function() {
                 var expected = ['rico', 'kip'];
                 var store = new MockLocalStore({});
-                var model = new FollowingModel(store);
 
+                var model = new FollowingModel(store);
                 model.add('rico');
                 model.add('kip');
 
@@ -50,13 +50,41 @@ define(['FollowingModel'],
             "test add(): following list is unique, so is serialisation to store": function() {
                 var expected = ['summer'];
                 var store = new MockLocalStore({});
-                var model = new FollowingModel(store);
 
+                var model = new FollowingModel(store);
                 model.add('summer');
                 model.add('summer');
 
                 assertEquals(expected, model.following);
                 assertEquals(JSON.stringify(expected), store.contents.following);
+            },
+
+            "test add(): fires followingChanged event to all listeners": function() {
+                var original = ['rex'];
+                var expected = ['rex', 'deb'];
+                var store = new MockLocalStore({ following: JSON.stringify(original) });
+                var resultOne = null;
+                var resultTwo = null;
+
+                var model = new FollowingModel(store);
+                model.onFollowingChanged(function(following) { resultOne = following; });
+                model.onFollowingChanged(function(following) { resultTwo = following; });
+                model.add('deb');
+
+                assertEquals(expected, resultOne);
+                assertEquals(expected, resultTwo);
+            },
+
+            "test add(): fires followingChanged event to all listeners": function() {
+                var original = ['rex'];
+                var store = new MockLocalStore({ following: JSON.stringify(original) });
+                var result = null;
+
+                var model = new FollowingModel(store);
+                model.onFollowingChanged(function(following) { result = following; });
+                model.add('rex');
+
+                assertEquals(null, result);
             }
         });
 
