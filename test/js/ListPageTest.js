@@ -4,19 +4,18 @@ function(ListPage) {
     TestCase("ListPageTest", {
 
         setUp: function() {
-            var mock = this;
             this.model = {
                 load: function(arg) { this.loadArgument = arg; },
                 onItemsLoaded: function(arg) { this.onItemsLoadedArgument = arg; },
-                onItemsLoadedArgument: function(){}
-            }
+                onItemsLoadedArgument: function(items){}
+            };
             this.view = {
                 clear: function() { this.clearCalled = true; },
                 refresh: function(arg) { this.refreshArgument = arg; },
                 setHeading: function(title) { this.setHeadingArgument = title; },
                 onRefreshClicked: function(arg) { this.onRefreshClickedArgument = arg; },
                 onRefreshClickedArgument: function(){}
-            }
+            };
         },
 
         tearDown: function() {
