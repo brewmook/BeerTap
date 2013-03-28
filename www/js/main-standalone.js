@@ -5,11 +5,11 @@ requirejs.config({
     }
 });
 
-requirejs(['lib/domReady!', 'Twitter', 'ListView', 'ListPage', 'Model'],
-function (doc, Twitter, ListView, ListPage, Model) {
+requirejs(['lib/domReady!', 'Twitter', 'ListView', 'ListPage', 'TapsModel'],
+function (doc, Twitter, ListView, ListPage, TapsModel) {
     
     var twitter = new Twitter(localStorage);
-    var model = new Model(twitter);
+    var model = new TapsModel(twitter);
     var view = new ListView('daveappendix');
     view.setHeading('@daveappendix');
     var page = new ListPage('daveappendix', model, view);

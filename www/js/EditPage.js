@@ -1,5 +1,5 @@
-define(['Model', 'TextInputDialog', 'TwitterConfirmer'],
-function(Model, TextInputDialog, TwitterConfirmer) {
+define(['TapsModel', 'TextInputDialog', 'TwitterConfirmer'],
+function(TapsModel, TextInputDialog, TwitterConfirmer) {
 
 function onViewAddClicked(model, newTextDialog)
 {
@@ -41,7 +41,7 @@ function EditPage(twitterScreenName, twitter, viewFactory)
     };
 
     this.view = viewFactory.newEditView(twitterScreenName, viewCallbacks);
-    this.model = new Model(new TwitterConfirmer(twitter, this.view.page));
+    this.model = new TapsModel(new TwitterConfirmer(twitter, this.view.page));
     this.model.onItemsLoaded(function(items) { app.view.refresh(items, viewCallbacks); });
     this.model.onItemRemoved(function(item) { app.view.remove(item); });
 

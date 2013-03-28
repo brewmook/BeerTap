@@ -10,7 +10,7 @@ function keys(obj) {
     return result;
 }
 
-function Model(twitter)
+function TapsModel(twitter)
 {
     this.twitter = twitter;
     this.items = [];
@@ -18,17 +18,17 @@ function Model(twitter)
     this._itemRemovedCallbacks = [];
 }
 
-Model.prototype.onItemsLoaded = function(callback)
+TapsModel.prototype.onItemsLoaded = function(callback)
 {
     this._itemsLoadedCallbacks.push(callback);
-}
+};
 
-Model.prototype.onItemRemoved = function(callback)
+TapsModel.prototype.onItemRemoved = function(callback)
 {
     this._itemRemovedCallbacks.push(callback);
-}
+};
 
-Model.prototype.load = function(twitterScreenName)
+TapsModel.prototype.load = function(twitterScreenName)
 {
     var model = this;
     this.twitter.getUserTimeline(twitterScreenName, function(data)
@@ -37,7 +37,7 @@ Model.prototype.load = function(twitterScreenName)
     });
 };
 
-Model.prototype._parseTweets = function(tweets)
+TapsModel.prototype._parseTweets = function(tweets)
 {
     tweets.reverse(); // chronological order please
 
@@ -71,7 +71,7 @@ Model.prototype._parseTweets = function(tweets)
     this._fireItemsLoaded();
 };
 
-Model.prototype.add = function(name, tweet)
+TapsModel.prototype.add = function(name, tweet)
 {
     var index = this.findIndex(name);
     if (index < 0)
@@ -91,7 +91,7 @@ Model.prototype.add = function(name, tweet)
     }
 };
 
-Model.prototype.remove = function(name)
+TapsModel.prototype.remove = function(name)
 {
     var index = this.findIndex(name);
     if (index >= 0)
@@ -107,7 +107,7 @@ Model.prototype.remove = function(name)
     }
 };
 
-Model.prototype.change = function(oldname, newname)
+TapsModel.prototype.change = function(oldname, newname)
 {
     if (oldname != newname)
     {
@@ -126,7 +126,7 @@ Model.prototype.change = function(oldname, newname)
     }
 };
 
-Model.prototype.findIndex = function(name)
+TapsModel.prototype.findIndex = function(name)
 {
     var i = 0;
     while (i < this.items.length && this.items[i].name != name) ++i;
@@ -134,16 +134,16 @@ Model.prototype.findIndex = function(name)
     return i;
 };
 
-Model.prototype._fireItemsLoaded = function()
+TapsModel.prototype._fireItemsLoaded = function()
 {
     this._itemsLoadedCallbacks.forEach(function(callback) { callback(this.items); }, this);
-}
+};
 
-Model.prototype._fireItemRemoved = function(item)
+TapsModel.prototype._fireItemRemoved = function(item)
 {
     this._itemRemovedCallbacks.forEach(function(callback) { callback(item); });
-}
+};
 
-return Model;
+return TapsModel;
 
 });

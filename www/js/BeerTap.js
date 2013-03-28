@@ -1,5 +1,5 @@
-define(['Twitter', 'Model', 'JQMListView', 'ListPage', 'JQMEditView', 'EditPage', 'MainPage', 'SettingsPage'],
-function(Twitter, Model, JQMListView, ListPage, JQMEditView, EditPage, MainPage, SettingsPage) {
+define(['Twitter', 'TapsModel', 'JQMListView', 'ListPage', 'JQMEditView', 'EditPage', 'MainPage', 'SettingsPage'],
+function(Twitter, TapsModel, JQMListView, ListPage, JQMEditView, EditPage, MainPage, SettingsPage) {
 
 function BeerTap()
 {
@@ -9,7 +9,7 @@ function BeerTap()
 
     this.twitter = new Twitter(localStorage);
 
-    var listModel = new Model(this.twitter);
+    var listModel = new TapsModel(this.twitter);
     var listView = new JQMListView("listPage");
     var listPresenter = new ListPage("listPage", listModel, listView);
 
