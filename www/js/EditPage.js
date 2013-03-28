@@ -30,8 +30,6 @@ function(TapsModel, TextInputDialog, TwitterConfirmer) {
         var newTextDialog = new TextInputDialog("newTextDialog");
 
         var viewCallbacks = {
-            addHref:       "#newTextDialog",
-            addClicked:    function() { onViewAddClicked(app.model, newTextDialog); },
             removeHref:    "#",
             removeClicked: function(item) { app.model.remove(item.name); },
             refreshHref:    "#",
@@ -39,6 +37,9 @@ function(TapsModel, TextInputDialog, TwitterConfirmer) {
         };
 
         this.view = viewFactory.newEditView(twitterScreenName, viewCallbacks);
+        this.view.onAddClicked("#newTextDialog", function() {
+            onViewAddClicked(app.model, newTextDialog);
+        });
         this.view.onChangeClicked("#newTextDialog", function(item) {
             onViewItemChangeClicked(app.model, newTextDialog, item.name);
         });

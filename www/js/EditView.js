@@ -17,9 +17,6 @@ define(function() {
         this.page.find(".refreshButton")
             .attr("href", callbacks.refreshHref)
             .click(callbacks.refreshClicked);
-        this.page.find(".addButton")
-            .attr("href", callbacks.addHref)
-            .click(callbacks.addClicked);
 
         this._changeClickedHref = "#";
         this._changeClickedCallback = function(item){};
@@ -59,6 +56,11 @@ define(function() {
     {
         var itemList = this.page.find("ul");
         itemList.find("a").filter(function(i){return $(this).text() == item.name;}).parents("li").remove();
+    };
+
+    EditView.prototype.onAddClicked = function(href, callback)
+    {
+        this.page.find(".addButton").attr("href", href).click(callback);
     };
 
     EditView.prototype.onChangeClicked = function(href, callback)
