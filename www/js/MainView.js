@@ -1,13 +1,9 @@
 define(function() {
 
-function addLink(page, selector, title, href, click, refresh)
+function addLink(list, title, href, click)
 {
-    var list = page.find("ul");
-    var after = list.find(selector);
-    var li = $("<li/>").insertAfter(after);
-    var a = $("<a/>").attr("href",href).append(title).appendTo(li).click(function() { click(title); });
-    after.show();
-    if (refresh) list.listview('refresh');
+    var a = $("<a/>").attr("href",href).append(title).click(function() { click(title); });
+    list.append($("<li/>").append(a));
 }
 
 function MainView(id)
@@ -16,10 +12,7 @@ function MainView(id)
     $('<div>\
          <div class="header"><h1>BeerTap</h1></div>\
          <div data-role="content">\
-           <ul>\
-             <li class="editableDivider">Editable</li>\
-             <li class="followingDivider">Following</li>\
-           </ul>\
+           <ul></ul>\
          </div>\
          <div class="footer">\
            <a class="follow" href="#">Follow</a>\
@@ -31,7 +24,6 @@ function MainView(id)
     this.page.find(".header").attr({'data-role':'header', 'data-position':'fixed'})
     this.page.find("ul").attr({"data-role":"listview",
                                "data-inset":"false"});
-    this.page.find("li").attr('data-role', 'list-divider').hide();
     this.page.find(".footer").attr({'data-role':'footer', 'data-position':'fixed'});
     this.page.find(".follow")
         .attr("data-role","button")
@@ -40,21 +32,35 @@ function MainView(id)
         .attr("data-role","button")
         .buttonMarkup({icon:'gear', inline:true, mini:false});
 
+    this._editableClickedHref = "#";
     this._editableClickedCallback = function(title){};
+    this._followingClickedHref = "#";
     this._followingClickedCallback = function(title){};
 
     this.page.appendTo("body");
 }
 
-MainView.prototype.addEditable = function(title, href, refresh)
+MainView.prototype.refresh = function(editable, following, jqmRrefresh)
 {
-    addLink(this.page, ".editableDivider", title, href, this._editableClickedCallback, refresh);
-};
+    var list = this.page.find("ul");
+    list.empty();
 
-MainView.prototype.addFollowing = function(title, href, refresh)
-{
-    addLink(this.page, ".followingDivider", title, href, this._followingClickedCallback, refresh);
-};
+    if (editable.length > 0)
+        list.append($('<li>Editable</li>').attr('data-role', 'list-divider'));
+
+    editable.forEach(function(name) {
+        addLink(list, name, this._editableClickedHref, this._editableClickedCallback);
+    }, this);
+
+    if (following.length > 0)
+        list.append($('<li>Following</li>').attr('data-role', 'list-divider'));
+
+    following.forEach(function(name) {
+        addLink(list, name, this._followingClickedHref, this._followingClickedCallback);
+    }, this);
+
+    if (jqmRrefresh) list.listview('refresh');
+}
 
 MainView.prototype.onFollowClicked = function(href, click)
 {
@@ -66,13 +72,15 @@ MainView.prototype.onSettingsClicked = function(href, click)
     this.page.find(".settings").attr("href",href).click(click);
 };
 
-MainView.prototype.onFollowingClicked = function(callback)
+MainView.prototype.onFollowingClicked = function(href, callback)
 {
+    this._followingClickedHref = href;
     this._followingClickedCallback = callback;
 };
 
-MainView.prototype.onEditableClicked = function(callback)
+MainView.prototype.onEditableClicked = function(href, callback)
 {
+    this._editableClickedHref = href;
     this._editableClickedCallback = callback;
 };
 

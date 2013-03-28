@@ -7,19 +7,21 @@ function stripLeadingAt(text)
     return text;
 }
 
-function addFollowToView(twitterScreenName, twitter, view, listPageId, editPageId, refreshList)
+function refreshView(view, authorisedTwitterName, nowFollowing, jqmRefresh)
 {
-    twitterScreenName = stripLeadingAt(twitterScreenName);
+    var editable = [];
+    var following = [];
+    var authorised = "@"+authorisedTwitterName;
 
-    if (twitterScreenName == twitter.authorisedScreenName())
-    {
-        view.addEditable("@"+twitterScreenName, "#"+editPageId, refreshList)
-    }
-    else
-    {
-        view.addFollowing("@"+twitterScreenName, "#"+listPageId, refreshList)
-    }
-};
+    nowFollowing.forEach(function(name) {
+        if (name == authorised)
+            editable.push(name);
+        else
+            following.push(name);
+    });
+
+    view.refresh(editable, following, jqmRefresh);
+}
 
 function MainPage(id, twitter, listPage, editPage, settingsHref)
 {
@@ -27,27 +29,27 @@ function MainPage(id, twitter, listPage, editPage, settingsHref)
     var model = new FollowingModel(localStorage);
     var view = new MainView(id);
 
-    view.onEditableClicked(function(title) {
+    model.onFollowingChanged(function(nowFollowing) {
+        refreshView(view, twitter.authorisedScreenName(), nowFollowing, true);
+    });
+
+    view.onEditableClicked("#"+editPage.id, function(title) {
         editPage.show(title, stripLeadingAt(title));
     });
 
-    view.onFollowingClicked(function(title) {
+    view.onFollowingClicked("#"+listPage.id, function(title) {
         listPage.show(title, stripLeadingAt(title));
     });
 
     view.onFollowClicked("#followDialog", function() {
         followDialog.show("Follow", "Twitter user", "@", function(user) {
             model.add(user);
-            addFollowToView(user, twitter, view, listPage.id, editPage.id, true);
         });
     });
 
     view.onSettingsClicked(settingsHref, function(){});
 
-    model.following.forEach(function(follow)
-    {
-        addFollowToView(follow, twitter, view, listPage.id, editPage.id, false);
-    });
+    refreshView(view, twitter.authorisedScreenName(), model.following, false);
 }
 
 return MainPage;
