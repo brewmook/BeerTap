@@ -56,6 +56,11 @@ define(['EditView'], function(EditView) {
         this.view.onChangeClicked(href, callback);
     };
 
+    JQMEditView.prototype.onRefreshClicked = function(href, callback)
+    {
+        this.view.onRefreshClicked(href, callback);
+    };
+
     return JQMEditView;
 
 });

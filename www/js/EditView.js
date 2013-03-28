@@ -14,10 +14,6 @@ define(function() {
              </div>\
            </div>');
 
-        this.page.find(".refreshButton")
-            .attr("href", callbacks.refreshHref)
-            .click(callbacks.refreshClicked);
-
         this._changeClickedHref = "#";
         this._changeClickedCallback = function(item){};
     }
@@ -67,6 +63,11 @@ define(function() {
     {
         this._changeClickedHref = href;
         this._changeClickedCallback = callback;
+    };
+
+    EditView.prototype.onRefreshClicked = function(href, callback)
+    {
+        this.page.find(".refreshButton").attr("href", href).click(callback);
     };
 
     return EditView;

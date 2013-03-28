@@ -23,7 +23,7 @@ function(TapsModel, TextInputDialog, TwitterConfirmer) {
         newTextDialog.show("Change Item", "Enter new text:", originalName, callback);
     }
 
-    function EditPage(twitterScreenName, twitter, viewFactory)
+    function EditPage(id, twitter, viewFactory)
     {
         var app = this;
 
@@ -31,24 +31,25 @@ function(TapsModel, TextInputDialog, TwitterConfirmer) {
 
         var viewCallbacks = {
             removeHref:    "#",
-            removeClicked: function(item) { app.model.remove(item.name); },
-            refreshHref:    "#",
-            refreshClicked: function() { app.model.load(twitterScreenName); }
+            removeClicked: function(item) { app.model.remove(item.name); }
         };
 
-        this.view = viewFactory.newEditView(twitterScreenName, viewCallbacks);
+        this.view = viewFactory.newEditView(id, viewCallbacks);
         this.view.onAddClicked("#newTextDialog", function() {
             onViewAddClicked(app.model, newTextDialog);
         });
         this.view.onChangeClicked("#newTextDialog", function(item) {
             onViewItemChangeClicked(app.model, newTextDialog, item.name);
         });
+        this.view.onRefreshClicked("#", function() {
+            app.model.load(twitter.authorisedScreenName());
+        });
 
         this.model = new TapsModel(new TwitterConfirmer(twitter, this.view.page));
         this.model.onItemsLoaded(function(items) { app.view.refresh(items, viewCallbacks); });
         this.model.onItemRemoved(function(item) { app.view.remove(item); });
 
-        this.id = twitterScreenName;
+        this.id = id;
     }
 
     EditPage.prototype.show = function(title, twitterScreenName)
