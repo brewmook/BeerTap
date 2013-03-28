@@ -13,7 +13,7 @@ function SettingsPage(id, twitter)
     this.view.addAuthoriser("PIN", "#twitterPinDialog", function() { pinAuthoriser.authorise(twitter); });
 
     var view = this.view;
-    twitter.addAuthorisationListener(function(userId, screenName) { view.setTwitterScreenName(screenName); });
+    twitter.onAuthorisationChange(function(userId, screenName) { view.setTwitterScreenName(screenName); });
 }
 
 return SettingsPage;

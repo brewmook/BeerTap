@@ -29,6 +29,10 @@ function MainPage(id, twitter, listPage, editPage, settingsHref)
     var model = new FollowingModel(localStorage);
     var view = new MainView(id);
 
+    twitter.onAuthorisationChange(function(userId, screenName) {
+        refreshView(view, screenName, model.following, true);
+    });
+
     model.onFollowingChanged(function(nowFollowing) {
         refreshView(view, twitter.authorisedScreenName(), nowFollowing, true);
     });

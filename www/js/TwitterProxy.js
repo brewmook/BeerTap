@@ -5,7 +5,7 @@ function TwitterProxy(localProxyUrl)
     this.localProxyUrl = localProxyUrl;
 }
 
-TwitterProxy.prototype.addAuthorisationListener = function(callback)
+TwitterProxy.prototype.onAuthorisationChange = function(callback)
 {
 }
 

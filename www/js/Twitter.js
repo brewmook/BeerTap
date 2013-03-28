@@ -3,12 +3,12 @@ define(['oAuthConfig'], function(oAuthConfig) {
 function Twitter(store)
 {
     this.store = store;
-    this.authorisationListeners = [];
+    this._authorisationChangeCallbacks = [];
 
     this.oAuth = OAuth({
         consumerKey: oAuthConfig.consumerKey,
         consumerSecret: oAuthConfig.consumerSecret,
-        enablePrivilege: false,
+        enablePrivilege: false
     });
 
     if (store.accessTokenKey && store.accessTokenSecret)
@@ -17,9 +17,9 @@ function Twitter(store)
     }
 }
 
-Twitter.prototype.addAuthorisationListener = function(callback)
+Twitter.prototype.onAuthorisationChange = function(callback)
 {
-    this.authorisationListeners.push(callback);
+    this._authorisationChangeCallbacks.push(callback);
 }
 
 Twitter.prototype.authorised = function()
@@ -68,7 +68,7 @@ Twitter.prototype.setAuthorisation = function(accessTokenKey, accessTokenSecret,
     this.store.userId = userId;
     this.store.screenName = screenName;
     this.oAuth.setAccessToken(accessTokenKey, accessTokenSecret);
-    this.authorisationListeners.forEach(function(callback) { callback(userId, screenName); });
+    this._authorisationChangeCallbacks.forEach(function(callback) { callback(userId, screenName); });
 }
 
 Twitter.prototype.authorisedScreenName = function()
