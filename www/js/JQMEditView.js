@@ -19,7 +19,7 @@ function JQMEditView(id, callbacks)
     this.itemList = this.page.find("ul");
     this.itemList.attr({"data-role":"listview",
                         "data-split-icon":"delete",
-                        "data-split-theme":"e",
+                        "data-split-theme":"c",
                         "data-inset":"false"});
 
     this.page.appendTo("body");

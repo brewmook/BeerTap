@@ -45,6 +45,10 @@ function MainPage(id, twitter, listPage, editPage, settingsHref)
         listPage.show(title, stripLeadingAt(title));
     });
 
+    view.onRemoveClicked(function(title) {
+        model.remove(title);
+    });
+
     view.onFollowClicked("#followDialog", function() {
         followDialog.show("Follow", "Twitter user", "@", function(user) {
             model.add(user);
