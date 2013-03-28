@@ -1,6 +1,12 @@
 define([],
 function() {
 
+function updateStoreAndNotify(following, store, callbacks)
+{
+    store.setItem('following', JSON.stringify(following));
+    callbacks.forEach(function(callback){ callback(following); });
+}
+
 function FollowingModel(store)
 {
     this.store = store;
@@ -10,14 +16,21 @@ function FollowingModel(store)
 
 FollowingModel.prototype.add = function(user)
 {
-    for (var i = 0; i < this.following.length; ++i)
-        if (this.following[i] == user) break;
-
-    if (i == this.following.length)
+    var i = this.following.indexOf(user);
+    if (i < 0)
     {
         this.following.push(user);
-        this.store.setItem('following', JSON.stringify(this.following));
-        this._followingChangedCallbacks.forEach(function(callback){ callback(this.following); }, this);
+        updateStoreAndNotify(this.following, this.store, this._followingChangedCallbacks);
+    }
+};
+
+FollowingModel.prototype.remove = function(user)
+{
+    var i = this.following.indexOf(user);
+    if (i >= 0)
+    {
+        this.following.splice(i, 1);
+        updateStoreAndNotify(this.following, this.store, this._followingChangedCallbacks);
     }
 };
 
