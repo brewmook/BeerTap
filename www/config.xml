@@ -3,7 +3,7 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
     xmlns:gap = "http://phonegap.com/ns/1.0"
     id        = "com.coolhandmook.beertap"
-    version   = "0.1.1">
+    version   = "0.1.2">
 
 <name>BeerTap</name>
 <description>Find out what beers are on tap at your favourite pubs.</description>
