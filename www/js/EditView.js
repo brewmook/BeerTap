@@ -20,6 +20,9 @@ define(function() {
         this.page.find(".addButton")
             .attr("href", callbacks.addHref)
             .click(callbacks.addClicked);
+
+        this._changeClickedHref = "#";
+        this._changeClickedCallback = function(item){};
     }
 
     EditView.prototype.clear = function()
@@ -37,13 +40,14 @@ define(function() {
     EditView.prototype.refresh = function(items, callbacks)
     {
         var itemList = this.page.find("ul");
+        var view = this;
         itemList.empty();
         items.forEach(function(item) {
             var li = $("<li/>");
             li.append($("<a/>")
                       .append(item.name)
-                      .attr("href", callbacks.changeHref)
-                      .click(function() { callbacks.changeClicked(item); }));
+                      .attr("href", view._changeClickedHref)
+                      .click(function() { view._changeClickedCallback(item); }));
             li.append($("<a>Remove</a>")
                       .attr("href", callbacks.removeHref)
                       .click(function() { callbacks.removeClicked(item); }));
@@ -55,6 +59,12 @@ define(function() {
     {
         var itemList = this.page.find("ul");
         itemList.find("a").filter(function(i){return $(this).text() == item.name;}).parents("li").remove();
+    };
+
+    EditView.prototype.onChangeClicked = function(href, callback)
+    {
+        this._changeClickedHref = href;
+        this._changeClickedCallback = callback;
     };
 
     return EditView;
