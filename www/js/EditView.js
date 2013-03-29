@@ -74,22 +74,22 @@ function(TextInputDialog) {
         itemList.find("a").filter(function(i){return $(this).text() == item.name;}).parents("li").remove();
     };
 
-    EditView.prototype.onAddClicked = function(href, callback)
+    EditView.prototype.onAddClicked = function(callback)
     {
         this._addClickedCallback = callback;
     };
 
-    EditView.prototype.onChangeClicked = function(href, callback)
+    EditView.prototype.onChangeClicked = function(callback)
     {
         this._changeClickedCallback = callback;
     };
 
-    EditView.prototype.onRefreshClicked = function(href, callback)
+    EditView.prototype.onRefreshClicked = function(callback)
     {
         this.page.find(".refreshButton").attr("href", "#").unbind('click').click(callback);
     };
 
-    EditView.prototype.onRemoveClicked = function(href, callback)
+    EditView.prototype.onRemoveClicked = function(callback)
     {
         this._removeClickedCallback = callback;
     };

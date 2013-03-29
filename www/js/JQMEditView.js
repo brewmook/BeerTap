@@ -46,24 +46,24 @@ define(['EditView'], function(EditView) {
         this.view.remove(item);
     };
 
-    JQMEditView.prototype.onAddClicked = function(href, callback)
+    JQMEditView.prototype.onAddClicked = function(callback)
     {
-        this.view.onAddClicked(href, callback);
+        this.view.onAddClicked(callback);
     };
 
-    JQMEditView.prototype.onChangeClicked = function(href, callback)
+    JQMEditView.prototype.onChangeClicked = function(callback)
     {
-        this.view.onChangeClicked(href, callback);
+        this.view.onChangeClicked(callback);
     };
 
-    JQMEditView.prototype.onRefreshClicked = function(href, callback)
+    JQMEditView.prototype.onRefreshClicked = function(callback)
     {
-        this.view.onRefreshClicked(href, callback);
+        this.view.onRefreshClicked(callback);
     };
 
-    JQMEditView.prototype.onRemoveClicked = function(href, callback)
+    JQMEditView.prototype.onRemoveClicked = function(callback)
     {
-        this.view.onRemoveClicked(href, callback);
+        this.view.onRemoveClicked(callback);
     };
 
     return JQMEditView;
