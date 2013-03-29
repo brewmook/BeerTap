@@ -1,53 +1,53 @@
 define(['TapsModel', 'TextInputDialog', 'TwitterConfirmer'],
 function(TapsModel, TextInputDialog, TwitterConfirmer) {
 
-    function onViewAddClicked(model, newTextDialog)
+    function viewAddClick(model, newTextDialog)
     {
         function callback(newText)
         {
             // Timeout is here to give page chance to change back from the TextInputDialog
             // so that the twitter confirmer dialog shows properly.
-            setTimeout(function() { model.add(newText, true); }, 300);
+            setTimeout(function() { model.add(newText, true); }, 500);
         }
         newTextDialog.show("Add Item", "Enter new text:", '', callback);
     }
 
-    function onViewItemChangeClicked(model, newTextDialog, originalName)
+    function viewChangeClick(model, newTextDialog, originalName)
     {
         function callback(newText)
         {
             // Timeout is here to give page chance to change back from the TextInputDialog
             // so that the twitter confirmer dialog shows properly.
-            setTimeout(function() { model.change(originalName, newText); }, 300);
+            setTimeout(function() { model.change(originalName, newText); }, 500);
         }
         newTextDialog.show("Change Item", "Enter new text:", originalName, callback);
     }
 
     function EditPage(id, twitter, viewFactory)
     {
-        var app = this;
-
         var newTextDialog = new TextInputDialog("newTextDialog");
+        var view = viewFactory.newEditView(id);
+        var model = new TapsModel(new TwitterConfirmer(twitter, view.page));
 
-        this.view = viewFactory.newEditView(id);
-        this.view.onAddClicked("#newTextDialog", function() {
-            onViewAddClicked(app.model, newTextDialog);
+        view.onAddClicked("#newTextDialog", function() {
+            viewAddClick(model, newTextDialog);
         });
-        this.view.onChangeClicked("#newTextDialog", function(item) {
-            onViewItemChangeClicked(app.model, newTextDialog, item.name);
+        view.onChangeClicked("#newTextDialog", function(item) {
+            viewChangeClick(model, newTextDialog, item.name);
         });
-        this.view.onRefreshClicked("#", function() {
-            app.model.load(twitter.authorisedScreenName());
+        view.onRefreshClicked("#", function() {
+            model.load(twitter.authorisedScreenName());
         });
-        this.view.onRemoveClicked("#", function(item) {
-            app.model.remove(item.name);
+        view.onRemoveClicked("#", function(item) {
+            model.remove(item.name);
         });
 
-        this.model = new TapsModel(new TwitterConfirmer(twitter, this.view.page));
-        this.model.onItemsLoaded(function(items) { app.view.refresh(items); });
-        this.model.onItemRemoved(function(item) { app.view.remove(item); });
+        model.onItemsLoaded(function(items) { view.refresh(items); });
+        model.onItemRemoved(function(item) { view.remove(item); });
 
         this.id = id;
+        this.view = view;
+        this.model = model;
     }
 
     EditPage.prototype.show = function(title, twitterScreenName)
