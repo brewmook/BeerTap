@@ -23,7 +23,7 @@ function(MainView, TextInputDialog, FollowingModel) {
         view.refresh(editable, following, jqmRefresh);
     }
 
-    function MainPage(id, twitter, listPage, editPage, settingsHref)
+    function FollowingPresenter(id, twitter, listPage, editPage, settingsHref)
     {
         var followDialog = new TextInputDialog("followDialog");
         var model = new FollowingModel(localStorage);
@@ -60,6 +60,6 @@ function(MainView, TextInputDialog, FollowingModel) {
         refreshView(view, twitter.authorisedScreenName(), model.following, false);
     }
 
-    return MainPage;
+    return FollowingPresenter;
 
 });
