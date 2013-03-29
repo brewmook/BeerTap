@@ -20,7 +20,11 @@ define(function() {
             twitter.tweet(text, success, fail);
         });
         this.popup.find(".tweetPreview").text(text);
-        this.popup.popup("open");
+
+        // Timeout is here to give page chance to change back from a TextInputDialog
+        // so that this confirmer dialog shows properly.
+        var popup = this.popup;
+        setTimeout(function() { popup.popup("open"); }, 500);
     };
 
     TwitterConfirmer.prototype.getUserTimeline = function(screenName, callback)

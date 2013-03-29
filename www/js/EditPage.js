@@ -3,24 +3,12 @@ function(TapsModel, TextInputDialog, TwitterConfirmer) {
 
     function viewAddClick(model, newTextDialog)
     {
-        function callback(newText)
-        {
-            // Timeout is here to give page chance to change back from the TextInputDialog
-            // so that the twitter confirmer dialog shows properly.
-            setTimeout(function() { model.add(newText, true); }, 500);
-        }
-        newTextDialog.show("Add Item", "Enter new text:", '', callback);
+        newTextDialog.show("Add Item", "Enter new text:", '', function(newText) { model.add(newText, true); });
     }
 
     function viewChangeClick(model, newTextDialog, originalName)
     {
-        function callback(newText)
-        {
-            // Timeout is here to give page chance to change back from the TextInputDialog
-            // so that the twitter confirmer dialog shows properly.
-            setTimeout(function() { model.change(originalName, newText); }, 500);
-        }
-        newTextDialog.show("Change Item", "Enter new text:", originalName, callback);
+        newTextDialog.show("Change Item", "Enter new text:", originalName, function(newText) { model.change(originalName, newText); });
     }
 
     function EditPage(id, twitter, viewFactory)
