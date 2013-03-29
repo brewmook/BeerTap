@@ -32,15 +32,16 @@ function(ListPage) {
             assertSame(this.view, listPage.view);
         },
 
-        "test when refresh clicked, model.load() is called": function() {
-            var listPage = new ListPage("twitterid", this.model, this.view);
+        "test when refresh clicked, model.load() is called with twitterid of previous show()": function() {
+            var listPage = new ListPage("whatever", this.model, this.view);
+            listPage.show("title", "twitterid");
             this.view.onRefreshClickedArgument();
             assertSame("twitterid", this.model.loadArgument);
         },
 
         "test when model items loaded, view.refresh() is called": function() {
             var items = [1, 2, 3];
-            var listPage = new ListPage("twitterid", this.model, this.view);
+            var listPage = new ListPage("whatever", this.model, this.view);
             this.model.onItemsLoadedArgument(items);
             assertSame(items, this.view.refreshArgument);
         },
