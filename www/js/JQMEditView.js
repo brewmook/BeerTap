@@ -61,6 +61,11 @@ define(['EditView'], function(EditView) {
         this.view.onRefreshClicked(href, callback);
     };
 
+    JQMEditView.prototype.onRemoveClicked = function(href, callback)
+    {
+        this.view.onRemoveClicked(href, callback);
+    };
+
     return JQMEditView;
 
 });

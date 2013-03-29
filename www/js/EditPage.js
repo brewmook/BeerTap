@@ -29,12 +29,7 @@ function(TapsModel, TextInputDialog, TwitterConfirmer) {
 
         var newTextDialog = new TextInputDialog("newTextDialog");
 
-        var viewCallbacks = {
-            removeHref:    "#",
-            removeClicked: function(item) { app.model.remove(item.name); }
-        };
-
-        this.view = viewFactory.newEditView(id, viewCallbacks);
+        this.view = viewFactory.newEditView(id);
         this.view.onAddClicked("#newTextDialog", function() {
             onViewAddClicked(app.model, newTextDialog);
         });
@@ -44,9 +39,12 @@ function(TapsModel, TextInputDialog, TwitterConfirmer) {
         this.view.onRefreshClicked("#", function() {
             app.model.load(twitter.authorisedScreenName());
         });
+        this.view.onRemoveClicked("#", function(item) {
+            app.model.remove(item.name);
+        });
 
         this.model = new TapsModel(new TwitterConfirmer(twitter, this.view.page));
-        this.model.onItemsLoaded(function(items) { app.view.refresh(items, viewCallbacks); });
+        this.model.onItemsLoaded(function(items) { app.view.refresh(items); });
         this.model.onItemRemoved(function(item) { app.view.remove(item); });
 
         this.id = id;
