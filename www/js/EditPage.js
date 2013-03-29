@@ -29,18 +29,10 @@ function(TapsModel, TextInputDialog, TwitterConfirmer) {
         var view = viewFactory.newEditView(id);
         var model = new TapsModel(new TwitterConfirmer(twitter, view.page));
 
-        view.onAddClicked("#newTextDialog", function() {
-            viewAddClick(model, newTextDialog);
-        });
-        view.onChangeClicked("#newTextDialog", function(item) {
-            viewChangeClick(model, newTextDialog, item.name);
-        });
-        view.onRefreshClicked("#", function() {
-            model.load(twitter.authorisedScreenName());
-        });
-        view.onRemoveClicked("#", function(item) {
-            model.remove(item.name);
-        });
+        view.onAddClicked("#newTextDialog", function() { viewAddClick(model, newTextDialog); });
+        view.onChangeClicked("#newTextDialog", function(item) { viewChangeClick(model, newTextDialog, item.name); });
+        view.onRefreshClicked("#", function() { model.load(twitter.authorisedScreenName()); });
+        view.onRemoveClicked("#", function(item) { model.remove(item.name); });
 
         model.onItemsLoaded(function(items) { view.refresh(items); });
         model.onItemRemoved(function(item) { view.remove(item); });
