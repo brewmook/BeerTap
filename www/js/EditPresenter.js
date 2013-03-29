@@ -1,6 +1,6 @@
 define(function() {
 
-    function EditPage(id, model, view)
+    function EditPresenter(id, model, view)
     {
         var presenter = this;
         view.onAddClicked(function(newText) { model.add(newText, true); });
@@ -17,7 +17,7 @@ define(function() {
         this.twitterScreenName = '';
     }
 
-    EditPage.prototype.show = function(title, twitterScreenName)
+    EditPresenter.prototype.show = function(title, twitterScreenName)
     {
         this.view.clear();
         this.view.setHeading(title);
@@ -25,6 +25,6 @@ define(function() {
         this.twitterScreenName = twitterScreenName;
     };
 
-    return EditPage;
+    return EditPresenter;
 
 });
