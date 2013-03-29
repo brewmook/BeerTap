@@ -1,6 +1,6 @@
 define(function() {
 
-    function ListPage(id, model, view)
+    function ListPresenter(id, model, view)
     {
         var presenter = this;
         this.view = view;
@@ -11,7 +11,7 @@ define(function() {
         model.onItemsLoaded(function(items) { view.refresh(items); });
     }
 
-    ListPage.prototype.show = function(title, twitterScreenName)
+    ListPresenter.prototype.show = function(title, twitterScreenName)
     {
         this.view.clear();
         this.view.setHeading(title);
@@ -19,6 +19,6 @@ define(function() {
         this._twitterScreenName = twitterScreenName;
     };
 
-    return ListPage;
+    return ListPresenter;
 
 });

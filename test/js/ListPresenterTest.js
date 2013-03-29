@@ -1,7 +1,7 @@
-define(['ListPage'],
-function(ListPage) {
+define(['ListPresenter'],
+function(ListPresenter) {
 
-    TestCase("ListPageTest", {
+    TestCase("ListPresenterTest", {
 
         setUp: function() {
             this.model = {
@@ -25,7 +25,7 @@ function(ListPage) {
 
         "test id, model and view are assigned from construction arguments": function() {
             var id = "pies";
-            var listPage = new ListPage(id, this.model, this.view);
+            var listPage = new ListPresenter(id, this.model, this.view);
 
             assertSame(id, listPage.id);
             assertSame(this.model, listPage.model);
@@ -33,7 +33,7 @@ function(ListPage) {
         },
 
         "test when refresh clicked, model.load() is called with twitterid of previous show()": function() {
-            var listPage = new ListPage("whatever", this.model, this.view);
+            var listPage = new ListPresenter("whatever", this.model, this.view);
             listPage.show("title", "twitterid");
             this.view.onRefreshClickedArgument();
             assertSame("twitterid", this.model.loadArgument);
@@ -41,7 +41,7 @@ function(ListPage) {
 
         "test when model items loaded, view.refresh() is called": function() {
             var items = [1, 2, 3];
-            var listPage = new ListPage("whatever", this.model, this.view);
+            var listPage = new ListPresenter("whatever", this.model, this.view);
             this.model.onItemsLoadedArgument(items);
             assertSame(items, this.view.refreshArgument);
         },
@@ -50,7 +50,7 @@ function(ListPage) {
             var title = 'a title';
             var twitterid = 'something';
 
-            var listPage = new ListPage("whatever", this.model, this.view);
+            var listPage = new ListPresenter("whatever", this.model, this.view);
             listPage.show(title, twitterid);
 
             assertTrue(this.view.clearCalled);
