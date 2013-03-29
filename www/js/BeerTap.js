@@ -3,17 +3,14 @@ function(Twitter, TapsModel, JQMListView, ListPage, JQMEditView, EditPage, MainP
 
     function BeerTap()
     {
-        var jQueryMobileViewFactory = {
-            newEditView: function(id, callbacks) { return new JQMEditView(id, callbacks); }
-        };
-
         this.twitter = new Twitter(localStorage);
 
         var listModel = new TapsModel(this.twitter);
         var listView = new JQMListView("listPage");
         var listPresenter = new ListPage("listPage", listModel, listView);
 
-        var editPresenter = new EditPage("editPage", this.twitter, jQueryMobileViewFactory);
+        var editView = new JQMEditView("editPage");
+        var editPresenter = new EditPage("editPage", this.twitter, editView);
 
         this.mainPage = new MainPage("main", this.twitter, listPresenter, editPresenter, "#settings");
         this.settings = new SettingsPage("settings", this.twitter);

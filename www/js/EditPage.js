@@ -1,19 +1,14 @@
 define(['TapsModel', 'TwitterConfirmer'],
 function(TapsModel, TwitterConfirmer) {
 
-    function EditPage(id, twitter, viewFactory)
+    function EditPage(id, twitter, view)
     {
-        var view = viewFactory.newEditView(id);
         var model = new TapsModel(new TwitterConfirmer(twitter, view.page));
 
-        view.onAddClicked("#", function(newText) {
-            model.add(newText, true);
-        });
-        view.onChangeClicked("#", function(oldText, newText) {
-            model.change(oldText, newText);
-        });
-        view.onRefreshClicked("#", function() { model.load(twitter.authorisedScreenName()); });
-        view.onRemoveClicked("#", function(item) { model.remove(item.name); });
+        view.onAddClicked(function(newText) { model.add(newText, true); });
+        view.onChangeClicked(function(oldText, newText) { model.change(oldText, newText); });
+        view.onRefreshClicked(function() { model.load(twitter.authorisedScreenName()); });
+        view.onRemoveClicked(function(item) { model.remove(item.name); });
 
         model.onItemsLoaded(function(items) { view.refresh(items); });
         model.onItemRemoved(function(item) { view.remove(item); });

@@ -1,8 +1,8 @@
 define(['EditView'], function(EditView) {
 
-    function JQMEditView(id, callbacks)
+    function JQMEditView(id)
     {
-        this.view = new EditView(id, callbacks);
+        this.view = new EditView(id);
 
         this.page = this.view.page;
         this.page.attr({id:id, "data-role":"page"});
@@ -35,9 +35,9 @@ define(['EditView'], function(EditView) {
         this.view.setHeading(heading);
     };
 
-    JQMEditView.prototype.refresh = function(items, callbacks)
+    JQMEditView.prototype.refresh = function(items)
     {
-        this.view.refresh(items, callbacks);
+        this.view.refresh(items);
         this.itemList.listview('refresh');
     };
 
