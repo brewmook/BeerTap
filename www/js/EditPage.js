@@ -1,10 +1,7 @@
-define(['TapsModel', 'TwitterConfirmer'],
-function(TapsModel, TwitterConfirmer) {
+define(function() {
 
-    function EditPage(id, twitter, view)
+    function EditPage(id, model, view)
     {
-        var model = new TapsModel(new TwitterConfirmer(twitter, view.page));
-
         var presenter = this;
         view.onAddClicked(function(newText) { model.add(newText, true); });
         view.onChangeClicked(function(oldText, newText) { model.change(oldText, newText); });

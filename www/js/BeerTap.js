@@ -1,5 +1,5 @@
-define(['Twitter', 'TapsModel', 'JQMListView', 'ListPage', 'JQMEditView', 'EditPage', 'MainPage', 'SettingsPage'],
-function(Twitter, TapsModel, JQMListView, ListPage, JQMEditView, EditPage, MainPage, SettingsPage) {
+define(['Twitter', 'TwitterConfirmer', 'TapsModel', 'JQMListView', 'ListPage', 'JQMEditView', 'EditPage', 'MainPage', 'SettingsPage'],
+function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPage, JQMEditView, EditPage, MainPage, SettingsPage) {
 
     function BeerTap()
     {
@@ -10,7 +10,8 @@ function(Twitter, TapsModel, JQMListView, ListPage, JQMEditView, EditPage, MainP
         var listPresenter = new ListPage("listPage", listModel, listView);
 
         var editView = new JQMEditView("editPage");
-        var editPresenter = new EditPage("editPage", this.twitter, editView);
+        var editModel = new TapsModel(new TwitterConfirmer(this.twitter, editView.page));
+        var editPresenter = new EditPage("editPage", editModel, editView);
 
         this.mainPage = new MainPage("main", this.twitter, listPresenter, editPresenter, "#settings");
         this.settings = new SettingsPage("settings", this.twitter);
