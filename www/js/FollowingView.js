@@ -7,7 +7,7 @@ define(function() {
         list.append($("<li/>").append(a).append(remove));
     }
 
-    function MainView(id)
+    function FollowingView(id)
     {
         this.page =
         $('<div>\
@@ -44,7 +44,7 @@ define(function() {
         this.page.appendTo("body");
     }
 
-    MainView.prototype.refresh = function(editable, following, jqmRrefresh)
+    FollowingView.prototype.refresh = function(editable, following, jqmRrefresh)
     {
         var list = this.page.find("ul");
         list.empty();
@@ -66,33 +66,33 @@ define(function() {
         if (jqmRrefresh) list.listview('refresh');
     };
 
-    MainView.prototype.onFollowClicked = function(href, click)
+    FollowingView.prototype.onFollowClicked = function(href, click)
     {
         this.page.find(".follow").attr("href",href).click(click);
     };
 
-    MainView.prototype.onSettingsClicked = function(href, click)
+    FollowingView.prototype.onSettingsClicked = function(href, click)
     {
         this.page.find(".settings").attr("href",href).click(click);
     };
 
-    MainView.prototype.onFollowingClicked = function(href, callback)
+    FollowingView.prototype.onFollowingClicked = function(href, callback)
     {
         this._followingClickedHref = href;
         this._followingClickedCallback = callback;
     };
 
-    MainView.prototype.onEditableClicked = function(href, callback)
+    FollowingView.prototype.onEditableClicked = function(href, callback)
     {
         this._editableClickedHref = href;
         this._editableClickedCallback = callback;
     };
 
-    MainView.prototype.onRemoveClicked = function(callback)
+    FollowingView.prototype.onRemoveClicked = function(callback)
     {
         this._removeClickedCallback = callback;
     };
 
-    return MainView;
+    return FollowingView;
 
 });

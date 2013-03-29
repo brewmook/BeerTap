@@ -1,5 +1,5 @@
-define(['MainView', 'TextInputDialog', 'FollowingModel'],
-function(MainView, TextInputDialog, FollowingModel) {
+define(['FollowingView', 'TextInputDialog', 'FollowingModel'],
+function(FollowingView, TextInputDialog, FollowingModel) {
 
     function stripLeadingAt(text)
     {
@@ -27,7 +27,7 @@ function(MainView, TextInputDialog, FollowingModel) {
     {
         var followDialog = new TextInputDialog("followDialog");
         var model = new FollowingModel(localStorage);
-        var view = new MainView(id);
+        var view = new FollowingView(id);
 
         twitter.onAuthorisationChange(function(userId, screenName) {
             refreshView(view, screenName, model.following, true);
