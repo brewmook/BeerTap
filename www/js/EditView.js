@@ -1,4 +1,5 @@
-define(function() {
+define(['TextInputDialog'],
+function(TextInputDialog) {
 
     function EditView(id)
     {
@@ -14,9 +15,17 @@ define(function() {
              </div>\
            </div>');
 
-        this._changeClickedHref = "#";
-        this._changeClickedCallback = function(item){};
-        this._removeClickedHref = "#";
+        this._textDialog = new TextInputDialog(id+"TextDialog");
+
+        var view = this;
+        this.page.find(".addButton").attr("href", "#"+this._textDialog.id).click(function() {
+            view._textDialog.show("Add Item", "Enter new text:", '', function(newText) {
+                view._addClickedCallback(newText);
+            });
+        });
+
+        this._addClickedCallback = function(newName){};
+        this._changeClickedCallback = function(oldText, newText){};
         this._removeClickedCallback = function(item){};
     }
 
@@ -36,15 +45,24 @@ define(function() {
     {
         var itemList = this.page.find("ul");
         var view = this;
+        var dialogId = "#"+this._textDialog.id;
+
+        function showChangeDialog(oldText)
+        {
+            view._textDialog.show("Change Item", "Enter new text:", oldText, function(newText) {
+                view._changeClickedCallback(oldText, newText);
+            });
+        }
+
         itemList.empty();
         items.forEach(function(item) {
             var li = $("<li/>");
             li.append($("<a/>")
                       .append(item.name)
-                      .attr("href", view._changeClickedHref)
-                      .click(function() { view._changeClickedCallback(item); }));
+                      .attr("href", dialogId)
+                      .click(function() { showChangeDialog(item.name); }));
             li.append($("<a>Remove</a>")
-                      .attr("href", view._removeClickedHref)
+                      .attr("href", "#")
                       .click(function() { view._removeClickedCallback(item); }));
             itemList.append(li);
         });
@@ -58,23 +76,21 @@ define(function() {
 
     EditView.prototype.onAddClicked = function(href, callback)
     {
-        this.page.find(".addButton").attr("href", href).click(callback);
+        this._addClickedCallback = callback;
     };
 
     EditView.prototype.onChangeClicked = function(href, callback)
     {
-        this._changeClickedHref = href;
         this._changeClickedCallback = callback;
     };
 
     EditView.prototype.onRefreshClicked = function(href, callback)
     {
-        this.page.find(".refreshButton").attr("href", href).click(callback);
+        this.page.find(".refreshButton").attr("href", "#").unbind('click').click(callback);
     };
 
     EditView.prototype.onRemoveClicked = function(href, callback)
     {
-        this._removeClickedHref = href;
         this._removeClickedCallback = callback;
     };
 

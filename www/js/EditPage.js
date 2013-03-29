@@ -1,21 +1,16 @@
-define(['TapsModel', 'TextInputDialog', 'TwitterConfirmer'],
-function(TapsModel, TextInputDialog, TwitterConfirmer) {
+define(['TapsModel', 'TwitterConfirmer'],
+function(TapsModel, TwitterConfirmer) {
 
     function EditPage(id, twitter, viewFactory)
     {
-        var newTextDialog = new TextInputDialog("newTextDialog");
         var view = viewFactory.newEditView(id);
         var model = new TapsModel(new TwitterConfirmer(twitter, view.page));
 
-        view.onAddClicked("#newTextDialog", function() {
-            newTextDialog.show("Add Item", "Enter new text:", '', function(newText) {
-                model.add(newText, true);
-            });
+        view.onAddClicked("#", function(newText) {
+            model.add(newText, true);
         });
-        view.onChangeClicked("#newTextDialog", function(item) {
-            newTextDialog.show("Change Item", "Enter new text:", item.name, function(newText) {
-                model.change(item.name, newText);
-            });
+        view.onChangeClicked("#", function(oldText, newText) {
+            model.change(oldText, newText);
         });
         view.onRefreshClicked("#", function() { model.load(twitter.authorisedScreenName()); });
         view.onRemoveClicked("#", function(item) { model.remove(item.name); });
