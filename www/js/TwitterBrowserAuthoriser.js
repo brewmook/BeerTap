@@ -13,8 +13,8 @@ define(['oAuthConfig'], function(oAuthConfig) {
             callbackUrl: callbackUrl,
             enablePrivilege: false,
             requestTokenUrl: 'https://api.twitter.com/oauth/request_token',
-            authorizationUrl: 'https://twitter.com/oauth/authorize',
-            accessTokenUrl: 'https://twitter.com/oauth/access_token'
+            authorizationUrl: 'https://api.twitter.com/oauth/authorize',
+            accessTokenUrl: 'https://api.twitter.com/oauth/access_token'
         });
 
         console.log("Requesting twitter authorisation...");
