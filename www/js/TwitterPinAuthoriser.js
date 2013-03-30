@@ -6,16 +6,16 @@ function(oAuthConfig, TextInputDialog) {
         this.pinDialog = new TextInputDialog(dialogId);
     }
 
-    TwitterPinAuthoriser.prototype.authorise = function(twitter)
+    TwitterPinAuthoriser.prototype.authorise = function(twitter, twitterUrls)
     {
         var oAuth = OAuth({
             consumerKey: oAuthConfig.consumerKey,
             consumerSecret: oAuthConfig.consumerSecret,
             callbackUrl: 'oob',
             enablePrivilege: false,
-            requestTokenUrl: 'https://api.twitter.com/oauth/request_token',
-            authorizationUrl: 'https://api.twitter.com/oauth/authorize',
-            accessTokenUrl: 'https://api.twitter.com/oauth/access_token'
+            requestTokenUrl:  twitterUrls.requestTokenUrl,
+            authorizationUrl: twitterUrls.authorizationUrl,
+            accessTokenUrl:   twitterUrls.accessTokenUrl
         });
 
         console.log("Requesting twitter authorisation...");

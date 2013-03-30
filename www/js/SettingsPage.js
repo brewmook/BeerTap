@@ -1,16 +1,16 @@
 define(['TwitterBrowserAuthoriser', 'TwitterPinAuthoriser', 'SettingsView'],
 function(TwitterBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
 
-    function SettingsPage(id, twitter)
+    function SettingsPage(id, twitter, twitterUrls)
     {
         this.view = new SettingsView(id);
         this.view.setTwitterScreenName(twitter.authorisedScreenName());
 
         var browserAuthoriser = new TwitterBrowserAuthoriser();
-        this.view.addAuthoriser("Browser", "#", function() { browserAuthoriser.authorise(twitter); });
+        this.view.addAuthoriser("Browser", "#", function() { browserAuthoriser.authorise(twitter, twitterUrls); });
 
         var pinAuthoriser = new TwitterPinAuthoriser("twitterPinDialog");
-        this.view.addAuthoriser("PIN", "#twitterPinDialog", function() { pinAuthoriser.authorise(twitter); });
+        this.view.addAuthoriser("PIN", "#twitterPinDialog", function() { pinAuthoriser.authorise(twitter, twitterUrls); });
 
         var view = this.view;
         twitter.onAuthorisationChange(function(userId, screenName) { view.setTwitterScreenName(screenName); });
