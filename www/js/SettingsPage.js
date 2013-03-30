@@ -1,5 +1,5 @@
-define(['Twitter', 'TwitterBrowserAuthoriser', 'TwitterPinAuthoriser', 'SettingsView'],
-function(Twitter, TwitterBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
+define(['TwitterBrowserAuthoriser', 'TwitterPinAuthoriser', 'SettingsView'],
+function(TwitterBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
 
     function SettingsPage(id, twitter)
     {
