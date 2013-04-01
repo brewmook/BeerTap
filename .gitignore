@@ -6,3 +6,4 @@ phonegap.js
 bin
 gen
 *~
+*.log

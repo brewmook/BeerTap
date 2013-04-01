@@ -1,7 +1,7 @@
 define(['Twitter', 'TwitterConfirmer', 'TapsModel', 'JQMListView', 'ListPresenter', 'JQMEditView', 'EditPresenter', 'FollowingPresenter', 'SettingsPage'],
 function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEditView, EditPresenter, FollowingPresenter, SettingsPage) {
 
-    function BeerTap()
+    function BeerTap(twitterProxy)
     {
         twitterUrls = {
             userTimeline:     "https://api.twitter.com/1.1/statuses/user_timeline.json",
@@ -12,7 +12,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
             accessTokenUrl:   "https://api.twitter.com/oauth/access_token"
         };
 
-        this.twitter = new Twitter(localStorage, twitterUrls);
+        this.twitter = new Twitter(localStorage, twitterUrls, twitterProxy);
 
         var listModel = new TapsModel(this.twitter);
         var listView = new JQMListView("listPage");
@@ -23,7 +23,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         var editPresenter = new EditPresenter("editPage", editModel, editView);
 
         this.mainPage = new FollowingPresenter("main", this.twitter, listPresenter, editPresenter, "#settings");
-        this.settings = new SettingsPage("settings", this.twitter, twitterUrls);
+        this.settings = new SettingsPage("settings", this.twitter, twitterUrls, twitterProxy);
 
         $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
         $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });

@@ -1,6 +1,6 @@
 define(['oAuthConfig'], function(oAuthConfig) {
 
-    function Twitter(store, twitterUrls)
+    function Twitter(store, twitterUrls, twitterProxy)
     {
         this.store = store;
         this.twitterUrls = twitterUrls;
@@ -9,7 +9,8 @@ define(['oAuthConfig'], function(oAuthConfig) {
         this.oAuth = OAuth({
             consumerKey: oAuthConfig.consumerKey,
             consumerSecret: oAuthConfig.consumerSecret,
-            enablePrivilege: false
+            enablePrivilege: false,
+            proxy: twitterProxy
         });
 
         if (store.accessTokenKey && store.accessTokenSecret)
