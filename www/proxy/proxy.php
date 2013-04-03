@@ -33,59 +33,38 @@
 
 ini_set('display_errors', 'On');
 
-function proxyLog($text)
-{
-    file_put_contents('proxy.log', "$text\n", FILE_APPEND | LOCK_EX);
-}
-
 function proxy($url)
 {
-    proxyLog($url);
-
     $ch = curl_init( $url );
+    $url = parse_url($url);
 
     if ( strtolower($_SERVER['REQUEST_METHOD']) == 'post' )
     {
         curl_setopt( $ch, CURLOPT_POST, true );
-        curl_setopt( $ch, CURLOPT_POSTFIELDS, $_POST );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, file_get_contents("php://input") );
     }
 
     curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
     curl_setopt( $ch, CURLOPT_HEADER, true );
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 
-    // Propagate headers to response.
     $requestHeader = array();
-    foreach (getallheaders() as $name => $value) {
-        if (strtolower($name) == "authorization")
-        {
-            $requestHeader[] = "$name: $value\n";
-        }
+    $requestHeader[] = "Host: $url[host]";
+    foreach (getallheaders() as $name => $value)
+    {
+        if (strtolower($name) != "host")
+            $requestHeader[] = "$name: $value";
     }
     curl_setopt( $ch, CURLOPT_HTTPHEADER, $requestHeader );
-    proxyLog("Request headers:");
-    proxyLog(print_r($requestHeader, true));
 
     $result = curl_exec($ch);
-    proxyLog("RESULT:");
-    proxyLog(print_r($result, true));
+    curl_close($ch);
 
-    list( $header, $contents ) = preg_split( '/([\r\n][\r\n])\\1/', $result, 2 );
+    list( $headers, $contents ) = preg_split( '/([\r\n][\r\n])\\1/', $result, 2 );
 
-    $status = curl_getinfo( $ch );
-
-    curl_close( $ch );
-
-    // Split header text into an array.
-    $header_text = preg_split( '/[\r\n]+/', $header );
-
-    proxyLog("RESPONSE:");
-    // Propagate headers to response.
-    foreach ( $header_text as $header )
-    {
-        header( $header );
-        proxyLog($header);
-    }
+    $headers = preg_split('/[\r\n]+/', $headers);
+    foreach($headers as $header)
+        header($header);
 
     print $contents;
 }
