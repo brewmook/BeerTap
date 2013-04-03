@@ -31,7 +31,7 @@
 //
 // ############################################################################
 
-ini_set('display_errors', 'On');
+ini_set('display_errors', 0);
 
 function proxy($url)
 {
@@ -52,9 +52,10 @@ function proxy($url)
     $requestHeader[] = "Host: $url[host]";
     foreach (getallheaders() as $name => $value)
     {
-        if (strtolower($name) != "host")
+        if (strtolower($name) != "host" && strtolower($name) != "connection")
             $requestHeader[] = "$name: $value";
     }
+    $requestHeader[] = "Connection: close";
     curl_setopt( $ch, CURLOPT_HTTPHEADER, $requestHeader );
 
     $result = curl_exec($ch);
@@ -62,10 +63,10 @@ function proxy($url)
 
     list( $headers, $contents ) = preg_split( '/([\r\n][\r\n])\\1/', $result, 2 );
 
-    $headers = preg_split('/[\r\n]+/', $headers);
+    $headers = preg_split( '/[\r\n]+/', $headers);
     foreach($headers as $header)
         header($header);
 
-    print $contents;
+    die($contents);
 }
 ?>
