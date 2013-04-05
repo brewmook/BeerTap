@@ -6,8 +6,11 @@ function(TwitterBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
         this.view = new SettingsView(id);
         this.view.setTwitterScreenName(twitter.authorisedScreenName());
 
-        var browserAuthoriser = new TwitterBrowserAuthoriser();
-        this.view.addAuthoriser("Browser", "#", function() { browserAuthoriser.authorise(twitter, twitterUrls, twitterProxy); });
+        if (twitterProxy === undefined)
+        {
+            var browserAuthoriser = new TwitterBrowserAuthoriser();
+            this.view.addAuthoriser("Browser", "#", function() { browserAuthoriser.authorise(twitter, twitterUrls, twitterProxy); });
+        }
 
         var pinAuthoriser = new TwitterPinAuthoriser("twitterPinDialog");
         this.view.addAuthoriser("PIN", "#twitterPinDialog", function() { pinAuthoriser.authorise(twitter, twitterUrls, twitterProxy); });
