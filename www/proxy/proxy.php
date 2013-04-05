@@ -35,6 +35,11 @@ ini_set('display_errors', 0);
 
 function proxy($url)
 {
+    if ($_SERVER['QUERY_STRING'] != '')
+    {
+        $url = $url.'?'.$_SERVER['QUERY_STRING'];
+    }
+
     $ch = curl_init( $url );
     $url = parse_url($url);
 
