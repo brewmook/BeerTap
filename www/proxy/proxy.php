@@ -63,7 +63,6 @@ function proxy($url)
     curl_setopt( $ch, CURLOPT_HTTPHEADER, $requestHeader );
 
     $result = curl_exec($ch);
-    curl_close($ch);
 
     list( $headers, $contents ) = preg_split( '/([\r\n][\r\n])\\1/', $result, 2 );
 
@@ -71,6 +70,8 @@ function proxy($url)
     foreach($headers as $header)
         header($header);
 
-    die($contents);
+    echo $contents;
+
+    curl_close($ch);
 }
 ?>
