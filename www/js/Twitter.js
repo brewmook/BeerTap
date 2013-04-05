@@ -33,15 +33,10 @@ define(['oAuthConfig'], function(oAuthConfig) {
     {
         var url;
         if (this.authorised())
-        {
             url = this.twitterUrls.userTimeline + "?trim_user=true&include_rts=false&count=100&screen_name=";
-            this.oAuth.getJSON(url+screenName, success, function(data) { alert("Get timeline failed"); });
-        }
         else
-        {
-            url = this.twitterUrls.userTimelineV1 + "?trim_user=true&include_rts=false&count=100&screen_name=" + screenName;
-            $.getJSON(url, success);
-        }
+            url = this.twitterUrls.userTimelineV1 + "?trim_user=true&include_rts=false&count=100&screen_name=";
+        this.oAuth.getJSON(url+screenName, success, function(data) { alert("Get timeline failed"); });
     };
 
     Twitter.prototype.tweet = function(text, success, failure)
