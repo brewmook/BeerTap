@@ -57,7 +57,7 @@ function proxy($url)
     $requestHeader[] = "Host: $url[host]";
     foreach (getallheaders() as $name => $value)
     {
-        if (strtolower($name) != "host")
+        if (strtolower($name) != "host" && strtolower($name) != "accept-encoding")
             $requestHeader[] = "$name: $value";
     }
     curl_setopt( $ch, CURLOPT_HTTPHEADER, $requestHeader );
