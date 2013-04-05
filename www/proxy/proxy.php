@@ -57,10 +57,9 @@ function proxy($url)
     $requestHeader[] = "Host: $url[host]";
     foreach (getallheaders() as $name => $value)
     {
-        if (strtolower($name) != "host" && strtolower($name) != "connection")
+        if (strtolower($name) != "host")
             $requestHeader[] = "$name: $value";
     }
-    $requestHeader[] = "Connection: close";
     curl_setopt( $ch, CURLOPT_HTTPHEADER, $requestHeader );
 
     $result = curl_exec($ch);
