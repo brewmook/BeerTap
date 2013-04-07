@@ -37,11 +37,11 @@ function(FollowingView, TextInputDialog, FollowingModel) {
             refreshView(view, twitter.authorisedScreenName(), nowFollowing, true);
         });
 
-        view.onEditableClicked("#"+editPage.id, function(title) {
+        view.onEditableClicked(function(title) {
             editPage.show(title, stripLeadingAt(title));
         });
 
-        view.onFollowingClicked("#"+listPage.id, function(title) {
+        view.onFollowingClicked(function(title) {
             listPage.show(title, stripLeadingAt(title));
         });
 

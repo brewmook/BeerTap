@@ -1,9 +1,9 @@
 define(function() {
 
-    function addLink(list, title, href, nameClick, removeClick)
+    function addLink(list, title, nameClick, removeClick)
     {
-        var a = $("<a/>").attr("href",href).append(title).click(function() { nameClick(title); });
-        var remove = ($('<a href="#">Remove</a>').click(function() { removeClick(title); }));
+        var a = $("<a/>").append(title).click(function() { nameClick(title); });
+        var remove = ($('<a>Remove</a>').click(function() { removeClick(title); }));
         list.append($("<li/>").append(a).append(remove));
     }
 
@@ -35,9 +35,7 @@ define(function() {
             .attr("data-role","button")
             .buttonMarkup({icon:'gear', inline:true, mini:false});
 
-        this._editableClickedHref = "#";
         this._editableClickedCallback = function(title){};
-        this._followingClickedHref = "#";
         this._followingClickedCallback = function(title){};
         this._removeClickedCallback = function(title){};
 
@@ -53,14 +51,14 @@ define(function() {
             list.append($('<li>Editable</li>').attr('data-role', 'list-divider'));
 
         editable.forEach(function(name) {
-            addLink(list, name, this._editableClickedHref, this._editableClickedCallback, this._removeClickedCallback);
+            addLink(list, name, this._editableClickedCallback, this._removeClickedCallback);
         }, this);
 
         if (following.length > 0)
             list.append($('<li>Following</li>').attr('data-role', 'list-divider'));
 
         following.forEach(function(name) {
-            addLink(list, name, this._followingClickedHref, this._followingClickedCallback, this._removeClickedCallback);
+            addLink(list, name, this._followingClickedCallback, this._removeClickedCallback);
         }, this);
 
         if (jqmRrefresh) list.listview('refresh');
@@ -76,15 +74,13 @@ define(function() {
         this.page.find(".settings").attr("href",href).click(click);
     };
 
-    FollowingView.prototype.onFollowingClicked = function(href, callback)
+    FollowingView.prototype.onFollowingClicked = function(callback)
     {
-        this._followingClickedHref = href;
         this._followingClickedCallback = callback;
     };
 
-    FollowingView.prototype.onEditableClicked = function(href, callback)
+    FollowingView.prototype.onEditableClicked = function(callback)
     {
-        this._editableClickedHref = href;
         this._editableClickedCallback = callback;
     };
 

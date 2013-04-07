@@ -23,6 +23,7 @@ define(function() {
         this.view.setHeading(title);
         this.model.load(twitterScreenName);
         this.twitterScreenName = twitterScreenName;
+        $.mobile.changePage("#"+this.id);
     };
 
     return EditPresenter;
