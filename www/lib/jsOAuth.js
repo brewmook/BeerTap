@@ -441,7 +441,7 @@ exports.OAuth = (function (global) {
                 }
 
                 if (oauth.proxy) {
-                    url = URI(oauth.proxy(url));
+                    url = URI(oauth.proxy(url.path, url.query));
                 }
 
                 if(appendQueryString || method == 'GET') {

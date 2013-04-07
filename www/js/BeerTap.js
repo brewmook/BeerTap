@@ -3,7 +3,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
 
     function BeerTap(twitterProxy)
     {
-        twitterUrls = {
+        var twitterUrls = {
             userTimeline:     "https://api.twitter.com/1.1/statuses/user_timeline.json",
             userTimelineV1:   "https://api.twitter.com/1/statuses/user_timeline.json",
             update:           "https://api.twitter.com/1.1/statuses/update.json",
