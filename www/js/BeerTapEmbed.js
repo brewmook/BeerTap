@@ -1,8 +1,11 @@
 define(['Twitter', 'ListView', 'ListPresenter', 'TapsModel', 'Utility'],
 function (Twitter, ListView, ListPresenter, TapsModel, Utility) {
 
-    function BeerTapEmbed(twitterScreenName, parent)
+    function BeerTapEmbed(parent)
     {
+        var twitterScreenName = 'BeerTapDemo';
+        var screenNameMatch = /\btwitterScreenName=([^&]+)/.exec(window.location.search);
+        if (screenNameMatch) twitterScreenName = screenNameMatch[1];
         var twitterProxyUrl = Utility.changeRelativePath(window.location.href, 'twitter');
         var twitterProxy = Utility.rewriteProxy(twitterProxyUrl);
         var twitter = new Twitter(localStorage, twitterProxy);

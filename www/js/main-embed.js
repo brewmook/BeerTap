@@ -8,5 +8,5 @@ requirejs.config({
 requirejs(['lib/domReady!', 'BeerTapEmbed'],
 function (doc, BeerTapEmbed)
 {
-    new BeerTapEmbed('BeerTapDemo', 'body');
+    new BeerTapEmbed('body');
 });
