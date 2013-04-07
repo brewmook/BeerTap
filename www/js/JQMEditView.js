@@ -9,12 +9,11 @@ define(['EditView'], function(EditView) {
         this.page.find(".header").attr({"data-role":"header", "data-position":"fixed"});
         this.page.find(".content").attr("data-role","content");
         this.page.find(".footer").attr({"data-role":"footer", "data-position":"fixed"});
-        this.page.find(".refreshButton")
-            .attr("data-role","button")
-            .buttonMarkup({icon:'refresh', inline:true, mini:false});
-        this.page.find(".addButton")
-            .attr("data-role","button")
-            .buttonMarkup({icon:'plus', inline:true, mini:false});
+        this.page.find(".buttons").attr({"data-role":"controlgroup", "data-type":"horizontal", "data-mini":true});
+        this.page.find(".refresh")
+            .button({icon:'refresh', inline:true, theme:'a'});
+        this.page.find(".add")
+            .button({icon:'plus', inline:true, theme:'a'});
 
         this.itemList = this.page.find("ul");
         this.itemList.attr({"data-role":"listview",

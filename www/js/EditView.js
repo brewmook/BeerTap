@@ -10,15 +10,17 @@ function(TextInputDialog) {
                <ul></ul>\
              </div>\
              <div class="footer">\
-               <a class="refreshButton">Refresh</a>\
-               <a class="addButton">Add new</a>\
+               <div class="buttons">\
+                 <button class="refresh">Refresh</button>\
+                 <button class="add">Add new</button>\
+               </div>\
              </div>\
            </div>');
 
         this._textDialog = new TextInputDialog(id+"TextDialog");
 
         var view = this;
-        this.page.find(".addButton").click(function() {
+        this.page.find(".add").click(function() {
             view._textDialog.show("Add Item", "Enter new text:", '', function(newText) {
                 view._addClickedCallback(newText);
             });
@@ -83,7 +85,7 @@ function(TextInputDialog) {
 
     EditView.prototype.onRefreshClicked = function(callback)
     {
-        this.page.find(".refreshButton").attr("href", "#").unbind('click').click(callback);
+        this.page.find(".refresh").unbind('click').click(callback);
     };
 
     EditView.prototype.onRemoveClicked = function(callback)
