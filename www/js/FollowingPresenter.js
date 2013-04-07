@@ -59,7 +59,7 @@ function(FollowingView, TextInputDialog, FollowingModel) {
             });
         });
 
-        refreshView(view, twitter.authorisedScreenName(), model.following, false);
+        refreshView(view, twitter.authorisedScreenName(), model.following, true);
     }
 
     return FollowingPresenter;

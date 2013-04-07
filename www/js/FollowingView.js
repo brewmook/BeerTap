@@ -9,38 +9,19 @@ define(function() {
 
     function FollowingView(id)
     {
-        this.page =
-        $('<div>\
-             <div class="header"><h1>BeerTap</h1></div>\
-             <div data-role="content">\
-               <ul></ul>\
-             </div>\
-             <div class="footer">\
-               <div class="buttons">\
-                 <button class="follow">Follow</button>\
-                 <button class="settings">Settings</button>\
-               </div>\
-             </div>\
-           </div>');
-
-        this.page.attr({id:id, 'data-role':'page'});
-        this.page.find(".header").attr({'data-role':'header', 'data-position':'fixed'});
-        this.page.find("ul").attr({"data-role":"listview",
-                                   "data-split-icon":"delete",
-                                   "data-split-theme":"c",
-                                   "data-inset":"false"});
-        this.page.find(".footer").attr({'data-role':'footer', 'data-position':'fixed'});
-        this.page.find(".buttons").attr({"data-role":"controlgroup", "data-type":"horizontal", "data-mini":true});
-        this.page.find(".follow")
-            .button({icon:'plus', inline:true, theme:'a'});
-        this.page.find(".settings")
-            .button({icon:'gear', inline:true, theme:'a'});
+        this.page = $("#"+id);
+        this.page.find(".content").append(
+            $("<ul/>").attr({"data-role":"listview",
+                             "data-split-icon":"delete",
+                             "data-split-theme":"c",
+                             "data-inset":"false"}));
+        this.page.find(".buttons").append($('<a href="#" class="follow">Follow</a>').buttonMarkup({icon:'plus', inline:true, theme:'a'}));
+        this.page.find(".buttons").append($('<a href="#" class="settings">Settings</a>').buttonMarkup({icon:'gear', inline:true, theme:'a'}));
+        this.page.trigger("create");
 
         this._editableClickedCallback = function(title){};
         this._followingClickedCallback = function(title){};
         this._removeClickedCallback = function(title){};
-
-        this.page.appendTo("body");
     }
 
     FollowingView.prototype.refresh = function(editable, following, jqmRrefresh)
