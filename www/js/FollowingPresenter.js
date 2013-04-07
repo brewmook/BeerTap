@@ -7,7 +7,7 @@ function(FollowingView, TextInputDialog, FollowingModel) {
         return text;
     }
 
-    function refreshView(view, authorisedTwitterName, nowFollowing, jqmRefresh)
+    function refreshView(view, authorisedTwitterName, nowFollowing)
     {
         var editable = [];
         var following = [];
@@ -20,7 +20,7 @@ function(FollowingView, TextInputDialog, FollowingModel) {
                 following.push(name);
         });
 
-        view.refresh(editable, following, jqmRefresh);
+        view.refresh(editable, following);
     }
 
     function FollowingPresenter(id, twitter, listPage, editPage, settingsPage)
@@ -30,11 +30,11 @@ function(FollowingView, TextInputDialog, FollowingModel) {
         var view = new FollowingView(id);
 
         twitter.onAuthorisationChange(function(userId, screenName) {
-            refreshView(view, screenName, model.following, true);
+            refreshView(view, screenName, model.following);
         });
 
         model.onFollowingChanged(function(nowFollowing) {
-            refreshView(view, twitter.authorisedScreenName(), nowFollowing, true);
+            refreshView(view, twitter.authorisedScreenName(), nowFollowing);
         });
 
         view.onEditableClicked(function(title) {
@@ -59,7 +59,7 @@ function(FollowingView, TextInputDialog, FollowingModel) {
             });
         });
 
-        refreshView(view, twitter.authorisedScreenName(), model.following, true);
+        refreshView(view, twitter.authorisedScreenName(), model.following);
     }
 
     return FollowingPresenter;

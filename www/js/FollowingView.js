@@ -24,7 +24,7 @@ define(function() {
         this._removeClickedCallback = function(title){};
     }
 
-    FollowingView.prototype.refresh = function(editable, following, jqmRrefresh)
+    FollowingView.prototype.refresh = function(editable, following)
     {
         var list = this.page.find("ul");
         list.empty();
@@ -43,7 +43,7 @@ define(function() {
             addLink(list, name, this._followingClickedCallback, this._removeClickedCallback);
         }, this);
 
-        if (jqmRrefresh) list.listview('refresh');
+        list.listview('refresh');
     };
 
     FollowingView.prototype.onFollowClicked = function(click)
