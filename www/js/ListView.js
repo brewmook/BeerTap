@@ -10,6 +10,7 @@ define(function() {
              </div>\
              <div class="footer">\
                <div class="buttons">\
+                 <button class="back">Back</button>\
                  <button class="refresh">Refresh</button>\
                </div>\
              </div>\

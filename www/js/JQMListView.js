@@ -11,6 +11,7 @@ define(['ListView'], function(ListView) {
         this.page.find("ul").attr("data-role","listview");
         this.page.find(".footer").attr({"data-role":"footer", "data-position":"fixed"});
         this.page.find(".buttons").attr({"data-role":"controlgroup", "data-type":"horizontal", "data-mini":true});
+        this.page.find(".back").button({icon:'back', theme:'a'}).click(function(){history.go(-1);});
         this.page.find(".refresh").button({icon:'refresh', theme:'a'});
         this.page.appendTo("body");
     }

@@ -11,6 +11,7 @@ function(TextInputDialog) {
              </div>\
              <div class="footer">\
                <div class="buttons">\
+                 <button class="back">Back</button>\
                  <button class="refresh">Refresh</button>\
                  <button class="add">Add new</button>\
                </div>\
