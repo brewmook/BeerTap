@@ -6,14 +6,14 @@ function(oAuthConfig, TextInputDialog) {
         this.pinDialog = new TextInputDialog(dialogId);
     }
 
-    TwitterPinAuthoriser.prototype.authorise = function(twitter, twitterProxy)
+    TwitterPinAuthoriser.prototype.authorise = function(twitter)
     {
         var oAuth = OAuth({
             consumerKey: oAuthConfig.consumerKey,
             consumerSecret: oAuthConfig.consumerSecret,
             callbackUrl: 'oob',
             enablePrivilege: false,
-            proxy: twitterProxy,
+            proxy: twitter.proxy,
             requestTokenUrl:  twitter.urls.requestTokenUrl,
             authorizationUrl: twitter.urls.authorizationUrl,
             accessTokenUrl:   twitter.urls.accessTokenUrl

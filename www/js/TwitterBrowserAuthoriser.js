@@ -4,7 +4,7 @@ define(['oAuthConfig'], function(oAuthConfig) {
     {
     }
 
-    TwitterBrowserAuthoriser.prototype.authorise = function(twitter, twitterProxy)
+    TwitterBrowserAuthoriser.prototype.authorise = function(twitter)
     {
         var callbackUrl = 'https://github.com/coolhandmook/BeerTap';
         var oAuth = OAuth({
@@ -12,7 +12,7 @@ define(['oAuthConfig'], function(oAuthConfig) {
             consumerSecret: oAuthConfig.consumerSecret,
             callbackUrl: callbackUrl,
             enablePrivilege: false,
-            proxy: twitterProxy,
+            proxy: twitter.proxy,
             requestTokenUrl:  twitter.urls.requestTokenUrl,
             authorizationUrl: twitter.urls.authorizationUrl,
             accessTokenUrl:   twitter.urls.accessTokenUrl
