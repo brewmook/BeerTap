@@ -3,16 +3,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
 
     function BeerTap(twitterProxy)
     {
-        var twitterUrls = {
-            userTimeline:     "https://api.twitter.com/1.1/statuses/user_timeline.json",
-            userTimelineV1:   "https://api.twitter.com/1/statuses/user_timeline.json",
-            update:           "https://api.twitter.com/1.1/statuses/update.json",
-            requestTokenUrl:  "https://api.twitter.com/oauth/request_token",
-            authorizationUrl: "https://api.twitter.com/oauth/authorize",
-            accessTokenUrl:   "https://api.twitter.com/oauth/access_token"
-        };
-
-        this.twitter = new Twitter(localStorage, twitterUrls, twitterProxy);
+        this.twitter = new Twitter(localStorage, twitterProxy);
 
         var listModel = new TapsModel(this.twitter);
         var listView = new JQMListView("listPage");
@@ -23,7 +14,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         var editPresenter = new EditPresenter("editPage", editModel, editView);
 
         this.mainPage = new FollowingPresenter("main", this.twitter, listPresenter, editPresenter, "#settings");
-        this.settings = new SettingsPage("settings", this.twitter, twitterUrls, twitterProxy);
+        this.settings = new SettingsPage("settings", this.twitter, twitterProxy);
 
         $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
         $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });
