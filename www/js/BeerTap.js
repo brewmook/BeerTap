@@ -20,7 +20,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });
         $(document).ajaxError(function() { alert("Error fetching data"); });
 
-        $.mobile.changePage("#main");
+        $.mobile.changePage("#main", { changeHash:false });
     }
 
     return BeerTap;
