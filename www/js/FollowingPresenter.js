@@ -23,7 +23,7 @@ function(FollowingView, TextInputDialog, FollowingModel) {
         view.refresh(editable, following, jqmRefresh);
     }
 
-    function FollowingPresenter(id, twitter, listPage, editPage, settingsHref)
+    function FollowingPresenter(id, twitter, listPage, editPage, settingsPage)
     {
         var followDialog = new TextInputDialog("followDialog");
         var model = new FollowingModel(localStorage);
@@ -45,6 +45,10 @@ function(FollowingView, TextInputDialog, FollowingModel) {
             listPage.show(title, stripLeadingAt(title));
         });
 
+        view.onSettingsClicked(function(){
+            settingsPage.show();
+        });
+
         view.onRemoveClicked(function(title) {
             model.remove(title);
         });
@@ -54,8 +58,6 @@ function(FollowingView, TextInputDialog, FollowingModel) {
                 model.add(user);
             });
         });
-
-        view.onSettingsClicked(settingsHref, function(){});
 
         refreshView(view, twitter.authorisedScreenName(), model.following, false);
     }

@@ -3,6 +3,7 @@ function(TwitterBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
 
     function SettingsPage(id, twitter)
     {
+        this.id = id;
         this.view = new SettingsView(id);
         this.view.setTwitterScreenName(twitter.authorisedScreenName());
 
@@ -18,6 +19,11 @@ function(TwitterBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
         var view = this.view;
         twitter.onAuthorisationChange(function(userId, screenName) { view.setTwitterScreenName(screenName); });
     }
+
+    SettingsPage.prototype.show = function()
+    {
+        $.mobile.changePage('#'+this.id);
+    };
 
     return SettingsPage;
 

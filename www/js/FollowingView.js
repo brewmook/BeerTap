@@ -18,7 +18,7 @@ define(function() {
              <div class="footer">\
                <a class="follow">Follow</a>\
                <a class="settings">Settings</a>\
-             </div>\
+               </div>\
            </div>');
 
         this.page.attr({id:id, 'data-role':'page'});
@@ -69,9 +69,9 @@ define(function() {
         this.page.find(".follow").click(click);
     };
 
-    FollowingView.prototype.onSettingsClicked = function(href, click)
+    FollowingView.prototype.onSettingsClicked = function(click)
     {
-        this.page.find(".settings").attr("href",href).click(click);
+        this.page.find(".settings").click(click);
     };
 
     FollowingView.prototype.onFollowingClicked = function(callback)

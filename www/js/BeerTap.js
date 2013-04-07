@@ -13,8 +13,9 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         var editModel = new TapsModel(new TwitterConfirmer(this.twitter, editView.page));
         var editPresenter = new EditPresenter("editPage", editModel, editView);
 
-        this.mainPage = new FollowingPresenter("main", this.twitter, listPresenter, editPresenter, "#settings");
-        this.settings = new SettingsPage("settings", this.twitter);
+        var settingsPresenter = new SettingsPage("settings", this.twitter);
+
+        this.mainPage = new FollowingPresenter("main", this.twitter, listPresenter, editPresenter, settingsPresenter);
 
         $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
         $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });
