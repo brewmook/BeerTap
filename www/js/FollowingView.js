@@ -16,9 +16,11 @@ define(function() {
                <ul></ul>\
              </div>\
              <div class="footer">\
-               <a class="follow">Follow</a>\
-               <a class="settings">Settings</a>\
+               <div class="buttons">\
+                 <button class="follow">Follow</button>\
+                 <button class="settings">Settings</button>\
                </div>\
+             </div>\
            </div>');
 
         this.page.attr({id:id, 'data-role':'page'});
@@ -28,12 +30,11 @@ define(function() {
                                    "data-split-theme":"c",
                                    "data-inset":"false"});
         this.page.find(".footer").attr({'data-role':'footer', 'data-position':'fixed'});
+        this.page.find(".buttons").attr({"data-role":"controlgroup", "data-type":"horizontal", "data-mini":true});
         this.page.find(".follow")
-            .attr("data-role","button")
-            .buttonMarkup({icon:'plus', inline:true, mini:false});
+            .button({icon:'plus', inline:true, theme:'a'});
         this.page.find(".settings")
-            .attr("data-role","button")
-            .buttonMarkup({icon:'gear', inline:true, mini:false});
+            .button({icon:'gear', inline:true, theme:'a'});
 
         this._editableClickedCallback = function(title){};
         this._followingClickedCallback = function(title){};
