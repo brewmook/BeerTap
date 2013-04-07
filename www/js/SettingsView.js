@@ -28,9 +28,9 @@ define(function(){
         this.page.find(".twitterScreenName").text(screenName || "");
     };
 
-    SettingsView.prototype.addAuthoriser = function(label, href, click)
+    SettingsView.prototype.addAuthoriser = function(label, click)
     {
-        var button = $('<a href="'+href+'" data-role="button" data-icon="plus">Authorise ('+label+')</a>')
+        var button = $('<a data-role="button" data-icon="plus">Authorise ('+label+')</a>')
                      .appendTo(this.page.find(".authorisers"))
                      .click(click);
     };

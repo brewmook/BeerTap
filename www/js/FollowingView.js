@@ -16,8 +16,8 @@ define(function() {
                <ul></ul>\
              </div>\
              <div class="footer">\
-               <a class="follow" href="#">Follow</a>\
-               <a class="settings" href="#">Settings</a>\
+               <a class="follow">Follow</a>\
+               <a class="settings">Settings</a>\
              </div>\
            </div>');
 
@@ -66,9 +66,9 @@ define(function() {
         if (jqmRrefresh) list.listview('refresh');
     };
 
-    FollowingView.prototype.onFollowClicked = function(href, click)
+    FollowingView.prototype.onFollowClicked = function(click)
     {
-        this.page.find(".follow").attr("href",href).click(click);
+        this.page.find(".follow").click(click);
     };
 
     FollowingView.prototype.onSettingsClicked = function(href, click)

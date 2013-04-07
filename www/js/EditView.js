@@ -18,7 +18,7 @@ function(TextInputDialog) {
         this._textDialog = new TextInputDialog(id+"TextDialog");
 
         var view = this;
-        this.page.find(".addButton").attr("href", "#"+this._textDialog.id).click(function() {
+        this.page.find(".addButton").click(function() {
             view._textDialog.show("Add Item", "Enter new text:", '', function(newText) {
                 view._addClickedCallback(newText);
             });
@@ -45,7 +45,6 @@ function(TextInputDialog) {
     {
         var itemList = this.page.find("ul");
         var view = this;
-        var dialogId = "#"+this._textDialog.id;
 
         function showChangeDialog(oldText)
         {
@@ -59,10 +58,8 @@ function(TextInputDialog) {
             var li = $("<li/>");
             li.append($("<a/>")
                       .append(item.name)
-                      .attr("href", dialogId)
                       .click(function() { showChangeDialog(item.name); }));
             li.append($("<a>Remove</a>")
-                      .attr("href", "#")
                       .click(function() { view._removeClickedCallback(item); }));
             itemList.append(li);
         });

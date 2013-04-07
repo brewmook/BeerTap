@@ -1,9 +1,9 @@
 define(['oAuthConfig', 'TextInputDialog'],
 function(oAuthConfig, TextInputDialog) {
 
-    function TwitterPinAuthoriser(dialogId)
+    function TwitterPinAuthoriser()
     {
-        this.pinDialog = new TextInputDialog(dialogId);
+        this.pinDialog = new TextInputDialog("twitterPinDialog");
     }
 
     TwitterPinAuthoriser.prototype.authorise = function(twitter)

@@ -49,7 +49,7 @@ function(FollowingView, TextInputDialog, FollowingModel) {
             model.remove(title);
         });
 
-        view.onFollowClicked("#followDialog", function() {
+        view.onFollowClicked(function() {
             followDialog.show("Follow", "Twitter user", "@", function(user) {
                 model.add(user);
             });

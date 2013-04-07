@@ -42,6 +42,7 @@ define(function() {
         {
             callback(input.val());
         });
+        $.mobile.changePage("#"+this.id);
     };
 
     return TextInputDialog;
