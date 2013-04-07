@@ -11,7 +11,7 @@ function (Twitter, ListView, ListPresenter, TapsModel, Utility) {
         var twitter = new Twitter(localStorage, twitterProxy);
         var model = new TapsModel(twitter);
         var view = new ListView(twitterScreenName);
-        var presenter = new ListPresenter(twitterScreenName, model, view);
+        var presenter = new ListPresenter(twitterScreenName, model, view, function(){});
         view.page.appendTo(parent);
         presenter.show('@'+twitterScreenName, twitterScreenName);
     }

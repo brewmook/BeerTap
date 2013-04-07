@@ -1,12 +1,13 @@
 define(function() {
 
-    function ListPresenter(id, model, view)
+    function ListPresenter(id, model, view, changePage)
     {
         var presenter = this;
         this.view = view;
         this.model = model;
         this.id = id;
         this._twitterScreenName = '';
+        this._changePage = changePage;
         view.onRefreshClicked(function() { model.load(presenter._twitterScreenName); });
         model.onItemsLoaded(function(items) { view.refresh(items); });
     }
@@ -17,7 +18,7 @@ define(function() {
         this.view.setHeading(title);
         this.model.load(twitterScreenName);
         this._twitterScreenName = twitterScreenName;
-        $.mobile.changePage("#"+this.id);
+        this._changePage("#"+this.id);
     };
 
     return ListPresenter;

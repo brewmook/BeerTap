@@ -33,7 +33,7 @@ function(ListPresenter) {
         },
 
         "test when refresh clicked, model.load() is called with twitterid of previous show()": function() {
-            var listPage = new ListPresenter("whatever", this.model, this.view);
+            var listPage = new ListPresenter("whatever", this.model, this.view, function(){});
             listPage.show("title", "twitterid");
             this.view.onRefreshClickedArgument();
             assertSame("twitterid", this.model.loadArgument);
@@ -46,16 +46,19 @@ function(ListPresenter) {
             assertSame(items, this.view.refreshArgument);
         },
 
-        "test show(): set view header, clear view, load feed": function() {
+        "test show(): set view header, clear view, load feed, change page": function() {
             var title = 'a title';
             var twitterid = 'something';
+            var changePageHref = null;
+            function changePage(href) { changePageHref = href; }
 
-            var listPage = new ListPresenter("whatever", this.model, this.view);
+            var listPage = new ListPresenter("whatever", this.model, this.view, changePage);
             listPage.show(title, twitterid);
 
             assertTrue(this.view.clearCalled);
             assertEquals(title, this.view.setHeadingArgument);
             assertEquals(twitterid, this.model.loadArgument);
+            assertEquals('#whatever', changePageHref);
         }
 
     });

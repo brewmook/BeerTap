@@ -7,7 +7,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
 
         var listModel = new TapsModel(this.twitter);
         var listView = new JQMListView("listPage");
-        var listPresenter = new ListPresenter("listPage", listModel, listView);
+        var listPresenter = new ListPresenter("listPage", listModel, listView, $.mobile.changePage);
 
         var editView = new JQMEditView("editPage");
         var editModel = new TapsModel(new TwitterConfirmer(this.twitter, editView.page));
