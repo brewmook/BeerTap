@@ -1,9 +1,11 @@
-define(['TwitterProxy', 'ListView', 'ListPresenter', 'TapsModel'],
-function (TwitterProxy, ListView, ListPresenter, TapsModel) {
+define(['Twitter', 'ListView', 'ListPresenter', 'TapsModel', 'Utility'],
+function (Twitter, ListView, ListPresenter, TapsModel, Utility) {
 
     function BeerTapEmbed(twitterScreenName, parent)
     {
-        var twitter = new TwitterProxy("proxy/twitter_user_timeline_json.php");
+        var twitterProxyUrl = Utility.changeRelativePath(window.location.href, 'twitter');
+        var twitterProxy = Utility.rewriteProxy(twitterProxyUrl);
+        var twitter = new Twitter(localStorage, twitterProxy);
         var model = new TapsModel(twitter);
         var view = new ListView(twitterScreenName);
         var presenter = new ListPresenter(twitterScreenName, model, view);
