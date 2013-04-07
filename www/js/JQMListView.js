@@ -10,10 +10,8 @@ define(['ListView'], function(ListView) {
         this.page.find(".content").attr("data-role","content");
         this.page.find("ul").attr("data-role","listview");
         this.page.find(".footer").attr({"data-role":"footer", "data-position":"fixed"});
-        this.page.find(".refresh").attr("data-role","button")
-                                  .buttonMarkup({icon: 'refresh',
-                                                 inline: true,
-                                                 mini: false});
+        this.page.find(".buttons").attr({"data-role":"controlgroup", "data-type":"horizontal", "data-mini":true});
+        this.page.find(".refresh").button({icon:'refresh', theme:'a'});
         this.page.appendTo("body");
     }
 

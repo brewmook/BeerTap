@@ -8,7 +8,11 @@ define(function() {
              <div class="content">\
                <ul></ul>\
              </div>\
-             <div class="footer"><a class="refresh" href="#">Refresh</a></div>\
+             <div class="footer">\
+               <div class="buttons">\
+                 <button class="refresh">Refresh</button>\
+               </div>\
+             </div>\
            </div>');
 
         var view = this;
