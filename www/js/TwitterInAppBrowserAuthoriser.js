@@ -1,10 +1,10 @@
 define(['oAuthConfig'], function(oAuthConfig) {
 
-    function TwitterBrowserAuthoriser()
+    function TwitterInAppBrowserAuthoriser()
     {
     }
 
-    TwitterBrowserAuthoriser.prototype.authorise = function(twitter)
+    TwitterInAppBrowserAuthoriser.prototype.authorise = function(twitter)
     {
         var callbackUrl = 'https://github.com/coolhandmook/BeerTap';
         var oAuth = OAuth({
@@ -42,7 +42,7 @@ define(['oAuthConfig'], function(oAuthConfig) {
         );
     };
 
-    TwitterBrowserAuthoriser.prototype.onVerifierSuccess = function(twitter, oAuth, verifier)
+    TwitterInAppBrowserAuthoriser.prototype.onVerifierSuccess = function(twitter, oAuth, verifier)
     {
         function success(data)
         {
@@ -75,6 +75,6 @@ define(['oAuthConfig'], function(oAuthConfig) {
             failure);
     };
 
-    return TwitterBrowserAuthoriser;
+    return TwitterInAppBrowserAuthoriser;
 
 });
