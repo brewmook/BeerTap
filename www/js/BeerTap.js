@@ -20,6 +20,8 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         $(document).ajaxStart(function() { $.mobile.loading( 'show' ); });
         $(document).ajaxStop(function() { $.mobile.loading( 'hide' ); });
         $(document).ajaxError(function() { alert("Error fetching data"); });
+        $.mobile.defaultDialogTransition = 'none';
+        $.mobile.defaultPageTransition = 'none';
     }
 
     return BeerTap;
