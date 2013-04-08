@@ -10,15 +10,6 @@ define(function() {
     function FollowingView(id)
     {
         this.page = $("#"+id);
-        this.page.find(".content").append(
-            $("<ul/>").attr({"data-role":"listview",
-                             "data-split-icon":"delete",
-                             "data-split-theme":"c",
-                             "data-inset":"false"}));
-        this.page.find(".buttons").append($('<a href="#" class="follow">Follow</a>').buttonMarkup({icon:'plus', inline:true, theme:'a'}));
-        this.page.find(".buttons").append($('<a href="#" class="settings">Settings</a>').buttonMarkup({icon:'gear', inline:true, theme:'a'}));
-        this.page.trigger("create");
-
         this._editableClickedCallback = function(title){};
         this._followingClickedCallback = function(title){};
         this._removeClickedCallback = function(title){};
