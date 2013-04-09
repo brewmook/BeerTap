@@ -39,7 +39,7 @@ define(function(){
 
     SettingsView.prototype.addAuthoriser = function(label, click)
     {
-        var button = $('<a data-role="button" data-icon="plus">Authorise ('+label+')</a>')
+        var button = $('<a data-role="button" data-icon="plus">'+label+'</a>')
                      .appendTo(this.page.find(".authorisers"))
                      .click(click);
     };

@@ -10,15 +10,15 @@ function(TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuth
         if (twitter.proxy === undefined)
         {
             var browserAuthoriser = new TwitterInAppBrowserAuthoriser();
-            this.view.addAuthoriser("Browser", function() { browserAuthoriser.authorise(twitter); });
+            this.view.addAuthoriser("Authorise (Browser)", function() { browserAuthoriser.authorise(twitter); });
 
             var pinAuthoriser = new TwitterPinAuthoriser();
-            this.view.addAuthoriser("PIN", function() { pinAuthoriser.authorise(twitter); });
+            this.view.addAuthoriser("Authorise (PIN)", function() { pinAuthoriser.authorise(twitter); });
         }
         else
         {
             var browserAuthoriser = new TwitterBrowserAuthoriser(this.view.page);
-            this.view.addAuthoriser("Browser", function() { browserAuthoriser.authorise(twitter); });
+            this.view.addAuthoriser("Authorise", function() { browserAuthoriser.authorise(twitter); });
             this.browserAuthoriser = browserAuthoriser;
         }
 
