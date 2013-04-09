@@ -2,6 +2,14 @@ define(function() {
 
     return {
 
+        parentPath: function(url)
+        {
+            var match = /(.*:\/\/.+)\//.exec(url);
+            if (match)
+                url = match[1];
+            return url + '/';
+        },
+
         changeRelativePath: function(url, path)
         {
             var match = /(.*:\/\/.+)\//.exec(url);

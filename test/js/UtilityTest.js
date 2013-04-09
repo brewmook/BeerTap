@@ -5,6 +5,24 @@ function(Utility) {
 
         // changeRelativePath()
 
+        "test parentPath(): top-level url with trailing slash, return same url": function() {
+            assertEquals("http://blah.com/", Utility.parentPath("http://blah.com/"));
+        },
+
+        "test parentPath(): top-level url with no trailing slash, return url with slash appended": function() {
+            assertEquals("http://blah.com/", Utility.parentPath("http://blah.com"));
+        },
+
+        "test parentPath(): url with path and no trailing slash, return url up to and including last slash": function() {
+            assertEquals("http://blah.com/some/", Utility.parentPath("http://blah.com/some/path"));
+        },
+
+        "test parentPath(): url with path and trailing slash, return same url": function() {
+            assertEquals("http://blah.com/some/path/", Utility.parentPath("http://blah.com/some/path/"));
+        },
+
+        // changeRelativePath()
+
         "test changeRelativePath(): top-level url with trailing slash, append new path": function() {
             var url = "http://blah.com/";
             assertEquals(url+"hello", Utility.changeRelativePath(url, "hello"));

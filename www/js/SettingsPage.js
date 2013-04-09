@@ -1,5 +1,5 @@
-define(['TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser', 'SettingsView'],
-function(TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
+define(['TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser', 'SettingsView'],
+function(TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
 
     function SettingsPage(id, twitter)
     {
@@ -11,10 +11,16 @@ function(TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
         {
             var browserAuthoriser = new TwitterInAppBrowserAuthoriser();
             this.view.addAuthoriser("Browser", function() { browserAuthoriser.authorise(twitter); });
-        }
 
-        var pinAuthoriser = new TwitterPinAuthoriser();
-        this.view.addAuthoriser("PIN", function() { pinAuthoriser.authorise(twitter); });
+            var pinAuthoriser = new TwitterPinAuthoriser();
+            this.view.addAuthoriser("PIN", function() { pinAuthoriser.authorise(twitter); });
+        }
+        else
+        {
+            var browserAuthoriser = new TwitterBrowserAuthoriser(this.view.page);
+            this.view.addAuthoriser("Browser", function() { browserAuthoriser.authorise(twitter); });
+            this.browserAuthoriser = browserAuthoriser;
+        }
 
         var view = this.view;
         twitter.onAuthorisationChange(function(userId, screenName) { view.setTwitterScreenName(screenName); });
@@ -23,6 +29,15 @@ function(TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
     SettingsPage.prototype.show = function()
     {
         $.mobile.changePage('#'+this.id);
+    };
+
+    SettingsPage.prototype.checkForTwitterAuthorisation = function(twitter)
+    {
+        if (this.browserAuthoriser && this.browserAuthoriser.authorisationInProgress())
+        {
+            this.show();
+            this.browserAuthoriser.continueAuthorisation(twitter);
+        }
     };
 
     return SettingsPage;

@@ -22,6 +22,8 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         $(document).ajaxError(function() { alert("Error fetching data"); });
         $.mobile.defaultDialogTransition = 'none';
         $.mobile.defaultPageTransition = 'none';
+
+        settingsPresenter.checkForTwitterAuthorisation(this.twitter);
     }
 
     return BeerTap;
