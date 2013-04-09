@@ -1,4 +1,5 @@
-define(function(){
+define(['AuthorisationPopup'],
+function(AuthorisationPopup) {
 
     function SettingsView(id)
     {
@@ -26,6 +27,8 @@ define(function(){
         this.page.find(".footer").attr({"data-role":"footer", "data-position":"fixed"});
         this.page.find(".buttons").attr({"data-role":"controlgroup", "data-type":"horizontal", "data-mini":true});
         this.page.find(".back").button({icon:'back', theme:'a'}).click(function(){history.go(-1);});
+        
+        this.authorisationPopup = new AuthorisationPopup(this.page);
 
         this.page.appendTo("body");
 

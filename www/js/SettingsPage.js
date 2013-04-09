@@ -17,7 +17,7 @@ function(TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuth
         }
         else
         {
-            var browserAuthoriser = new TwitterBrowserAuthoriser(this.view.page);
+            var browserAuthoriser = new TwitterBrowserAuthoriser(this.view.authorisationPopup);
             this.view.addAuthoriser("Authorise", function() { browserAuthoriser.authorise(twitter); });
             this.browserAuthoriser = browserAuthoriser;
         }
