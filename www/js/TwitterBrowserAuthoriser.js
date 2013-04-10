@@ -1,9 +1,9 @@
 define(['oAuthConfig', 'Utility'],
 function(oAuthConfig, Utility) {
 
-    function TwitterBrowserAuthoriser(statusPopup)
+    function TwitterBrowserAuthoriser(verifier)
     {
-        this.statusPopup = statusPopup;
+        this.verifier = verifier;
         this.authorisationRegexp = /\boauth_token=([^&]+)&oauth_verifier=([^&]+)/;
     }
 
@@ -54,37 +54,9 @@ function(oAuthConfig, Utility) {
         {
             var accessToken = match[1];
             var verifier = match[2];
-            var statusPopup = this.statusPopup;
-
-            statusPopup.show("Authorising", "Please wait...", false);
-
             var oAuth = this._createOAuth(twitter, accessToken);
 
-            function failure(data)
-            {
-                statusPopup.show("Failed", "Twitter authorisation failed", true);
-                console.log("Twitter authorisation failed.");
-                console.log(data);
-            }
-
-            function success(data)
-            {
-                var match = /oauth_token=(.*)&oauth_token_secret=(.*)&user_id=(.*)&screen_name=(.*)/.exec(data.text);
-                if (match)
-                {
-                    twitter.setAuthorisation(match[1], match[2], match[3], match[4]);
-                    statusPopup.show("Success", "Sending tweets as " + twitter.authorisedScreenName(), true);
-                    console.log("Twitter authorisation successful.");
-                    console.log(data);
-                }
-                else
-                {
-                    failure(data);
-                }
-            }
-
-            oAuth.setVerifier(verifier);
-            oAuth.fetchAccessToken(success, failure);
+            this.verifier.verify(twitter, oAuth, verifier);
         }
     };
 

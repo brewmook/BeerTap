@@ -1,11 +1,13 @@
-define(['TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser', 'SettingsView'],
-function(TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, SettingsView) {
+define(['TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser', 'AuthorisationVerifier', 'SettingsView'],
+function(TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, AuthorisationVerifier, SettingsView) {
 
     function SettingsPage(id, twitter)
     {
         this.id = id;
         this.view = new SettingsView(id);
         this.view.setTwitterScreenName(twitter.authorisedScreenName());
+
+        var verifier = new AuthorisationVerifier(this.view.authorisationPopup);
 
         if (twitter.proxy === undefined)
         {
@@ -17,7 +19,7 @@ function(TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuth
         }
         else
         {
-            var browserAuthoriser = new TwitterBrowserAuthoriser(this.view.authorisationPopup);
+            var browserAuthoriser = new TwitterBrowserAuthoriser(verifier);
             this.view.addAuthoriser("Authorise", function() { browserAuthoriser.authorise(twitter); });
             this.browserAuthoriser = browserAuthoriser;
         }
