@@ -1,15 +1,15 @@
 define(['TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser', 'AuthorisationVerifier', 'SettingsView'],
 function(TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, AuthorisationVerifier, SettingsView) {
 
-    function SettingsPage(id, twitter)
+    function SettingsPage(id, twitter, isPhoneGap)
     {
         this.id = id;
-        this.view = new SettingsView(id);
+        this.view = new SettingsView(id, isPhoneGap);
         this.view.setTwitterScreenName(twitter.authorisedScreenName());
 
         var verifier = new AuthorisationVerifier(this.view.authorisationPopup);
 
-        if (twitter.proxy === undefined)
+        if (isPhoneGap)
         {
             var browserAuthoriser = new TwitterInAppBrowserAuthoriser(verifier);
             this.view.addAuthoriser("Authorise (Browser)", function() { browserAuthoriser.authorise(twitter); });

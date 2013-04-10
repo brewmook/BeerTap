@@ -1,7 +1,7 @@
 define(['AuthorisationPopup'],
 function(AuthorisationPopup) {
 
-    function SettingsView(id)
+    function SettingsView(id, isPhoneGap)
     {
         this.page =
         $('<div id="'+id+'" data-role="page">\
@@ -15,7 +15,7 @@ function(AuthorisationPopup) {
                      <div class="authorisers" />\
                    </div>\
                  </div>\
-                 <div data-role="collapsible">\
+                 <div data-role="collapsible" class="nonPhoneGap">\
                    <h4>Experimental</h4>\
                    <div>\
                      <p>These features may not work on your device</p>\
@@ -38,6 +38,9 @@ function(AuthorisationPopup) {
         var view = this;
         this._fullScreenClickedCallback = function(){};
         this.page.find(".fullscreen").click(function(){ view._fullScreenClickedCallback(); });
+
+        if (isPhoneGap)
+            this.page.find(".nonPhoneGap").hide();
 
         this.authorisationPopup = new AuthorisationPopup(this.page);
 
