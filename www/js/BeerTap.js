@@ -23,7 +23,17 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         $.mobile.defaultDialogTransition = 'none';
         $.mobile.defaultPageTransition = 'none';
 
+        window.addEventListener("orientationchange", function() { hideAddressBar(); });
+        hideAddressBar();
+
         settingsPresenter.checkForTwitterAuthorisation(this.twitter);
+    }
+
+    function hideAddressBar()
+    {
+        if(document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
+            document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
+        setTimeout(function(){ window.scrollTo(0,1); }, 100);
     }
 
     return BeerTap;
