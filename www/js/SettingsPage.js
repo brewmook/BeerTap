@@ -11,10 +11,10 @@ function(TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuth
 
         if (twitter.proxy === undefined)
         {
-            var browserAuthoriser = new TwitterInAppBrowserAuthoriser();
+            var browserAuthoriser = new TwitterInAppBrowserAuthoriser(verifier);
             this.view.addAuthoriser("Authorise (Browser)", function() { browserAuthoriser.authorise(twitter); });
 
-            var pinAuthoriser = new TwitterPinAuthoriser();
+            var pinAuthoriser = new TwitterPinAuthoriser(verifier);
             this.view.addAuthoriser("Authorise (PIN)", function() { pinAuthoriser.authorise(twitter); });
         }
         else

@@ -1,8 +1,9 @@
 define(['oAuthConfig', 'TextInputDialog'],
 function(oAuthConfig, TextInputDialog) {
 
-    function TwitterPinAuthoriser()
+    function TwitterPinAuthoriser(verifier)
     {
+        this.verifier = verifier;
         this.pinDialog = new TextInputDialog("twitterPinDialog");
     }
 
@@ -20,11 +21,15 @@ function(oAuthConfig, TextInputDialog) {
         });
 
         console.log("Requesting twitter authorisation...");
-        var authoriser = this;
+        var pinDialog = this.pinDialog;
+        var verifier = this.verifier;
         oAuth.fetchRequestToken(
             function(url) {
                 console.log("Success - sending user to "+url);
-                authoriser.pinDialog.show("Twitter PIN", "Enter authorisation PIN:", url, function(pin) { authoriser.onPinSubmit(twitter, oAuth, pin); });
+                pinDialog.show("Twitter PIN", "Enter authorisation PIN:", url, function(pin) {
+                    // Timeout to give the pin dialog a chance to close properly
+                    setTimeout(function() { verifier.verify(twitter, oAuth, pin); }, 250);
+                });
                 alert("Go to the URL shown in the PIN dialog, authorise with Twitter, then come back and enter the PIN instead of the URL.");
             },
             function(data) {
@@ -33,39 +38,6 @@ function(oAuthConfig, TextInputDialog) {
                 console.log(data);
             }
         );
-    };
-
-    TwitterPinAuthoriser.prototype.onPinSubmit = function(twitter, oAuth, pin)
-    {
-        function success(data)
-        {
-            alert("You're all set, sending real tweets as " + twitter.authorisedScreenName() + " now!");
-            console.log("Twitter authorisation successful.");
-            console.log(data);
-        }
-
-        function failure(data)
-        {
-            alert("Dang, your PIN didn't work.");
-            console.log("Twitter authorisation failed.");
-            console.log(data);
-        }
-
-        oAuth.setVerifier(pin);
-        oAuth.fetchAccessToken(
-            function(data) {
-                var match = /oauth_token=(.*)&oauth_token_secret=(.*)&user_id=(.*)&screen_name=(.*)/.exec(data.text);
-                if (match)
-                {
-                    twitter.setAuthorisation(match[1], match[2], match[3], match[4]);
-                    success(data);
-                }
-                else
-                {
-                    failure(data);
-                }
-            },
-            failure);
     };
 
     return TwitterPinAuthoriser;
