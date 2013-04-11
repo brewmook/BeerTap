@@ -24,6 +24,10 @@ html, body {
  right: 8px;
 }
 
+.footer button.back {
+ display:none;
+}
+
 h1 {
  margin: 0;
  padding: 0;

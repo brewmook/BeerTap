@@ -19,6 +19,7 @@ define(function() {
         var view = this;
         this.page.find(".refresh").click(function() { view._fireRefreshClicked(); });
         this._refreshClickedCallbacks = [];
+        this._showDates = true;
     }
 
     ListView.prototype.clear = function()
@@ -44,14 +45,30 @@ define(function() {
         itemList.empty();
         items.forEach(function(item)
         {
-            var date = item.date.toISOString().substring(0,10);
-            itemList.append('<li>'+item.name+' <span class="date">'+date+'</span></li>');
+            var date = '';
+            if (this._showDates)
+            {
+                var isodate = item.date.toISOString().substring(0,10);
+                date = ' <span class="date">'+date+'</span>';
+            }
+            itemList.append('<li>'+item.name+date+'</li>');
         });
     };
 
     ListView.prototype._fireRefreshClicked = function()
     {
         this._refreshClickedCallbacks.forEach(function(callback) { callback(); });
+    };
+
+    ListView.prototype.hideRefreshButton = function()
+    {
+        this.page.find(".refresh").hide();
+    };
+
+    ListView.prototype.hideDates = function()
+    {
+        this.page.find(".date").hide();
+        this._showDates = false;
     };
 
     return ListView;
