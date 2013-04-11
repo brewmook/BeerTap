@@ -53,6 +53,17 @@ function (Twitter, ListView, ListPresenter, TapsModel, Utility) {
                 if (pair.length == 2)
                     header.css('color', decodeURIComponent(pair[1]));
                 break;
+            case "css":
+                if (pair.length == 2)
+                {
+                    $("#defaultstyle").remove();
+                    $("<link/>", {
+                        rel: "stylesheet",
+                        type: "text/css",
+                        href: decodeURIComponent(pair[1])
+                    }).appendTo("head");
+                }
+                break;
             }
         });
     }
