@@ -41,15 +41,16 @@ define(function() {
 
     ListView.prototype.refresh = function(items)
     {
+        var view = this;
         var itemList = this.page.find("ul");
         itemList.empty();
         items.forEach(function(item)
         {
             var date = '';
-            if (this._showDates)
+            if (view._showDates)
             {
                 var isodate = item.date.toISOString().substring(0,10);
-                date = ' <span class="date">'+date+'</span>';
+                date = ' <span class="date">'+isodate+'</span>';
             }
             itemList.append('<li>'+item.name+date+'</li>');
         });
