@@ -4,7 +4,7 @@ from datetime import datetime
 Version = {
     'major':     0,
     'minor':     1,
-    'patch':     3,
+    'patch':     4,
     'revision':  os.popen("git rev-parse HEAD").read().strip(),
     'timestamp': int(datetime.utcnow().strftime("%s")) * 1000,
     }
