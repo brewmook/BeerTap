@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<widget xmlns = "http://www.w3.org/ns/widgets"
+    xmlns:gap = "http://phonegap.com/ns/1.0"
+    id        = "com.coolhandmook.beertap"
+    version   = "{major}.{minor}.{patch}">
+
+<name>BeerTap</name>
+<description>Find out what beers are on tap at your favourite pubs.</description>
+<author href="https://github.com/coolhandmook/BeerTap" email="dave.beertap@coolhandmook.com">Dave E</author>
+
+<preference name="permissions" value="none"/>
+<preference name="splash-screen-duration" value="0" />
+<preference name="phonegap-version" value="2.3.0" />
+<preference name="orientation" value="default" />
+<preference name="target-device" value="universal" />
+<preference name="fullscreen" value="false" />
+
+<access origin="https://github.com" />
+<access origin="https://twitter.com" subdomains="true" />
+
+</widget>
