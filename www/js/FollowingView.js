@@ -1,4 +1,5 @@
-define(function() {
+define(['AboutView'],
+function(AboutView) {
 
     function addLink(list, title, nameClick, removeClick)
     {
@@ -13,6 +14,10 @@ define(function() {
         this._editableClickedCallback = function(title){};
         this._followingClickedCallback = function(title){};
         this._removeClickedCallback = function(title){};
+
+        var about = new AboutView(this.page);
+        this.page.find(".about").click(function() { about.show(); });
+        this.page.trigger('create');
     }
 
     FollowingView.prototype.refresh = function(editable, following)
