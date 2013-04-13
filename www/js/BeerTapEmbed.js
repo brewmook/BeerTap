@@ -10,7 +10,7 @@ function (Twitter, ListView, ListPresenter, TapsModel, Utility) {
 
         var twitterProxyUrl = Utility.changeRelativePath(window.location.href, 'twitter');
         var twitterProxy = Utility.rewriteProxy(twitterProxyUrl);
-        var twitter = new Twitter(localStorage, twitterProxy);
+        var twitter = new Twitter({}, twitterProxy);
         var model = new TapsModel(twitter);
         var view = new ListView(twitterScreenName);
         var presenter = new ListPresenter(twitterScreenName, model, view, function(){});
