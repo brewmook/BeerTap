@@ -17,7 +17,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         var editModel = new TapsModel(new TwitterConfirmer(twitter, editView.page));
         var editPresenter = new EditPresenter("editPage", editModel, editView);
 
-        var settingsView = new SettingsView("settings", twitter.authorisedScreenName(), isPhoneGap);
+        var settingsView = new SettingsView("settings", twitter.authorisedScreenName());
         var settingsPresenter = new SettingsPage("settings", twitter, settingsView);
 
         this.mainPage = new FollowingPresenter("main", twitter, listPresenter, editPresenter, settingsPresenter);

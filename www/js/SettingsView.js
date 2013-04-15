@@ -1,6 +1,6 @@
 define(function() {
 
-    function SettingsView(id, twitterScreenName, isPhoneGap)
+    function SettingsView(id, twitterScreenName)
     {
         this.page =
         $('<div id="'+id+'" data-role="page">\
@@ -12,13 +12,6 @@ define(function() {
                    <div>\
                      <p>Screen Name: <span class="twitterScreenName">'+twitterScreenName+'</span></p>\
                      <div class="authorisers" />\
-                   </div>\
-                 </div>\
-                 <div data-role="collapsible" class="nonPhoneGap">\
-                   <h4>Experimental</h4>\
-                   <div>\
-                     <p>These features may not work on your device</p>\
-                     <button class="fullscreen">Toggle fullscreen</button>\
                    </div>\
                  </div>\
                </div>\
@@ -33,13 +26,6 @@ define(function() {
         this.page.find(".footer").attr({"data-role":"footer", "data-position":"fixed"});
         this.page.find(".buttons").attr({"data-role":"controlgroup", "data-type":"horizontal", "data-mini":true});
         this.page.find(".back").button({icon:'back', theme:'a'}).click(function(){history.go(-1);});
-
-        var view = this;
-        this._fullScreenClickedCallback = function(){};
-        this.page.find(".fullscreen").click(function(){ view._fullScreenClickedCallback(); });
-
-        if (isPhoneGap)
-            this.page.find(".nonPhoneGap").hide();
 
         this.page.appendTo("body");
 
@@ -56,11 +42,6 @@ define(function() {
         var button = $('<a data-role="button" data-icon="plus">'+label+'</a>')
                      .appendTo(this.page.find(".authorisers"))
                      .click(click);
-    };
-
-    SettingsView.prototype.onFullscreenClicked = function(callback)
-    {
-        this._fullScreenClickedCallback = callback;
     };
 
     return SettingsView;
