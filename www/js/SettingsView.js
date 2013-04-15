@@ -1,7 +1,6 @@
-define(['AuthorisationPopup'],
-function(AuthorisationPopup) {
+define(function() {
 
-    function SettingsView(id, isPhoneGap)
+    function SettingsView(id, twitterScreenName, isPhoneGap)
     {
         this.page =
         $('<div id="'+id+'" data-role="page">\
@@ -11,7 +10,7 @@ function(AuthorisationPopup) {
                  <div data-role="collapsible" id="twitter-settings">\
                    <h4>Twitter</h4>\
                    <div>\
-                     <p>Screen Name: <span class="twitterScreenName"></span></p>\
+                     <p>Screen Name: <span class="twitterScreenName">'+twitterScreenName+'</span></p>\
                      <div class="authorisers" />\
                    </div>\
                  </div>\
@@ -41,8 +40,6 @@ function(AuthorisationPopup) {
 
         if (isPhoneGap)
             this.page.find(".nonPhoneGap").hide();
-
-        this.authorisationPopup = new AuthorisationPopup(this.page);
 
         this.page.appendTo("body");
 

@@ -8,7 +8,7 @@ define(function() {
              <p></p>\
              <a href="#" data-rel="back" data-role="button" data-icon="check">Ok</a>\
            </div>')
-            .appendTo(parentPage);
+            .appendTo(parentPage).popup().trigger('create');
     }
     
     AuthorisationPopup.prototype.show = function(heading, text, okEnabled)

@@ -1,10 +1,17 @@
 define(['oAuthConfig', 'Utility'],
 function(oAuthConfig, Utility) {
 
-    function TwitterBrowserAuthoriser(verifier)
+    function TwitterBrowserAuthoriser(twitter, authorisationVerifier)
     {
-        this.verifier = verifier;
-        this.authorisationRegexp = /\boauth_token=([^&]+)&oauth_verifier=([^&]+)/;
+        var authorisationRegexp = /\boauth_token=([^&]+)&oauth_verifier=([^&]+)/;
+        var match = authorisationRegexp.exec(window.location.search);
+        if (match)
+        {
+            var accessToken = match[1];
+            var verifier = match[2];
+            var oAuth = this._createOAuth(twitter, accessToken);
+            authorisationVerifier.verify(twitter, oAuth, verifier);
+        }
     }
 
     TwitterBrowserAuthoriser.prototype._createOAuth = function(twitter, accessToken)
@@ -40,24 +47,6 @@ function(oAuthConfig, Utility) {
                 console.log(data);
             }
         );
-    };
-
-    TwitterBrowserAuthoriser.prototype.authorisationInProgress = function()
-    {
-        return this.authorisationRegexp.test(window.location.search);
-    };
-
-    TwitterBrowserAuthoriser.prototype.continueAuthorisation = function(twitter)
-    {
-        var match = this.authorisationRegexp.exec(window.location.search);
-        if (match)
-        {
-            var accessToken = match[1];
-            var verifier = match[2];
-            var oAuth = this._createOAuth(twitter, accessToken);
-
-            this.verifier.verify(twitter, oAuth, verifier);
-        }
     };
 
     return TwitterBrowserAuthoriser;
