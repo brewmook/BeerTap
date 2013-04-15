@@ -31,7 +31,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         window.addEventListener("orientationchange", function() { hideAddressBar(); });
         hideAddressBar();
 
-        var authorisationPopup = new AuthorisationPopup($("#main"));
+        var authorisationPopup = new AuthorisationPopup("main");
         var verifier = new AuthorisationVerifier(authorisationPopup);
 
         if (isPhoneGap)

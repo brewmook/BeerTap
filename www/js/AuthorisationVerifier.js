@@ -9,13 +9,11 @@ define(function() {
     {
         var view = this.view;
 
-        view.show("Verifying", "Please wait...", false);
+        view.show();
 
         function failure(data)
         {
-            view.show("Failed", "Twitter authorisation failed", true);
-            console.log("Twitter authorisation failed.");
-            console.log(data);
+            view.failure(data);
         }
 
         function success(data)
@@ -24,13 +22,11 @@ define(function() {
             if (match)
             {
                 twitter.setAuthorisation(match[1], match[2], match[3], match[4]);
-                view.show("Success", "Sending tweets as " + twitter.authorisedScreenName(), true);
-                console.log("Twitter authorisation successful.");
-                console.log(data);
+                view.success(match[3], match[4]);
             }
             else
             {
-                failure(data);
+                view.failure(data);
             }
         }
 
