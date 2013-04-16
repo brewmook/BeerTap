@@ -1,4 +1,4 @@
-define(['oAuthConfig'], function(oAuthConfig) {
+define(function() {
 
     function TwitterInAppBrowserAuthoriser(verifier)
     {
@@ -7,21 +7,10 @@ define(['oAuthConfig'], function(oAuthConfig) {
 
     TwitterInAppBrowserAuthoriser.prototype.authorise = function(twitter)
     {
-        var callbackUrl = 'https://github.com/coolhandmook/BeerTap';
-        var oAuth = OAuth({
-            consumerKey: oAuthConfig.consumerKey,
-            consumerSecret: oAuthConfig.consumerSecret,
-            callbackUrl: callbackUrl,
-            enablePrivilege: false,
-            proxy: twitter.proxy,
-            requestTokenUrl:  twitter.urls.requestTokenUrl,
-            authorizationUrl: twitter.urls.authorizationUrl,
-            accessTokenUrl:   twitter.urls.accessTokenUrl
-        });
-
         console.log("Requesting twitter authorisation...");
         var verifier = this.verifier;
-        oAuth.fetchRequestToken(
+        twitter.oAuth.setCallbackUrl("https://github.com/coolhandmook/BeerTap");
+        twitter.oAuth.fetchRequestToken(
             function(url) {
                 var browser = window.open(url, '_blank');
                 browser.addEventListener('loadstart', function(event) {
@@ -30,9 +19,10 @@ define(['oAuthConfig'], function(oAuthConfig) {
                     if (split[0] == callbackUrl)
                     {
                         browser.close();
-                        split = split[1].split("oauth_verifier=");
-                        if (split.length > 1)
-                            verifier.verify(twitter, oAuth, split[1]);
+                        var authorisationRegexp = /\boauth_token=([^&]+)&oauth_verifier=([^&]+)/;
+                        var match = authorisationRegexp.exec(split[1]);
+                        if (match)
+                            verifier.verify(twitter, match[2], match[1]);
                     }
                 });
             },

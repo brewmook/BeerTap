@@ -6,7 +6,7 @@ requirejs.config({
     }
 });
 
-if (/^file/.test(window.location.href))
+if (true || /^file/.test(window.location.href))
 {
     requirejs(['root/phonegap', 'lib/domReady!', 'BeerTap'],
         function (phonegap, doc, BeerTap) {

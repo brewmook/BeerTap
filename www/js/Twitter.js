@@ -19,7 +19,10 @@ define(['oAuthConfig'], function(oAuthConfig) {
             consumerKey: oAuthConfig.consumerKey,
             consumerSecret: oAuthConfig.consumerSecret,
             enablePrivilege: false,
-            proxy: proxy
+            proxy: proxy,
+            requestTokenUrl:  this.urls.requestTokenUrl,
+            authorizationUrl: this.urls.authorizationUrl,
+            accessTokenUrl:   this.urls.accessTokenUrl
         });
 
         if (store.accessTokenKey && store.accessTokenSecret)

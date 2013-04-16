@@ -5,7 +5,7 @@ define(function() {
         this.view = view;
     }
 
-    AuthorisationVerifier.prototype.verify = function(twitter, oAuth, verifier)
+    AuthorisationVerifier.prototype.verify = function(twitter, verifier, accessToken)
     {
         var view = this.view;
 
@@ -30,8 +30,10 @@ define(function() {
             }
         }
 
-        oAuth.setVerifier(verifier);
-        oAuth.fetchAccessToken(success, failure);
+        if (accessToken)
+            twitter.oAuth.setAccessToken([accessToken, undefined]);
+        twitter.oAuth.setVerifier(verifier);
+        twitter.oAuth.fetchAccessToken(success, failure);
     };
 
     return AuthorisationVerifier;
