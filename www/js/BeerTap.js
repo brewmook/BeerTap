@@ -32,7 +32,7 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         hideAddressBar();
 
         var authorisationPopup = new AuthorisationPopup("main");
-        var verifier = new AuthorisationVerifier(authorisationPopup);
+        var verifier = new AuthorisationVerifier(twitter, authorisationPopup);
 
         if (isPhoneGap)
         {

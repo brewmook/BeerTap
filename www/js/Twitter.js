@@ -85,6 +85,29 @@ define(['oAuthConfig'], function(oAuthConfig) {
         return this.store.screenName;
     };
 
+    Twitter.prototype.verifyAuthorisation = function(verifier, accessToken, failure)
+    {
+        var twitter = this;
+
+        function success(data)
+        {
+            var match = /oauth_token=(.*)&oauth_token_secret=(.*)&user_id=(.*)&screen_name=(.*)/.exec(data.text);
+            if (match)
+            {
+                twitter.setAuthorisation(match[1], match[2], match[3], match[4]);
+            }
+            else
+            {
+                failure(data);
+            }
+        }
+
+        if (accessToken)
+            this.oAuth.setAccessToken([accessToken, undefined]);
+        this.oAuth.setVerifier(verifier);
+        this.oAuth.fetchAccessToken(success, failure);
+    };
+
     return Twitter;
 
 });

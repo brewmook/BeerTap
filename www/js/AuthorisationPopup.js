@@ -29,10 +29,13 @@ define(function() {
         show(this.popup, "Verifying", "Please wait...", false);
     };
 
-    AuthorisationPopup.prototype.success = function(userId, screenName)
+    AuthorisationPopup.prototype.success = function(screenName)
     {
-        show(this.popup, "Success", "Sending tweets as " + screenName, true);
-        console.log("Twitter authorisation successful.");
+        if (this.popup.is(":visible"))
+        {
+            show(this.popup, "Success", "Sending tweets as " + screenName, true);
+            console.log("Twitter authorisation successful.");
+        }
     };
 
     AuthorisationPopup.prototype.failure = function(data)
