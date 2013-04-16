@@ -2,6 +2,7 @@ define(function() {
 
     function SettingsView(id, twitterScreenName)
     {
+        twitterScreenName = twitterScreenName || '';
         this.page =
         $('<div id="'+id+'" data-role="page">\
              <div data-role="header"><h1>Settings</h1></div>\
