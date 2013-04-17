@@ -7,15 +7,12 @@ define(function() {
 
     TwitterInAppBrowserAuthoriser.prototype.authorise = function(twitter)
     {
-        console.log("Requesting twitter authorisation...");
         var verifier = this.verifier;
-        twitter.oAuth.setCallbackUrl("https://github.com/coolhandmook/BeerTap");
-        twitter.oAuth.fetchRequestToken(
+        twitter.fetchRequestTokenUrl("https://github.com/coolhandmook/BeerTap",
             function(url) {
                 var browser = window.open(url, '_blank');
                 browser.addEventListener('loadstart', function(event) {
                     var split = event.url.split('?');
-                    console.log(split);
                     if (split[0] == callbackUrl)
                     {
                         browser.close();
@@ -25,13 +22,7 @@ define(function() {
                             verifier.verify(match[2], match[1]);
                     }
                 });
-            },
-            function(data) {
-                alert("Failed to request Twitter authorisation URL");
-                console.log("FAIL!");
-                console.log(data);
-            }
-        );
+            });
     };
 
     return TwitterInAppBrowserAuthoriser;

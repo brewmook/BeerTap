@@ -11,19 +11,10 @@ function(Utility) {
 
     TwitterBrowserAuthoriser.prototype.authorise = function(twitter)
     {
-        console.log("Requesting twitter authorisation...");
-        twitter.oAuth.setCallbackUrl(Utility.parentPath(window.location.href));
-        twitter.oAuth.fetchRequestToken(
+        twitter.fetchRequestTokenUrl(Utility.parentPath(window.location.href),
             function(url) {
-                console.log(url);
                 window.location = url;
-            },
-            function(data) {
-                alert("Failed to request Twitter authorisation URL");
-                console.log("FAIL!");
-                console.log(data);
-            }
-        );
+            });
     };
 
     return TwitterBrowserAuthoriser;

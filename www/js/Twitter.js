@@ -85,6 +85,21 @@ define(['oAuthConfig'], function(oAuthConfig) {
         return this.store.screenName;
     };
 
+    Twitter.prototype.fetchRequestTokenUrl = function(callbackUrl, success, failure)
+    {
+        console.log("Requesting twitter authorisation...");
+        this.oAuth.setCallbackUrl(callbackUrl);
+        this.oAuth.fetchRequestToken(
+            success,
+            function(data) {
+                console.log("Twitter authorisation FAIL!");
+                console.log(data);
+                if (typeof failure === 'function')
+                    failure(data);
+            }
+        );
+    };
+
     Twitter.prototype.verifyAuthorisation = function(verifier, accessToken, failure)
     {
         var twitter = this;
