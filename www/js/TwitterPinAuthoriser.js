@@ -18,7 +18,7 @@ function(TextInputDialog) {
                 console.log("Success - sending user to "+url);
                 pinDialog.show("Twitter PIN", "Enter authorisation PIN:", url, function(pin) {
                     // Timeout to give the pin dialog a chance to close properly
-                    setTimeout(function() { verifier.verify(twitter, pin); }, 250);
+                    setTimeout(function() { verifier.verify(pin); }, 250);
                 });
                 alert("Go to the URL shown in the PIN dialog, authorise with Twitter, then come back and enter the PIN instead of the URL.");
             },

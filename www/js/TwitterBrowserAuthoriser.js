@@ -1,12 +1,12 @@
 define(['Utility'],
 function(Utility) {
 
-    function TwitterBrowserAuthoriser(twitter, authorisationVerifier)
+    function TwitterBrowserAuthoriser(authorisationVerifier)
     {
         var authorisationRegexp = /\boauth_token=([^&]+)&oauth_verifier=([^&]+)/;
         var match = authorisationRegexp.exec(window.location.search);
         if (match)
-            authorisationVerifier.verify(twitter, match[2], match[1]);
+            authorisationVerifier.verify(match[2], match[1]);
     }
 
     TwitterBrowserAuthoriser.prototype.authorise = function(twitter)

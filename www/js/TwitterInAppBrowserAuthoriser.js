@@ -22,7 +22,7 @@ define(function() {
                         var authorisationRegexp = /\boauth_token=([^&]+)&oauth_verifier=([^&]+)/;
                         var match = authorisationRegexp.exec(split[1]);
                         if (match)
-                            verifier.verify(twitter, match[2], match[1]);
+                            verifier.verify(match[2], match[1]);
                     }
                 });
             },

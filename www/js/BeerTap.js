@@ -1,9 +1,9 @@
 define(['Twitter', 'TwitterConfirmer', 'TapsModel', 'JQMListView', 'ListPresenter', 'JQMEditView',
         'EditPresenter', 'FollowingPresenter', 'SettingsView', 'SettingsPage', 'AuthorisationPopup',
-        'TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser', 'AuthorisationVerifier'],
+        'TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser'],
 function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEditView,
          EditPresenter, FollowingPresenter, SettingsView, SettingsPage, AuthorisationPopup,
-         TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, AuthorisationVerifier) {
+         TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser) {
 
     function BeerTap(isPhoneGap, twitterProxy)
     {
@@ -31,20 +31,19 @@ function(Twitter, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEd
         window.addEventListener("orientationchange", function() { hideAddressBar(); });
         hideAddressBar();
 
-        var authorisationPopup = new AuthorisationPopup("main");
-        var verifier = new AuthorisationVerifier(twitter, authorisationPopup);
+        var authorisationPopup = new AuthorisationPopup("main", twitter);
 
         if (isPhoneGap)
         {
-            var browserAuthoriser = new TwitterInAppBrowserAuthoriser(verifier);
+            var browserAuthoriser = new TwitterInAppBrowserAuthoriser(authorisationPopup);
             settingsView.addAuthoriser("Authorise (Browser)", function() { browserAuthoriser.authorise(twitter); });
 
-            var pinAuthoriser = new TwitterPinAuthoriser(verifier);
+            var pinAuthoriser = new TwitterPinAuthoriser(authorisationPopup);
             settingsView.addAuthoriser("Authorise (PIN)", function() { pinAuthoriser.authorise(twitter); });
         }
         else
         {
-            var browserAuthoriser = new TwitterBrowserAuthoriser(twitter, verifier);
+            var browserAuthoriser = new TwitterBrowserAuthoriser(authorisationPopup);
             settingsView.addAuthoriser("Authorise", function() { browserAuthoriser.authorise(twitter); });
         }
     }
