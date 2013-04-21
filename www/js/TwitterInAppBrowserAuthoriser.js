@@ -12,14 +12,12 @@ define(function() {
             function(url) {
                 var browser = window.open(url, '_blank');
                 browser.addEventListener('loadstart', function(event) {
-                    var split = event.url.split('?');
-                    if (split[0] == callbackUrl)
+                    var authorisationRegexp = /\boauth_token=([^&]+)&oauth_verifier=([^&]+)/;
+                    var match = authorisationRegexp.exec(event.url);
+                    if (match)
                     {
                         browser.close();
-                        var authorisationRegexp = /\boauth_token=([^&]+)&oauth_verifier=([^&]+)/;
-                        var match = authorisationRegexp.exec(split[1]);
-                        if (match)
-                            verifier.verify(match[2], match[1]);
+                        verifier.verify(match[2], match[1]);
                     }
                 });
             });
