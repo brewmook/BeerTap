@@ -1,21 +1,22 @@
-define(['Twitter', 'TwitterLogger', 'TwitterConfirmer', 'TapsModel', 'JQMListView', 'ListPresenter', 'JQMEditView',
+define(['Twitter', 'TwitterLogger', 'TwitterLoader', 'TwitterConfirmer', 'TapsModel', 'JQMListView', 'ListPresenter', 'JQMEditView',
         'EditPresenter', 'FollowingPresenter', 'SettingsView', 'SettingsPage', 'AuthorisationPopup',
         'TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser'],
-function(Twitter, TwitterLogger, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEditView,
+function(Twitter, TwitterLogger, TwitterLoader, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEditView,
          EditPresenter, FollowingPresenter, SettingsView, SettingsPage, AuthorisationPopup,
          TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser) {
 
     function BeerTap(isPhoneGap, twitterProxy)
     {
         var twitter = new Twitter(localStorage, twitterProxy);
-        var twitterLogger = new TwitterLogger(twitter);
+        var twitterLoader = new TwitterLoader(twitter);
 
-        var listModel = new TapsModel(twitter, twitterLogger);
+        var listModel = new TapsModel(twitterLoader, new TwitterLogger(twitter));
         var listView = new JQMListView("listPage");
         var listPresenter = new ListPresenter("listPage", listModel, listView, $.mobile.changePage);
 
         var editView = new JQMEditView("editPage");
-        var editModel = new TapsModel(new TwitterConfirmer(twitter, editView.page), twitterLogger);
+        var twitterConfirmer = new TwitterConfirmer(twitter, editView.page);
+        var editModel = new TapsModel(twitterLoader, new TwitterLogger(twitterConfirmer));
         var editPresenter = new EditPresenter("editPage", editModel, editView);
 
         var settingsView = new SettingsView("settings", twitter.authorisedScreenName());

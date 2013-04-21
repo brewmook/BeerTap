@@ -10,11 +10,11 @@ define(function() {
         return result;
     }
 
-    function TapsModel(twitter, logger)
+    function TapsModel(loader, logger)
     {
-        this.twitter = twitter;
+        this._loader = loader;
         this._logger = logger;
-        this.items = [];
+        this._items = [];
         this._itemsLoadedCallbacks = [];
         this._itemRemovedCallbacks = [];
     }
@@ -29,38 +29,25 @@ define(function() {
         this._itemRemovedCallbacks.push(callback);
     };
 
-    TapsModel.prototype.load = function(twitterScreenName)
+    TapsModel.prototype.load = function(userId)
     {
         var model = this;
-        this.twitter.getUserTimeline(twitterScreenName, function(data)
+        this._loader.load(userId, function(commands)
         {
-            model.items = parseTweets(data);
+            model._items = reduceCommandsToItems(commands);
             model._fireItemsLoaded();
         });
     };
 
-    function parseTweets(tweets)
+    function reduceCommandsToItems(commands)
     {
-        tweets.reverse(); // chronological order please
-
         var itemSet = {};
-        var offOnRegExp = /(OFF|ON): *(.*)/;
-        tweets.forEach(function(tweet)
+        commands.forEach(function(command)
         {
-            var lines = tweet.text.split('\n');
-            lines.forEach(function(line)
-            {
-                var matches = offOnRegExp.exec(line);
-                if (matches)
-                {
-                    var command = matches[1];
-                    var text = matches[2];
-                    if (command == "OFF")
-                        delete itemSet[text];
-                    else if (command == "ON")
-                        itemSet[text] = tweet.created_at;
-                }
-            });
+            if (command.command == "OFF")
+                delete itemSet[command.beer];
+            else if (command.command == "ON")
+                itemSet[command.beer] = command.time;
         });
 
         var items = [];
@@ -81,8 +68,8 @@ define(function() {
             function success()
             {
                 var i = 0;
-                while (i < model.items.length && model.items[i].name < name) ++i;
-                model.items.splice(i, 0, {name:name, date:new Date()});
+                while (i < model._items.length && model._items[i].name < name) ++i;
+                model._items.splice(i, 0, {name:name, date:new Date()});
                 model._fireItemsLoaded();
             }
             if (tweet)
@@ -100,8 +87,8 @@ define(function() {
             var model = this;
             function success()
             {
-                var item = model.items[index];
-                model.items.splice(index,1);
+                var item = model._items[index];
+                model._items.splice(index,1);
                 model._fireItemRemoved(item);
             }
             this._logger.remove(name, success);
@@ -119,7 +106,7 @@ define(function() {
                 var model = this;
                 function success()
                 {
-                    model.items.splice(oldindex,1);
+                    model._items.splice(oldindex,1);
                     model.add(newname, false);
                 }
                 this._logger.change(oldname, newname, success);
@@ -130,14 +117,14 @@ define(function() {
     TapsModel.prototype.findIndex = function(name)
     {
         var i = 0;
-        while (i < this.items.length && this.items[i].name != name) ++i;
-        if (i == this.items.length) i = -1;
+        while (i < this._items.length && this._items[i].name != name) ++i;
+        if (i == this._items.length) i = -1;
         return i;
     };
 
     TapsModel.prototype._fireItemsLoaded = function()
     {
-        this._itemsLoadedCallbacks.forEach(function(callback) { callback(this.items); }, this);
+        this._itemsLoadedCallbacks.forEach(function(callback) { callback(this._items); }, this);
     };
 
     TapsModel.prototype._fireItemRemoved = function(item)
