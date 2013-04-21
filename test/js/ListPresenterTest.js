@@ -6,8 +6,8 @@ function(ListPresenter) {
         setUp: function() {
             this.model = {
                 load: function(arg) { this.loadArgument = arg; },
-                onItemsLoaded: function(arg) { this.onItemsLoadedArgument = arg; },
-                onItemsLoadedArgument: function(items){}
+                on: function(name, callback) { this.callbacks[name] = callback; },
+                callbacks: {}
             };
             this.view = {
                 clear: function() { this.clearCalled = true; },
@@ -42,7 +42,7 @@ function(ListPresenter) {
         "test when model items loaded, view.refresh() is called": function() {
             var items = [1, 2, 3];
             var listPage = new ListPresenter("whatever", this.model, this.view);
-            this.model.onItemsLoadedArgument(items);
+            this.model.callbacks['itemsLoaded'](items);
             assertSame(items, this.view.refreshArgument);
         },
 

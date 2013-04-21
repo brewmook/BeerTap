@@ -15,18 +15,16 @@ define(function() {
         this._loader = loader;
         this._logger = logger;
         this._items = [];
-        this._itemsLoadedCallbacks = [];
-        this._itemRemovedCallbacks = [];
+        this._callbacks = {
+            'itemsLoaded': [],
+            'itemRemoved': []
+        };
     }
 
-    TapsModel.prototype.onItemsLoaded = function(callback)
+    TapsModel.prototype.on = function(name, callback)
     {
-        this._itemsLoadedCallbacks.push(callback);
-    };
-
-    TapsModel.prototype.onItemRemoved = function(callback)
-    {
-        this._itemRemovedCallbacks.push(callback);
+        if (name in this._callbacks)
+            this._callbacks[name].push(callback);
     };
 
     TapsModel.prototype.load = function(userId)
@@ -35,7 +33,7 @@ define(function() {
         this._loader.load(userId, function(commands)
         {
             model._items = reduceCommandsToItems(commands);
-            model._fireItemsLoaded();
+            model._fire('itemsLoaded', model._items);
         });
     };
 
@@ -70,7 +68,7 @@ define(function() {
                 var i = 0;
                 while (i < model._items.length && model._items[i].name < name) ++i;
                 model._items.splice(i, 0, {name:name, date:new Date()});
-                model._fireItemsLoaded();
+                model._fire('itemsLoaded', model._items);
             }
             if (tweet)
                 this._logger.add(name, success);
@@ -89,7 +87,7 @@ define(function() {
             {
                 var item = model._items[index];
                 model._items.splice(index,1);
-                model._fireItemRemoved(item);
+                model._fire('itemRemoved', item);
             }
             this._logger.remove(name, success);
         }
@@ -122,14 +120,10 @@ define(function() {
         return i;
     };
 
-    TapsModel.prototype._fireItemsLoaded = function()
+    TapsModel.prototype._fire = function(name, argument)
     {
-        this._itemsLoadedCallbacks.forEach(function(callback) { callback(this._items); }, this);
-    };
-
-    TapsModel.prototype._fireItemRemoved = function(item)
-    {
-        this._itemRemovedCallbacks.forEach(function(callback) { callback(item); });
+        if (name in this._callbacks)
+            this._callbacks[name].forEach(function(callback) { callback(argument); }, this);
     };
 
     return TapsModel;

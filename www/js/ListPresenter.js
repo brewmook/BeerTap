@@ -9,7 +9,7 @@ define(function() {
         this._userId = '';
         this._changePage = changePage;
         view.onRefreshClicked(function() { model.load(presenter._userId); });
-        model.onItemsLoaded(function(items) { view.refresh(items); });
+        model.on('itemsLoaded', function(items) { view.refresh(items); });
     }
 
     ListPresenter.prototype.show = function(title, userId)

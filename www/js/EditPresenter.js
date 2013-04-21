@@ -8,8 +8,8 @@ define(function() {
         view.onRefreshClicked(function() { model.load(presenter.twitterScreenName); });
         view.onRemoveClicked(function(item) { model.remove(item.name); });
 
-        model.onItemsLoaded(function(items) { view.refresh(items); });
-        model.onItemRemoved(function(item) { view.remove(item); });
+        model.on('itemsLoaded', function(items) { view.refresh(items); });
+        model.on('itemRemoved', function(item) { view.remove(item); });
 
         this.id = id;
         this.view = view;
