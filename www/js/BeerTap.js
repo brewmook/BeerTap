@@ -1,12 +1,19 @@
 define(['Twitter', 'TwitterLogger', 'TwitterLoader', 'TwitterConfirmer', 'TapsModel', 'JQMListView', 'ListPresenter', 'JQMEditView',
         'EditPresenter', 'FollowingPresenter', 'SettingsView', 'SettingsPage', 'AuthorisationPopup',
-        'TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser'],
+        'TwitterBrowserAuthoriser', 'TwitterInAppBrowserAuthoriser', 'TwitterPinAuthoriser', 'Utility'],
 function(Twitter, TwitterLogger, TwitterLoader, TwitterConfirmer, TapsModel, JQMListView, ListPresenter, JQMEditView,
          EditPresenter, FollowingPresenter, SettingsView, SettingsPage, AuthorisationPopup,
-         TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser) {
+         TwitterBrowserAuthoriser, TwitterInAppBrowserAuthoriser, TwitterPinAuthoriser, Utility) {
 
-    function BeerTap(isPhoneGap, twitterProxy)
+    function BeerTap(isPhoneGap)
     {
+        var twitterProxy = undefined;
+        if (!isPhoneGap)
+        {
+            var twitterProxyUrl = Utility.changeRelativePath(window.location.href, 'twitter');
+            twitterProxy = Utility.rewriteProxy(twitterProxyUrl);
+        }
+
         var twitter = new Twitter(localStorage, twitterProxy);
         var twitterLoader = new TwitterLoader(twitter);
 

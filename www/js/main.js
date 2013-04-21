@@ -16,10 +16,8 @@ if (/^file/.test(window.location.href))
 }
 else
 {
-    requirejs(['lib/domReady!', 'BeerTap', 'Utility'],
-        function (doc, BeerTap, Utility) {
-            var twitterProxyUrl = Utility.changeRelativePath(window.location.href, 'twitter');
-            var twitterProxy = Utility.rewriteProxy(twitterProxyUrl);
-            new BeerTap(false, twitterProxy);
+    requirejs(['lib/domReady!', 'BeerTap'],
+        function (doc, BeerTap) {
+            new BeerTap(false);
         });
 }
