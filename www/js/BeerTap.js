@@ -10,7 +10,7 @@ function(Twitter, TwitterLogger, TwitterLoader, TwitterConfirmer, TapsModel, JQM
         var twitter = new Twitter(localStorage, twitterProxy);
         var twitterLoader = new TwitterLoader(twitter);
 
-        var listModel = new TapsModel(twitterLoader, new TwitterLogger(twitter));
+        var listModel = new TapsModel(twitterLoader);
         var listView = new JQMListView("listPage");
         var listPresenter = new ListPresenter("listPage", listModel, listView, $.mobile.changePage);
 

@@ -1,5 +1,5 @@
-define(['Twitter', 'ListView', 'ListPresenter', 'TapsModel', 'Utility'],
-function (Twitter, ListView, ListPresenter, TapsModel, Utility) {
+define(['Twitter', 'TwitterLoader', 'ListView', 'ListPresenter', 'TapsModel', 'Utility'],
+function (Twitter, TwitterLoader, ListView, ListPresenter, TapsModel, Utility) {
 
     function BeerTapEmbed(parent)
     {
@@ -11,7 +11,8 @@ function (Twitter, ListView, ListPresenter, TapsModel, Utility) {
         var twitterProxyUrl = Utility.changeRelativePath(window.location.href, 'twitter');
         var twitterProxy = Utility.rewriteProxy(twitterProxyUrl);
         var twitter = new Twitter({}, twitterProxy);
-        var model = new TapsModel(twitter);
+        var twitterLoader = new TwitterLoader(twitter);
+        var model = new TapsModel(twitterLoader);
         var view = new ListView(twitterScreenName);
         var presenter = new ListPresenter(twitterScreenName, model, view, function(){});
         view.page.appendTo(parent);
