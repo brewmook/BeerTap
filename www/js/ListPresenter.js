@@ -6,18 +6,18 @@ define(function() {
         this.view = view;
         this.model = model;
         this.id = id;
-        this._twitterScreenName = '';
+        this._userId = '';
         this._changePage = changePage;
-        view.onRefreshClicked(function() { model.load(presenter._twitterScreenName); });
+        view.onRefreshClicked(function() { model.load(presenter._userId); });
         model.onItemsLoaded(function(items) { view.refresh(items); });
     }
 
-    ListPresenter.prototype.show = function(title, twitterScreenName)
+    ListPresenter.prototype.show = function(title, userId)
     {
         this.view.clear();
         this.view.setHeading(title);
-        this.model.load(twitterScreenName);
-        this._twitterScreenName = twitterScreenName;
+        this.model.load(userId);
+        this._userId = userId;
         this._changePage("#"+this.id);
     };
 

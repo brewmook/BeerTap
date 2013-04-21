@@ -11,7 +11,7 @@ define(function() {
         popup.popup("open");
     }
 
-    function AuthorisationPopup(parentPageId, twitter)
+    function AuthorisationPopup(parentPageId, provider)
     {
         this.parentPageHref = "#"+parentPageId;
         this.popup =
@@ -21,9 +21,9 @@ define(function() {
              <a href="#" data-rel="back" data-role="button" data-icon="check">Ok</a>\
            </div>')
             .appendTo($(this.parentPageHref)).popup().trigger('create');
-        this.twitter = twitter;
+        this._provider = provider;
         var popup = this.popup;
-        twitter.onAuthorisationChange(function(userId, screenName) { success(popup, screenName); });
+        provider.onAuthorisationChange(function(userId, screenName) { success(popup, screenName); });
     }
 
     AuthorisationPopup.prototype.verify = function(verifier, accessToken)
@@ -31,22 +31,22 @@ define(function() {
         $.mobile.changePage(this.parentPageHref);
         show(this.popup, "Verifying", "Please wait...", false);
         var popup = this.popup;
-        this.twitter.verifyAuthorisation(verifier, accessToken, function(data) { failure(popup, data); });
+        this._provider.verifyAuthorisation(verifier, accessToken, function(data) { failure(popup, data); });
     };
 
     function success(popup, screenName)
     {
         if (popup.is(":visible"))
         {
-            show(popup, "Success", "Sending tweets as " + screenName, true);
-            console.log("Twitter authorisation successful.");
+            show(popup, "Success", "Posting updates as " + screenName, true);
+            console.log("Authorisation successful.");
         }
     }
 
     function failure(popup, data)
     {
-        show(popup, "Failed", "Twitter authorisation failed", true);
-        console.log("Twitter authorisation failed.");
+        show(popup, "Failed", "Authorisation failed", true);
+        console.log("Authorisation failed.");
         console.log(data);
     }
 
