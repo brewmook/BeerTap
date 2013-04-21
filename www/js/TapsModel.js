@@ -10,9 +10,10 @@ define(function() {
         return result;
     }
 
-    function TapsModel(twitter)
+    function TapsModel(twitter, logger)
     {
         this.twitter = twitter;
+        this._logger = logger;
         this.items = [];
         this._itemsLoadedCallbacks = [];
         this._itemRemovedCallbacks = [];
@@ -33,11 +34,12 @@ define(function() {
         var model = this;
         this.twitter.getUserTimeline(twitterScreenName, function(data)
         {
-            model._parseTweets(data);
+            model.items = parseTweets(data);
+            model._fireItemsLoaded();
         });
     };
 
-    TapsModel.prototype._parseTweets = function(tweets)
+    function parseTweets(tweets)
     {
         tweets.reverse(); // chronological order please
 
@@ -67,9 +69,8 @@ define(function() {
             items.push({name:key, date:new Date(itemSet[key])});
         });
 
-        this.items = items;
-        this._fireItemsLoaded();
-    };
+        return items;
+    }
 
     TapsModel.prototype.add = function(name, tweet)
     {
@@ -85,7 +86,7 @@ define(function() {
                 model._fireItemsLoaded();
             }
             if (tweet)
-                this.twitter.tweet("ON: " + name, success, function(data){});
+                this._logger.add(name, success);
             else
                 success();
         }
@@ -103,7 +104,7 @@ define(function() {
                 model.items.splice(index,1);
                 model._fireItemRemoved(item);
             }
-            this.twitter.tweet("OFF: " + name, success, function(data){});
+            this._logger.remove(name, success);
         }
     };
 
@@ -121,7 +122,7 @@ define(function() {
                     model.items.splice(oldindex,1);
                     model.add(newname, false);
                 }
-                this.twitter.tweet("OFF: " + oldname + "\nON: " + newname, success, function(data){});
+                this._logger.change(oldname, newname, success);
             }
         }
     };
