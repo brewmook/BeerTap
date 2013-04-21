@@ -80,7 +80,7 @@ define(['oAuthConfig'], function(oAuthConfig) {
         this._authorisationChangeCallbacks.forEach(function(callback) { callback(userId, screenName); });
     };
 
-    Twitter.prototype.authorisedScreenName = function()
+    Twitter.prototype.screenName = function()
     {
         return this.store.screenName;
     };

@@ -7,14 +7,14 @@ function(FollowingView, TextInputDialog, FollowingModel) {
         return text;
     }
 
-    function refreshView(view, authorisedTwitterName, nowFollowing)
+    function refreshView(view, userName, nowFollowing)
     {
         var editable = [];
         var following = [];
-        var authorised = "@"+authorisedTwitterName;
+        var authorised = stripLeadingAt(userName);
 
         nowFollowing.forEach(function(name) {
-            if (name == authorised)
+            if (stripLeadingAt(name) == authorised)
                 editable.push(name);
             else
                 following.push(name);
@@ -23,18 +23,18 @@ function(FollowingView, TextInputDialog, FollowingModel) {
         view.refresh(editable, following);
     }
 
-    function FollowingPresenter(id, twitter, listPage, editPage, settingsPage)
+    function FollowingPresenter(id, login, listPage, editPage, settingsPage)
     {
         var followDialog = new TextInputDialog("followDialog");
         var model = new FollowingModel(localStorage);
         var view = new FollowingView(id);
 
-        twitter.onAuthorisationChange(function(userId, screenName) {
+        login.onAuthorisationChange(function(userId, screenName) {
             refreshView(view, screenName, model.following);
         });
 
         model.onFollowingChanged(function(nowFollowing) {
-            refreshView(view, twitter.authorisedScreenName(), nowFollowing);
+            refreshView(view, login.screenName(), nowFollowing);
         });
 
         view.onEditableClicked(function(title) {
@@ -54,12 +54,12 @@ function(FollowingView, TextInputDialog, FollowingModel) {
         });
 
         view.onFollowClicked(function() {
-            followDialog.show("Follow", "Twitter user", "@", function(user) {
+            followDialog.show("Follow", "User name", "", function(user) {
                 model.add(user);
             });
         });
 
-        refreshView(view, twitter.authorisedScreenName(), model.following);
+        refreshView(view, login.screenName(), model.following);
     }
 
     return FollowingPresenter;

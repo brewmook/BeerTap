@@ -19,7 +19,7 @@ function(Twitter, TwitterLogger, TwitterLoader, TwitterConfirmer, TapsModel, JQM
         var editModel = new TapsModel(twitterLoader, new TwitterLogger(twitterConfirmer));
         var editPresenter = new EditPresenter("editPage", editModel, editView);
 
-        var settingsView = new SettingsView("settings", twitter.authorisedScreenName());
+        var settingsView = new SettingsView("settings", twitter.screenName());
         var settingsPresenter = new SettingsPage("settings", twitter, settingsView);
 
         this.mainPage = new FollowingPresenter("main", twitter, listPresenter, editPresenter, settingsPresenter);

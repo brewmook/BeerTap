@@ -1,8 +1,8 @@
 define(function() {
 
-    function SettingsView(id, twitterScreenName)
+    function SettingsView(id, screenName)
     {
-        twitterScreenName = twitterScreenName || '';
+        screenName = screenName || '';
         this.page =
         $('<div id="'+id+'" data-role="page">\
              <div data-role="header"><h1>Settings</h1></div>\
@@ -11,7 +11,7 @@ define(function() {
                  <div data-role="collapsible" id="twitter-settings">\
                    <h4>Twitter</h4>\
                    <div>\
-                     <p>Screen Name: <span class="twitterScreenName">'+twitterScreenName+'</span></p>\
+                     <p>Screen Name: <span class="screenName">'+screenName+'</span></p>\
                      <div class="authorisers" />\
                    </div>\
                  </div>\
@@ -33,9 +33,9 @@ define(function() {
         this.authorisers = this.page.find(".authorisers");
     }
 
-    SettingsView.prototype.setTwitterScreenName = function(screenName)
+    SettingsView.prototype.setScreenName = function(screenName)
     {
-        this.page.find(".twitterScreenName").text(screenName || "");
+        this.page.find(".screenName").text(screenName || "");
     };
 
     SettingsView.prototype.addAuthoriser = function(label, click)

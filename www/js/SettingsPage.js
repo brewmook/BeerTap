@@ -1,9 +1,9 @@
 define(function() {
 
-    function SettingsPage(id, twitter, view)
+    function SettingsPage(id, login, view)
     {
         this.id = id;
-        twitter.onAuthorisationChange(function(userId, screenName) { view.setTwitterScreenName(screenName); });
+        login.onAuthorisationChange(function(userId, screenName) { view.setScreenName(screenName); });
     }
 
     SettingsPage.prototype.show = function()
