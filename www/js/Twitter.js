@@ -93,7 +93,7 @@ define(['oAuthConfig'], function(oAuthConfig) {
             success,
             function(data) {
                 console.log("Twitter authorisation FAIL!");
-                console.log(data);
+                console.log(data.text);
                 if (typeof failure === 'function')
                     failure(data);
             }

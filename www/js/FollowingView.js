@@ -17,7 +17,6 @@ function(AboutView) {
 
         var about = new AboutView(this.page);
         this.page.find(".about").click(function() { about.show(); });
-        this.page.trigger('create');
     }
 
     FollowingView.prototype.refresh = function(editable, following)

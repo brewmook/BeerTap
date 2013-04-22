@@ -41,10 +41,11 @@ function(Twitter, TwitterLogger, TwitterLoader, TwitterConfirmer, TapsModel, JQM
         hideAddressBar();
 
         var authorisationPopup = new AuthorisationPopup("main", twitter);
+        var browserAuthoriser;
 
         if (isPhoneGap)
         {
-            var browserAuthoriser = new TwitterInAppBrowserAuthoriser(authorisationPopup);
+            browserAuthoriser = new TwitterInAppBrowserAuthoriser(authorisationPopup);
             settingsView.addAuthoriser("Authorise (Browser)", function() { browserAuthoriser.authorise(twitter); });
 
             var pinAuthoriser = new TwitterPinAuthoriser(authorisationPopup);
@@ -52,8 +53,18 @@ function(Twitter, TwitterLogger, TwitterLoader, TwitterConfirmer, TapsModel, JQM
         }
         else
         {
-            var browserAuthoriser = new TwitterBrowserAuthoriser(authorisationPopup);
+            browserAuthoriser = new TwitterBrowserAuthoriser(authorisationPopup);
             settingsView.addAuthoriser("Authorise", function() { browserAuthoriser.authorise(twitter); });
+        }
+
+        var loginPage = $("#login");
+        var twitterButton = $('<button data-icon="bird"/>').append("Login with Twitter")
+                            .click(function() { browserAuthoriser.authorise(twitter); });
+        loginPage.find(".buttons").append(twitterButton).trigger("create");
+
+        if (localStorage.accessTokenKey && localStorage.accessTokenSecret)
+        {
+            this.mainPage.show();
         }
     }
 

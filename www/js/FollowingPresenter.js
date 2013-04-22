@@ -28,13 +28,19 @@ function(FollowingView, TextInputDialog, FollowingModel) {
         var followDialog = new TextInputDialog("followDialog");
         var model = new FollowingModel(localStorage);
         var view = new FollowingView(id);
+        this._id = id;
+        this._model = model;
+        this._view = view;
+        this._login = login;
 
         login.onAuthorisationChange(function(userId, screenName) {
-            refreshView(view, screenName, model.following);
+            if (view.page.is(":visible"))
+                refreshView(view, screenName, model.following);
         });
 
         model.onFollowingChanged(function(nowFollowing) {
-            refreshView(view, login.screenName(), nowFollowing);
+            if (view.page.is(":visible"))
+                refreshView(view, login.screenName(), nowFollowing);
         });
 
         view.onEditableClicked(function(title) {
@@ -58,9 +64,13 @@ function(FollowingView, TextInputDialog, FollowingModel) {
                 model.add(user);
             });
         });
-
-        refreshView(view, login.screenName(), model.following);
     }
+
+    FollowingPresenter.prototype.show = function()
+    {
+        $.mobile.changePage('#'+this._id);
+        refreshView(this._view, this._login.screenName(), this._model.following);
+    };
 
     return FollowingPresenter;
 
