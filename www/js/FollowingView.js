@@ -10,7 +10,22 @@ function(AboutView) {
 
     function FollowingView(id)
     {
-        this.page = $("#"+id);
+        this.page = $('<div id="'+id+'" data-role="page">\
+    <div data-role="header" data-position="fixed"><h1>BeerTap</h1></div>\
+    <div data-role="content">\
+        <ul data-role="listview" data-split-icon="delete" data-split-theme="c" data-inset="false"></ul>\
+    </div>\
+    <div data-role="footer" data-position="fixed">\
+        <div data-role="controlgroup" data-type="horizontal" data-mini="true" style="float: right">\
+            <button class="about" data-icon="info" data-inline="true" data-theme="a">About</button>\
+        </div>\
+        <div data-role="controlgroup" data-type="horizontal" data-mini="true">\
+            <button class="follow" data-icon="plus" data-inline="true" data-theme="a">Follow</button>\
+            <button class="settings" data-icon="gear" data-inline="true" data-theme="a">Settings</button>\
+        </div>\
+    </div>\
+</div>').appendTo('body');
+
         this._editableClickedCallback = function(title){};
         this._followingClickedCallback = function(title){};
         this._removeClickedCallback = function(title){};
