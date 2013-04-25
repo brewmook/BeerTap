@@ -3,10 +3,10 @@ define(function() {
     return {
         major:     0,
         minor:     1,
-        patch:     4,
-        string:    "0.1.4",
-        revision:  "7873a0fa53b4037412bd0ad95e50476dabe07888",
-        timestamp: 1365842613000
+        patch:     5,
+        string:    "0.1.5",
+        revision:  "8813721068f02017ce31d43a4c44d11773e75dcd",
+        timestamp: 1366912230000
     };
 
 });
